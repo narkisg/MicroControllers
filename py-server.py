@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
 
-#---------DO NOT REMOVE THIS LINE--------#
+#---------DO NOT REMOVE THIS LINE!!--------#
 from engineio.async_drivers import gevent
 
 from backend.functions import *
