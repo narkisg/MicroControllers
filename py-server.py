@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
 
-#---------DO NOT REMOVE THIS LINE!!--------#
+# ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent
 
 from backend.functions import *
@@ -17,126 +17,126 @@ def handle_message(message):
     print(message)
     emit('list', {'controllers': ['cont-1', 'cont-2', 'cont-3', 'cont-4']})
 
+# ========================= login window functions ========================= #
 
+# activate after pressing the 'Login' button
+@socketio.on('login attempt')
+def handle_message(username, password):
+    permission = arbitrator(username, password)
+    if permission == 1:
+        emit('simple user successfully logged in')
+    elif permission == 2:
+        emit('developer user successfully logged in')
+    elif permission == 3:
+        emit('administrator user successfully logged in')
+    else:
+        emit('invalid username or password')
+
+
+# ========================= main window functions ========================= #
+
+# ----- update program functions ----- #
+
+# activate after pressing the button to show the available com ports
+@socketio.on('get_list_of_ports')
+def handle_message():
+    portslist = get_ports_list()
+    emit(portslist)
+
+
+# activate after choosing port from list
 @socketio.on('choose_port')
 def handle_message(port_name):
-    choose_port(port_name)
-    emit(port_name+" chosen")
+    port = choose_port(port_name)
+    emit(port+" chosen")
 
 
+# activate after pressing the button to show the available controllers
+@socketio.on('get_list_of_controllers')
+def handle_message():
+    controllerlist = get_controllers_list()
+    emit(controllerlist)
+
+
+# activate after choosing controller from list
 @socketio.on('choose_controller')
 def handle_message(controller_name):
     choose_controller(controller_name)
     emit(controller_name+" chosen")
 
 
+# activate after pressing the button to show the available commands
+@socketio.on('get_list_of_commands')
+def handle_message():
+    commandslist = get_commands_list()
+    emit(commandslist)
+
+
+# activate after choosing command from list
 @socketio.on('choose_command')
 def handle_message(command_No):
     choose_command(command_No)
-    # add if statements for each command separately
     emit(command_No+" chosen")
 
 
-@socketio.on('list_of_commands')
-def handle_message():
-    emit(List_Of_Commands)
-
-
-@socketio.on('list_of_ports')
-def handle_message():
-    emit(list_of_ports)
-
-
+# activate after choosing port, controller, command, and update(if necessary)
+# and pressing the upload button
 @socketio.on('upload')
 def handle_message():
-    do_command()
-    emit("update has been uploaded successfully")
+    result = do_command()
+    if result == 0x00:
+        emit("Flash_HAL_OK")
+    elif result == 0x01:
+        emit("Flash_HAL_ERROR")
+    elif result == 0x02:
+        emit("Flash_HAL_BUSY")
+    elif result == 0x03:
+        emit("Flash_HAL_TIMEOUT")
+    elif result == 0x04:
+        emit("Flash_HAL_INV_ADDR")
 
 
-"""
-@socketio.on('exit')
+# ----- user management functions ----- #
+
+# activate after pressing the user management button- only for administrator
+@socketio.on('user_management')
 def handle_message():
-    exit_system()
-    emit('exit')
+    if authorization_code == 3:
+        pass
+    else:
+        raise OSError("Unauthorized action")
+
+""" undone
+@socketio.on('create_new_user')
+def handle_message(new_username, new_password, author_code):
+   result = create_new_user(new_username, new_password, author_code)
+   if result....
+   emit()"""
 
 
-@socketio.on('get_ver')
+@socketio.on('delete_user')
 def handle_message():
-    get_ver()
-    emit('get_ver_done')
+   pass
 
 
-@socketio.on('get_help')
+@socketio.on('change_user_authorization')
 def handle_message():
-    get_help()
-    emit('')
+   pass
 
 
-@socketio.on('get_cid')
+# ----- add new update functions ----- #
+
+@socketio.on('add_file')
 def handle_message():
-    get_cid()
-    emit('get_cid_done')
+   pass
 
 
-@socketio.on('get_status')
+# ----- logout functions ----- #
+
+# activate after pressing the 'Logout' button, and the 'confirm Logout button'
+@socketio.on('logout_attempt')
 def handle_message():
-    get_status()
-    emit('get_status_done')
-
-
-@socketio.on('go_to_address')
-def handle_message():
-    go_to_addr()
-    emit('')
-
-
-@socketio.on('flash_erase')
-def handle_message():
-    flash_erase()
-    emit('flash_erase_done')
-
-
-@socketio.on('mem_write')
-def handle_message():
-    mem_write()
-    emit('mem_write_done')
-
-
-@socketio.on('en_r_w_protect')
-def handle_message():
-    en_r_w_protect()
-    emit('en_r_w_is_protected')
-
-
-@socketio.on('mem_read')
-def handle_message():
-    mem_read()
-    emit('')
-
-
-@socketio.on('read_sector_status')
-def handle_message():
-    read_sector_status()
-    emit('')
-
-
-@socketio.on('opt_read')
-def handle_message():
-    opt_read()
-    emit('')
-
-
-@socketio.on('dis_r_w_protect')
-def handle_message():
-    dis_r_w_protect()
-    emit('dis_r_w_done')
-
-
-@socketio.on('my_new_command')
-def handle_message():
-    my_new_command()
-    emit('your new command executed')
-"""
+   raise SystemExit
 
 
 if __name__ == '__main__':
