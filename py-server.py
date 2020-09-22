@@ -24,7 +24,7 @@ def handle_message(message):
 
 # activate after pressing the 'Login' button
 @socketio.on('login attempt')
-def handle_message(username, password):
+def handle_message(username, password):    # transfer to switch-case function
     permission = arbitrator(username, password)
     if permission == -3:
         emit('invalid username and password')
@@ -91,7 +91,7 @@ def handle_message(command_No):
 # activate after choosing port, controller, command, and update(if necessary)
 # and pressing the upload button
 @socketio.on('upload')
-def handle_message():
+def handle_message():  # transfer to switch-case function
     result = do_command()
     if result == 0x00:
         emit("Flash_HAL_OK")
@@ -138,7 +138,7 @@ def handle_message():
 
 # create new user - add to database after filing details and pressing register
 @socketio.on('register_user')
-def handle_message(new_username, new_password, author_code):
+def handle_message(new_username, new_password, author_code):    # transfer to switch-case function
     result = create_new_user(new_username, new_password, author_code)
     if result == 0:
         emit('username already in use')

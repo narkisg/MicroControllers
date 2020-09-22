@@ -72,7 +72,7 @@ def calc_file_len():
 
 def open_the_file():
     global bin_file
-    bin_file = open('user_app.bin','rb')
+    bin_file = open('user_app.bin', 'rb')
     #read = bin_file.read()
     #global file_contents = bytearray(read)
 
@@ -466,7 +466,7 @@ def decode_menu_command_code(port_name, controller_name, command, authorization_
         Write_to_serial_port(data_buf[0], 1)
         
         for i in data_buf[1:COMMAND_BL_FLASH_ERASE_LEN]:
-            Write_to_serial_port(i,COMMAND_BL_FLASH_ERASE_LEN-1)
+            Write_to_serial_port(i, COMMAND_BL_FLASH_ERASE_LEN-1)
         
         ret_value = read_bootloader_reply(data_buf[1])
         
