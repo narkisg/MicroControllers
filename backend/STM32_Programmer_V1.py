@@ -328,7 +328,7 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
         print("\n   SUCCESS")
 
 
-def decode_menu_command_code(port_name, controller_name, command, authorization_code, additional_par):
+def decode_menu_command_code(port_name, controller_name, command, additional_par):
     name = port_name
     ret_value = Serial_Port_Configuration(name)
     if ret_value<0:
@@ -413,7 +413,7 @@ def decode_menu_command_code(port_name, controller_name, command, authorization_
         Write_to_serial_port(data_buf[0], 1)
         
         for i in data_buf[1:COMMAND_BL_GET_RDP_STATUS_LEN]:
-            Write_to_serial_port(i,COMMAND_BL_GET_RDP_STATUS_LEN-1)
+            Write_to_serial_port(i, COMMAND_BL_GET_RDP_STATUS_LEN-1)
         
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -775,7 +775,7 @@ while True:
     purge_serial_port()"""
 
 
-def execute_command(port_name, controller_name, command_code, authorization_code, additional_par):
+def execute_command(port_name, controller_name, command_code, additional_par):
     decode_menu_command_code(port_name, controller_name, command_code, authorization_code, additional_par)
 
 def check_flash_status():

@@ -16,7 +16,7 @@ def fill_table_of_users():
 
 def fill_list_of_controllers():
     for x in range(1000):
-        list_of_controllers.insert('controller_' + str(x))
+        list_of_controllers.append('controller' + str(x))
     return list_of_controllers
 
 
@@ -25,9 +25,7 @@ def fill_list_of_ports():
 
 #UNDONE
 def fill_list_of_commands():
-    if authorization_code == 3:
-        list_of_commands == ()
-    elif authorization_code == 2:
+    if my_authorization_code == 3 | my_authorization_code == 2:
         list_of_commands == ()
     else:
         list_of_commands == ()
@@ -88,6 +86,7 @@ def arbitrator(username, password):
             output = 0
         else:
             output = table_of_users([username][2])
+    init2(username, password, output)  # initialize my_parameters
     return output
 
 
@@ -129,6 +128,7 @@ def get_commands_list():
 def exit_system():
     raise SystemExit
 
+
 def list_of_commands():
     return List_Of_Commands
 
@@ -165,7 +165,7 @@ def create_new_user(new_username, new_password, author_code):
 
 
 def delete_user(username):
-    if authorization_code != 3:
+    if my_authorization_code != 3:
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in table_of_users:
@@ -177,7 +177,7 @@ def delete_user(username):
 
 
 def change_user_authorization(username, new_author_code):
-    if authorization_code != 3:
+    if my_authorization_code != 3:
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in table_of_users:
@@ -190,8 +190,6 @@ def change_user_authorization(username, new_author_code):
 
 
 def change_user_name(username, new_user_name):
-    if authorization_code != 3:
-        raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in table_of_users:
         current = user_card(x).username
@@ -203,8 +201,6 @@ def change_user_name(username, new_user_name):
 
 
 def change_user_password(username, new_password):
-    if authorization_code != 3:
-        raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in table_of_users:
         current = user_card(x).username

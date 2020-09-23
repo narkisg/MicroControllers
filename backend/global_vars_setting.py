@@ -41,20 +41,17 @@ class user_card:
                 return True
         return False
 
-authorization_code = 0
+
+my_user_name = ""
+my_password = ""
+my_authorization_code = 0
 table_of_users = list(user_card)
 list_of_controllers = list()
 list_of_ports = list()
 list_of_commands = list()
 
-def init():
-    global authorization_code
-    authorization_code = 0
-    # 0- unauthorized
-    # 1- simple user
-    # 2- developer
-    # 3- administrator
-
+# after running the program
+def init1():
     global table_of_users
     table_of_users = list()
 
@@ -68,3 +65,17 @@ def init():
     list_of_commands = list()
 
 
+# after login, called from arbitrator function
+def init2(username, password, authorization):
+    global my_user_name
+    my_user_name = username
+
+    global my_password
+    my_password = password
+
+    global my_authorization_code
+    my_authorization_code = authorization
+    # 0- unauthorized
+    # 1- simple user
+    # 2- developer
+    # 3- administrator
