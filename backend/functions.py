@@ -36,9 +36,8 @@ def fill_list_of_commands():
 # ============== functions ============== #
 
 
-def do_command():
-    if port_name is not None and controller_name is not None and command_number is not None:
-        result = execute_command(port_name, controller_name, command_number, authorization_code)
+def do_command(port_name, controller_name, command_No, authorization_code, additional_par):
+        result = execute_command(port_name, controller_name, command_No, authorization_code, additional_par)
         return result
 
 # assistant functions for arbitrator
@@ -69,7 +68,7 @@ def check_match(user_to_check, pass_to_check):
 
 # the arbitrator function is called only from login attempt
 def arbitrator(username, password):
-    output = 0   #Default value
+    output = 0   #  Default value
     fill_table_of_users()
     fill_list_of_ports()
     fill_list_of_controllers()
@@ -79,7 +78,8 @@ def arbitrator(username, password):
     if u_n_c == 0:
         if p_w_c == 0:
             output = -3
-        else: output = -2
+        else:
+            output = -2
 
     elif u_n_c == 1:
         if p_w_c == 0:
@@ -97,13 +97,13 @@ def get_ports_list():
     return list_of_ports
 
 
-def choose_port(portName):
-    global port_name
-    if portName in list_of_ports:
-        port_name = portName
-        return port_name
-    else:
-        EnvironmentError('Unsupported platform')
+#def choose_port(portName):
+    #global port_name
+    #if portName in list_of_ports:
+        #port_name = portName
+        #return port_name
+    #else:
+        #EnvironmentError('Unsupported platform')
 
 
 def get_controllers_list():
@@ -112,18 +112,18 @@ def get_controllers_list():
     return list_of_controllers
 
 
-def choose_controller(controllerName):
-    global controller_name
-    controller_name = controllerName
+#def choose_controller(controllerName):
+    #global controller_name
+    #controller_name = controllerName
 
 
 def get_commands_list():
     return list_of_commands
 
 
-def choose_command(commandNo):
-    global command_number
-    command_number = commandNo
+#def choose_command(commandNo):
+    #global command_number
+    #command_number = commandNo
 
 
 def exit_system():
@@ -139,8 +139,6 @@ def list_of_ports():
 # checks that username and password is not in use
 # add new user to data base
 def create_new_user(new_username, new_password, author_code):
-    if authorization_code != 3:
-        raise OSError("Unauthorized action")  # not suppose to happen
     u_n_c = 1  # for user name check- 1 for good, 0 for bad
     p_w_c = 1  # for password check 1 for good, 0 for bad
     output = -1
@@ -217,13 +215,13 @@ def change_user_password(username, new_password):
     return output
 
 
-def update_address(address_num):
-    address = address_num
+#def update_address(address_num):
+    #address = address_num
 
 
-def updater_sector_num(sec_num):
-    sector_number = sec_num
+#def updater_sector_num(sec_num):
+    #sector_number = sec_num
 
 
-def update_num_of_sector_to_erase(num_of_sec_to_erase):
-    num_of_sector_to_erase = num_of_sec_to_erase
+#def update_num_of_sector_to_erase(num_of_sec_to_erase):
+    #num_of_sector_to_erase = num_of_sec_to_erase

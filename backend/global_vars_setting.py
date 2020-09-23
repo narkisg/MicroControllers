@@ -41,45 +41,19 @@ class user_card:
                 return True
         return False
 
-
-port_name = None
-controller_name = None
-command_number = None
 authorization_code = 0
 table_of_users = list(user_card)
 list_of_controllers = list()
 list_of_ports = list()
 list_of_commands = list()
 
-address = ""
-sector_number = None
-num_of_sector_to_erase = None
-
 def init():
-    global port_name
-    port_name = None
-
-    global controller_name
-    controller_name = None
-
-    global command_number
-    command_number= None
-
     global authorization_code
     authorization_code = 0
     # 0- unauthorized
     # 1- simple user
     # 2- developer
     # 3- administrator
-
-    global address
-    address = ""
-
-    global sector_num
-    sector_num = None
-
-    global num_of_sector_to_erase
-    num_of_sector_to_erase = None
 
     global table_of_users
     table_of_users = list()
