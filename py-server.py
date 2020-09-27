@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
-from backend.global_vars_setting import *
-from backend.functions import *
 import json
+from backend.functions import *
+
 
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent
 
-from backend.functions import *
+
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'secret!'
@@ -80,31 +80,32 @@ def handle_message(details):  # transfer to switch-case function
     port_name = data["port name"]
     controller_name = data["controller name"]
     command_No = data["command number"]
-    authorization_code = data["authorization code"]
     additional_par = data["additional parameters"]
-    if authorization_code == 1 & command_No != 8:
-        emit("unauthorized command for simple user")
     # the additional parameters is a json list of all the additional parameters the current function demands,
     # for example, if some command demands additional parameters than the global fields(port name, cont num...),
     # like number of sectors, or list of something or file address to upload from directory.
-    # example for json file with additional parameters- {port name: "COM3",
+    # example for json file with additional parameters-
+    #                           {port name: "COM3",
     #                           controller name: "controller_1"
     #                           command number: "9"
     #                           authorization code: "2"
     #                           additional parameters: ["6", "00x4", "["3","7","0"]", "user_app.bin"]}
-    result = do_command(port_name, controller_name, command_No, additional_par)
-    if result == 0x00:
-        emit("Flash_HAL_OK")
-    elif result == 0x01:
-        emit("Flash_HAL_ERROR")
-    elif result == 0x02:
-        emit("Flash_HAL_BUSY")
-    elif result == 0x03:
-        emit("Flash_HAL_TIMEOUT")
-    elif result == 0x04:
-        emit("Flash_HAL_INV_ADDR")
-    elif result == -2:
-        emit("TimeOut : No response from the bootloader, reset the board and Try Again !")
+    if global_vars_setting.my_authorization == 1 & command_No != 8:
+        emit("unauthorized command for simple user")
+    else:
+        result = do_command(port_name, controller_name, command_No, additional_par)
+        if result == 0x00:
+            emit("Flash_HAL_OK")
+        elif result == 0x01:
+            emit("Flash_HAL_ERROR")
+        elif result == 0x02:
+            emit("Flash_HAL_BUSY")
+        elif result == 0x03:
+            emit("Flash_HAL_TIMEOUT")
+        elif result == 0x04:
+            emit("Flash_HAL_INV_ADDR")
+        elif result == -2:
+            emit("TimeOut : No response from the bootloader, reset the board and Try Again !")
 
 
 # ----- user management functions ----- #
@@ -112,7 +113,7 @@ def handle_message(details):  # transfer to switch-case function
 # activate after pressing the user management button- only for administrator
 @socketio.on('user management')
 def handle_message():
-    if my_authorization_code == 3:
+    if global_vars_setting.my_authorization == 3:
         emit("administrator confirmed")
     else:
         emit("unauthorized user")
@@ -138,7 +139,7 @@ def handle_message(new_user_details):    # transfer to switch-case function
 
 @socketio.on('get table of users')
 def handle_message():
-    emit(json.dumps(table_of_users))  # problem because of the new class i wrote!
+    emit(json.dumps(global_vars_setting.table_of_users))  # problem because of the new class i wrote!
 
 @socketio.on('delete user')
 def handle_message(username_to_del):
@@ -188,7 +189,7 @@ def handle_message(details):
 
 @socketio.on('my profile')
 def handle_message():
-    my_peofile = (my_user_name, my_password, my_authorization_code)
+    my_peofile = (global_vars_setting.my_user_name, global_vars_setting.my_password, global_vars_setting.my_authorization)
     emit(json.dumps(my_peofile))
 
 # ----- logout functions ----- #
@@ -202,4 +203,4 @@ def handle_message():
 if __name__ == '__main__':
     print('running on port 5000')
     socketio.run(app)
-    init1()
+    global_vars_setting.init1()

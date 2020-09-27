@@ -3,7 +3,7 @@ import struct
 import os
 import sys
 import glob
-from backend.functions import *
+import backend.functions
 from backend.global_vars_setting import *
 
 Flash_HAL_OK                                        = 0x00
@@ -776,7 +776,7 @@ while True:
 
 
 def execute_command(port_name, controller_name, command_code, additional_par):
-    decode_menu_command_code(port_name, controller_name, command_code, authorization_code, additional_par)
+    decode_menu_command_code(port_name, controller_name, command_code, additional_par)
 
 def check_flash_status():
     pass
