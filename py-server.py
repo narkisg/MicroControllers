@@ -73,7 +73,7 @@ def handle_message():
 
 # activate after choosing port, controller, command, and update(if necessary)
 # and pressing the update program button
-#port_name, controller_name, command_No, additonal_par
+#port_name, controller_name, command_No, additional_par
 @socketio.on('execute command')
 def handle_message(details):  # transfer to switch-case function
     data = json.loads(details)
@@ -126,20 +126,29 @@ def handle_message(new_user_details):    # transfer to switch-case function
     new_username = data["new user name"]
     new_password = data["new password"]
     author_code = data["authorization code"]
-    result = create_new_user(new_username, new_password, author_code)
-    if result == 0:
-        emit('username already in use')
-    elif result == 1:
-        emit('password already in use')
-    elif result == 2:
-        emit('username and password already in use')
-    elif result == 3:
-        emit('new user registered to system')
+    author_code = int(author_code, 10)
+    if author_code != 1 and author_code != 2 and author_code !=3:
+        emit('illegal authorization code')
+    else:
+        result = create_new_user(new_username, new_password, author_code)
+        if result == 0:
+            emit('username already in use')
+        elif result == 1:
+            emit('password already in use')
+        elif result == 2:
+            emit('username and password already in use')
+        elif result == 3:
+            emit('new user registered to system')
 
 
 @socketio.on('get table of users')
 def handle_message():
-    emit(json.dumps(global_vars_setting.table_of_users))  # problem because of the new class i wrote!
+    output = []
+    for usercard in global_vars_setting.table_of_users:
+        current = usercard.username
+        output.append(current)
+    emit(json.dumps(output))  # problem because of the new class i wrote!
+
 
 @socketio.on('delete user')
 def handle_message(username_to_del):
@@ -157,18 +166,21 @@ def handle_message(details):
     data = json.loads(details)
     username = data["username"]
     new_author_code = data["new authorization"]
-    result = change_user_authorization(username, new_author_code)
-    if result == 0:
-        emit('user is not in list')
-    elif result == 1:
-        emit('user authorization changed')
+    if new_author_code != 1 and new_author_code != 2 and new_author_code !=3:
+        emit('illegal authorization code')
+    else:
+        result = change_user_authorization(username, new_author_code)
+        if result == 0:
+            emit('user is not in list')
+        elif result == 1:
+            emit('user authorization changed')
 
 
 @socketio.on('change user name')
 def handle_message(details):
     data = json.loads(details)
     username = data["username"]
-    new_user_name = data["new user name"]
+    new_user_name = data["new username"]
     result = change_user_name(username, new_user_name)
     if result == 0:
         emit('user is not in list')
@@ -201,6 +213,7 @@ def handle_message():
 
 
 if __name__ == '__main__':
+    global_vars_setting.init1()
+    do_command('COM3', 'C1', '4', '')
     print('running on port 5000')
     socketio.run(app)
-    global_vars_setting.init1()

@@ -47,22 +47,29 @@ class user_card:
 
 # after running the program
 def init1():
-    global_vars_setting.table_of_users = fill_table_of_users()
+    global table_of_users
+    table_of_users = fill_table_of_users()
 
 
 # after login, called from arbitrator function
 def init2(username, password):
-    global_vars_setting.list_of_controllers = fill_list_of_controllers()
+    global list_of_controllers
+    list_of_controllers = fill_list_of_controllers()
 
-    global_vars_setting.list_of_ports = fill_list_of_ports()
+    global list_of_ports
+    list_of_ports = fill_list_of_ports()
 
-    global_vars_setting.my_user_name = username
+    global my_user_name
+    my_user_name = username
 
-    global_vars_setting.my_password = password
+    global my_password
+    my_password = password
 
-    global_vars_setting.my_authorization = chek_authorization(username, password)
+    global my_authorization
+    my_authorization = chek_authorization(username, password)
 
-    global_vars_setting.list_of_commands = fill_list_of_commands(my_authorization)
+    global list_of_commands
+    list_of_commands = fill_list_of_commands(my_authorization)
 
 
 def fill_table_of_users():

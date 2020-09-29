@@ -83,8 +83,8 @@ def create_new_user(new_username, new_password, author_code):
     p_w_c = 1  # for password check 1 for good, 0 for bad
     output = -1
     for x in global_vars_setting.table_of_users:
-        tmp_1 = global_vars_setting.user_card(x).username
-        tmp_2 = global_vars_setting.user_card(x).password
+        tmp_1 = x.username
+        tmp_2 = x.password
         if tmp_1 == new_username:
             u_n_c = 0
         if tmp_2 == new_password:
@@ -105,11 +105,11 @@ def create_new_user(new_username, new_password, author_code):
 
 
 def delete_user(username):
-    if global_vars_setting.my_authorization_code != 3:
+    if global_vars_setting.my_authorization != 3:
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in global_vars_setting.table_of_users:
-        current = global_vars_setting.user_card(x).username
+        current = x.username
         if current == username:
             global_vars_setting.table_of_users.remove(x)
             output = 1
@@ -121,10 +121,9 @@ def change_user_authorization(username, new_author_code):
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
     for x in global_vars_setting.table_of_users:
-        current = global_vars_setting.user_card(x).username
-        index = global_vars_setting.table_of_users.index(x)
+        current = x.username
         if current == username:
-            global_vars_setting.user_card(global_vars_setting.table_of_users[index]).authorization = new_author_code
+            x.authorization = new_author_code
             output = 1
     return output
 
@@ -132,10 +131,9 @@ def change_user_authorization(username, new_author_code):
 def change_user_name(username, new_user_name):
     output = 0
     for x in global_vars_setting.table_of_users:
-        current = global_vars_setting.user_card(x).username
-        index = global_vars_setting.table_of_users.index(x)
+        current = x.username
         if current == username:
-            global_vars_setting.user_card(global_vars_setting.table_of_users[index]).username = new_user_name
+            x.username = new_user_name
             output = 1
     return output
 
@@ -143,9 +141,8 @@ def change_user_name(username, new_user_name):
 def change_user_password(username, new_password):
     output = 0
     for x in global_vars_setting.table_of_users:
-        current = global_vars_setting.user_card(x).username
-        index = global_vars_setting.table_of_users.index(x)
+        current = x.username
         if current == username:
-            global_vars_setting.user_card(global_vars_setting.table_of_users[index]).password = new_password
+            x.password = new_password
             output = 1
     return output
