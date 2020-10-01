@@ -1,9 +1,9 @@
 from backend.functions import *
 
-table_of_users = []
-list_of_commands = []
-list_of_controllers = []
-list_of_ports = []
+table_of_users = dict()
+list_of_commands = dict()
+list_of_controllers = dict()
+list_of_ports = dict()
 my_user_name = ""
 my_password = ""
 my_authorization = ""
@@ -73,45 +73,52 @@ def init2(username, password):
 
 
 def fill_table_of_users():
-    output = []
+    output = dict()
     for i in range(30):
         if i == 0:
             user = user_card('user_' + str(i), '767_' + str(i), 3)
-            output.append(user)
+            output["user_No."+ str(i)] = user
         elif i < 16:
             user = user_card('user_' + str(i), '767_' + str(i), 2)
-            output.append(user)
+            output["user_No."+ str(i)] = user
         else:
             user = user_card('user_' + str(i), '767_' + str(i), 1)
-            output.append(user)
+            output["user_No."+ str(i)] = user
     return output
 
 
 def fill_list_of_controllers():
-    output = []
-    for x in range(1000):
-        output.append('controller' + str(x))
+    output = dict()
+    for x in range(30):
+        output["cont_" + str(x)] = str(x)
     return output
 
 
 def fill_list_of_ports():
-    return ["COM3"]
-    #return serial_ports()
+    return {"port_1": "COM3"}
+    # return serial_ports()
+
+
+def fill_list_of_commands(authorization_code):
+    output = dict()
+    i = -1
+    if authorization_code == 1:
+        output = {'command_0': 'MEM_WRITE'}
+    else:
+        to_insert = ['GET_VER', 'GET_HELP', 'GET_CID', 'GET_RDP_STATUS', 'GO_TO_ADDR', 'FLASH_ERASE',
+                     'MEM_WRITE', 'EN_R_W_PROTECT', 'MEM_READ', 'READ_SECTOR_P_STATUS', 'OTP_READ',
+                     'DIS_R_W_PROTECT', 'MY_NEW_COMMAND']
+        for x in to_insert:
+            i += 1
+            output["command_" + str(i)] = x
+    return output
 
 
 def chek_authorization(username, password):
     output = ""
-    for x in table_of_users:
+    for x in table_of_users.values():
         if x.username == username and x.password == password:
             output = x.authorization
     return output
 
 
-def fill_list_of_commands(authorization_code):
-    if authorization_code == 1:
-        output = ['MEM_WRITE']
-    else:
-        output = ['GET_VER', 'GET_HELP', 'GET_CID', 'GET_RDP_STATUS', 'GO_TO_ADDR', 'FLASH_ERASE',
-                  'MEM_WRITE', 'EN_R_W_PROTECT', 'MEM_READ', 'READ_SECTOR_P_STATUS', 'OTP_READ',
-                  'DIS_R_W_PROTECT', 'MY_NEW_COMMAND']
-    return output

@@ -3,7 +3,6 @@ from backend.global_vars_setting import *
 from backend.functions import *
 from backend.STM32_Programmer_V1 import *
 
-
 def permission_1():
     while True:
         print('\n simple user successfully logged in!')
@@ -188,7 +187,7 @@ def create_user():
             break
         new_username = str(input("\n please insert new username here: "))
         new_password = str(input("\n please insert new password here: "))
-        new_authorization = str(input("\n please insert new authorization code here: "))
+        new_authorization = int(input("\n please insert new authorization code here: "))
         if new_authorization != 1 and new_authorization != 2 and new_authorization != 3:
             print('illegal authorization code')
             break

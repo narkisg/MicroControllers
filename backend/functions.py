@@ -13,7 +13,7 @@ def do_command(port_name, controller_name, command_No, additional_par):
 
 # assistant functions for arbitrator
 def check_user_name(user_to_check):
-    for usercard in global_vars_setting.table_of_users:
+    for usercard in global_vars_setting.table_of_users.values():
         if usercard.username == user_to_check:
             return 1
     return 0
@@ -21,7 +21,7 @@ def check_user_name(user_to_check):
 
 # assistant functions for arbitrator
 def check_password(pass_to_check):
-    for usercard in global_vars_setting.table_of_users:
+    for usercard in global_vars_setting.table_of_users.values():
         if usercard.password == pass_to_check:
             return 1
     return 0
@@ -29,7 +29,7 @@ def check_password(pass_to_check):
 
 # assistant functions for arbitrator
 def check_match(user_to_check, pass_to_check):
-    for usercard in global_vars_setting.table_of_users:
+    for usercard in global_vars_setting.table_of_users.values():
         curr1 = usercard.username
         curr2 = usercard.password
         if curr1 == user_to_check and curr2 == pass_to_check:
@@ -82,7 +82,7 @@ def create_new_user(new_username, new_password, author_code):
     u_n_c = 1  # for user name check- 1 for good, 0 for bad
     p_w_c = 1  # for password check 1 for good, 0 for bad
     output = -1
-    for x in global_vars_setting.table_of_users:
+    for x in global_vars_setting.table_of_users.values():
         tmp_1 = x.username
         tmp_2 = x.password
         if tmp_1 == new_username:
@@ -100,7 +100,8 @@ def create_new_user(new_username, new_password, author_code):
         elif p_w_c == 1:
             output = 3
             NEW_USER = global_vars_setting.user_card(new_username, new_password, author_code)
-            global_vars_setting.table_of_users.append(NEW_USER)
+            i = len(global_vars_setting.table_of_users)
+            global_vars_setting.table_of_users['user_No.'+str(i)] = NEW_USER
     return output
 
 
@@ -108,11 +109,12 @@ def delete_user(username):
     if global_vars_setting.my_authorization != 3:
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
-    for x in global_vars_setting.table_of_users:
-        current = x.username
+    for key, usercard in global_vars_setting.table_of_users.items():
+        current = usercard.username
         if current == username:
-            global_vars_setting.table_of_users.remove(x)
+            del (global_vars_setting.table_of_users[key])
             output = 1
+            break
     return output
 
 
@@ -120,7 +122,7 @@ def change_user_authorization(username, new_author_code):
     if global_vars_setting.my_authorization != 3:
         raise OSError("Unauthorized action")  # not suppose to happen
     output = 0
-    for x in global_vars_setting.table_of_users:
+    for x in global_vars_setting.table_of_users.values():
         current = x.username
         if current == username:
             x.authorization = new_author_code
@@ -130,7 +132,7 @@ def change_user_authorization(username, new_author_code):
 
 def change_user_name(username, new_user_name):
     output = 0
-    for x in global_vars_setting.table_of_users:
+    for x in global_vars_setting.table_of_users.values():
         current = x.username
         if current == username:
             x.username = new_user_name
@@ -140,7 +142,7 @@ def change_user_name(username, new_user_name):
 
 def change_user_password(username, new_password):
     output = 0
-    for x in global_vars_setting.table_of_users:
+    for x in global_vars_setting.table_of_users.values():
         current = x.username
         if current == username:
             x.password = new_password
