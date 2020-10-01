@@ -3,11 +3,8 @@ from flask_socketio import SocketIO, emit
 import json
 from backend.functions import *
 
-
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent
-
-
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'secret!'
@@ -24,26 +21,27 @@ def handle_message(message):
 # ========================= login window functions ========================= #
 
 # activate after pressing the 'Login' button
-@socketio.on('login attempt')
-def handle_message(user_name_deatils):    # transfer to switch-case function
-    data = json.loads(user_name_deatils)
+@socketio.on('login_attempt')
+def handle_message(user_name_deatils):  # transfer to switch-case function
+    data = json.dumps(user_name_deatils)
+    data = json.loads(data)
     username = data["username"]
     password = data["password"]
-    permission = arbitrator(username, password)   # will call init2() later on
+    permission = arbitrator(username, password)  # will call init2() later on
     if permission == -3:
-        emit('invalid username and password')
+        emit('login_response', {'success': 'false', 'message': 'invalid_username_and_password'})
     elif permission == -2:
-        emit('invalid username')
+        emit('login_response', {'success': 'false', 'message': 'invalid_username'})
     elif permission == -1:
-        emit('invalid password')
+        emit('login_response', {'success': 'false', 'message': 'invalid_password'})
     elif permission == 0:
-        emit('username and password do not match')
+        emit('login_response', {'success': 'false', 'message': 'username_and_password_do_not_match'})
     elif permission == 1:
-        emit('simple user successfully logged in')
+        emit('login_response', {'success': 'true', 'message': 'simple_user_successfully_logged_in'})
     elif permission == 2:
-        emit('developer user successfully logged in')
+        emit('login_response', {'success': 'true', 'message': 'developer_user_successfully_logged_in'})
     elif permission == 3:
-        emit('administrator user successfully logged in')
+        emit('login_response', {'success': 'true', 'message': 'administrator_user_successfully_logged_in'})
 
 
 # ========================= main window functions ========================= #
@@ -51,17 +49,17 @@ def handle_message(user_name_deatils):    # transfer to switch-case function
 # ----- update program functions ----- #
 
 # activate after pressing the button to show the available com ports
-@socketio.on('get list of ports')
+@socketio.on('get_list_of_ports')
 def handle_message():
     portslist = get_ports_list()
-    emit(json.dumps(portslist))
+    emit('list_of_ports', json.dumps(portslist))
 
 
 # activate after pressing the button to show the available controllers
-@socketio.on('get list of controllers')
+@socketio.on('get_list_of_controllers')
 def handle_message():
     controllerlist = get_controllers_list()
-    emit(json.dumps(controllerlist))
+    emit('list_of_controllers', json.dumps(controllerlist))
 
 
 # activate after pressing the button to show the available commands
@@ -73,7 +71,7 @@ def handle_message():
 
 # activate after choosing port, controller, command, and update(if necessary)
 # and pressing the update program button
-#port_name, controller_name, command_No, additional_par
+# port_name, controller_name, command_No, additional_par
 @socketio.on('execute command')
 def handle_message(details):  # transfer to switch-case function
     data = json.loads(details)
@@ -121,13 +119,13 @@ def handle_message():
 
 # create new user - add to database after filing details and pressing register
 @socketio.on('register user')
-def handle_message(new_user_details):    # transfer to switch-case function
+def handle_message(new_user_details):  # transfer to switch-case function
     data = json.loads(new_user_details)
     new_username = data["new user name"]
     new_password = data["new password"]
     author_code = data["authorization code"]
     author_code = int(author_code, 10)
-    if author_code != 1 and author_code != 2 and author_code !=3:
+    if author_code != 1 and author_code != 2 and author_code != 3:
         emit('illegal authorization code')
     else:
         result = create_new_user(new_username, new_password, author_code)
@@ -152,7 +150,8 @@ def handle_message():
 
 @socketio.on('delete user')
 def handle_message(username_to_del):
-    data = json.loads(username_to_del)
+    data = json.dumps(username_to_del)
+    data = json.loads(data)
     us_to_del = data["username to delete"]
     result = delete_user(us_to_del)
     if result == 0:
@@ -166,7 +165,7 @@ def handle_message(details):
     data = json.loads(details)
     username = data["username"]
     new_author_code = data["new authorization"]
-    if new_author_code != 1 and new_author_code != 2 and new_author_code !=3:
+    if new_author_code != 1 and new_author_code != 2 and new_author_code != 3:
         emit('illegal authorization code')
     else:
         result = change_user_authorization(username, new_author_code)
@@ -199,12 +198,15 @@ def handle_message(details):
     elif result == 1:
         emit('password changed')
 
+
 @socketio.on('my profile')
 def handle_message():
-    my_peofile = (global_vars_setting.my_user_name, global_vars_setting.my_password, global_vars_setting.my_authorization)
-    emit(json.dumps(my_peofile))
+    my_profile = [global_vars_setting.my_user_name,
+                  global_vars_setting.my_password, global_vars_setting.my_authorization]
+    emit(json.dumps(my_profile))
 
-# ----- logout functions ----- #
+
+# ----- logout function ----- #
 
 # activate after pressing the 'Logout' button, and the 'confirm Logout button'
 @socketio.on('logout attempt')
@@ -214,6 +216,6 @@ def handle_message():
 
 if __name__ == '__main__':
     global_vars_setting.init1()
-    do_command('COM3', 'C1', '4', '')
+    do_command('COM3', 'CONT1', '4', "")
     print('running on port 5000')
     socketio.run(app)

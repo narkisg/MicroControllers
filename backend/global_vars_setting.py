@@ -76,13 +76,13 @@ def fill_table_of_users():
     output = []
     for i in range(30):
         if i == 0:
-            user = user_card('user_' + str(i), '767' + str(i), 3)
+            user = user_card('user_' + str(i), '767_' + str(i), 3)
             output.append(user)
         elif i < 16:
-            user = user_card('user_' + str(i), '767' + str(i), 2)
+            user = user_card('user_' + str(i), '767_' + str(i), 2)
             output.append(user)
         else:
-            user = user_card('user_' + str(i), '767' + str(i), 1)
+            user = user_card('user_' + str(i), '767_' + str(i), 1)
             output.append(user)
     return output
 
@@ -95,7 +95,8 @@ def fill_list_of_controllers():
 
 
 def fill_list_of_ports():
-    return serial_ports()
+    return ["COM3"]
+    #return serial_ports()
 
 
 def chek_authorization(username, password):

@@ -131,17 +131,17 @@ def permission_3():
             my_profile()
 
         else:
-            port = str(input("\n insert your port name here :"))
-            cont = str(input("\n from controller 1-1000,\n insert your controller name here :"))
+            port = input("\n insert your port name here :")
+            cont = input("\n from controller 1-1000,\n insert your controller name here :")
             additional_par = ""
             if command == 5 or command == 8:
-                address = str(input("\n this command demands address.\n please insert your address here: "))
+                address = input("\n this command demands address.\n please insert your address here: ")
                 additional_par = {"address": address}
                 do_command(port, cont, command, additional_par)
 
             elif command == 7:
                 print("\n this command demands more info from user\n")
-                sector_number = str(input("\n please insert sector number here: (0-8 decimal)"))
+                sector_number = input("\n please insert sector number here: (0-8 decimal)")
                 nsec = str(input("\n insert number of sectors to erase here: (0-7 decimal)"))
                 additional_par = {"sector number": sector_number, "number of sectors to erase": nsec}
                 do_command(port, cont, command, additional_par)

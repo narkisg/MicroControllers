@@ -12,6 +12,7 @@ Flash_HAL_BUSY                                      = 0x02
 Flash_HAL_TIMEOUT                                   = 0x03
 Flash_HAL_INV_ADDR                                  = 0x04
 name                                                = 'port'  # default value for comport that comes from the user later
+ret_value                                           = 0
 
 #BL Commands
 COMMAND_BL_GET_VER                                  = 0x51
@@ -332,7 +333,6 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
 
 def decode_menu_command_code(controller_name, command, additional_par):
     command = int(command, 10)
-    ret_value = 0
     data_buf = []
     for i in range(255):
         data_buf.append(0)
@@ -457,7 +457,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         if(sector_num != 0xff):
             nsec = additional_par["number of sectors to erase"]
             nsec = int(nsec, 16)
-            # nsec = int(input("\n   Enter number of sectors to erase(max 8) here :"))  # learn about data validation
+            # nsec = int(input("\n   Enter number of sectors to erase(max 8) here :"))
 
         data_buf[3]= sector_num
         data_buf[4]= nsec
@@ -779,6 +779,7 @@ while True:
 def execute_command(port_name, controller_name, command_code, additional_par):
     global name
     name = port_name
+    global ret_value
     ret_value = Serial_Port_Configuration(name)
     if ret_value<0:
         raise SystemExit

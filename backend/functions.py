@@ -69,7 +69,7 @@ def get_commands_list():
 
 
 def get_ports_list():
-    return global_vars_setting.list_Of_Ports
+    return global_vars_setting.list_of_ports
 
 
 def exit_system():
