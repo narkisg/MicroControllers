@@ -3,8 +3,6 @@ import struct
 import os
 import sys
 import glob
-import backend.functions
-from backend.global_vars_setting import *
 
 Flash_HAL_OK                                        = 0x00
 Flash_HAL_ERROR                                     = 0x01
@@ -332,7 +330,7 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
 
 def decode_menu_command_code(controller_name, command, additional_par):
     command = int(command, 10)
-    ret_value = 0
+    ret = 0
     data_buf = []
     for i in range(255):
         data_buf.append(0)
@@ -358,7 +356,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_VER_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 2):
         # print("\n   Command == > BL_GET_HELP") this line is for manual debugging
@@ -377,7 +375,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_HELP_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_HELP_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 3):
         # print("\n   Command == > BL_GET_CID") this line is for manual debugging
@@ -396,7 +394,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_CID_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_CID_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 4):
         # print("\n   Command == > BL_GET_RDP_STATUS") this line is for manual debugging
@@ -415,7 +413,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_RDP_STATUS_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_RDP_STATUS_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 5):
         # print("\n   Command == > BL_GO_TO_ADDR") this line is for manual debugging
@@ -440,7 +438,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GO_TO_ADDR_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GO_TO_ADDR_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     #elif(command == 6):
         #print("\n   This command is not supported")
@@ -473,7 +471,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_FLASH_ERASE_LEN]:
             Write_to_serial_port(i, COMMAND_BL_FLASH_ERASE_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 8):
         #print("\n   Command == > BL_MEM_WRITE") this line is for manual debugging
@@ -589,7 +587,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_EN_R_W_PROTECT_LEN]:
             Write_to_serial_port(i, COMMAND_BL_EN_R_W_PROTECT_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     #elif(command == 10):
         #print("\n   Command == > COMMAND_BL_MEM_READ")
@@ -612,7 +610,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_READ_SECTOR_P_STATUS_LEN]:
             Write_to_serial_port(i, COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     #elif(command == 12):
         #print("\n   Command == > COMMAND_OTP_READ")
@@ -634,7 +632,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_DIS_R_W_PROTECT_LEN]:
             Write_to_serial_port(i,COMMAND_BL_DIS_R_W_PROTECT_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
 
     elif(command == 14):
         #print("\n   Command == > COMMAND_BL_MY_NEW_COMMAND ")
@@ -652,7 +650,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_MY_NEW_COMMAND_LEN]:
             Write_to_serial_port(i, COMMAND_BL_MY_NEW_COMMAND_LEN-1)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret = read_bootloader_reply(data_buf[1])
     #else:
         #print("\n   Please input valid command code\n")
         #return
@@ -662,7 +660,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         #print("\n   Reset the board and Try Again !")
         #return
 
-    return ret_value
+    return ret
 
 def read_bootloader_reply(command_code):
     #ack=[0,0]
@@ -778,9 +776,9 @@ while True:
 
 def execute_command(port_name, controller_name, command_code, additional_par):
     name = port_name
-    ret = 0
-    ret = Serial_Port_Configuration(name)
-    if(ret < 0):
+    ret_value = 0
+    ret_value = Serial_Port_Configuration(name)
+    if ret_value < 0:
         raise SystemExit
     decode_menu_command_code(controller_name, command_code, additional_par)
     purge_serial_port()

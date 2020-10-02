@@ -1,7 +1,5 @@
+from functions import *
 
-from backend.global_vars_setting import *
-from backend.functions import *
-from backend.STM32_Programmer_V1 import *
 
 def permission_1():
     while True:
