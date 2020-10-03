@@ -43,25 +43,6 @@ COMMAND_BL_MY_NEW_COMMAND_LEN                       =8
 verbose_mode = 1
 mem_write_active = 0
 
-# the vars below is for sending the gui
-List_Of_Commands = {
-        "command No.1": "get VER",
-        "command No.2": "get HELP",
-        "command No.3": "get CID",
-        "command No.4": "get RDP STATUS",
-        "command No.5": "go to ADDRESS",
-        "command No.6": "flash ERASE",
-        "command No.7": "mem WRITE",
-        "command No.8": "en R W PROTECT",
-        "command No.9": "mem READ - NOT SUPPORTED AT THIS MOMENT",
-        "command No.10": "read sector P STATUS",
-        "command No.11": "OPT READ - NOT SUPPORTED AT THIS MOMENT",
-        "command No.12": "dis R W PROTECT",
-    }
-List_Of_Ports = {
-        "Port No.1": "COM3",
-    }
-
 
 #----------------------------- file ops----------------------------------------
 
@@ -139,7 +120,7 @@ def serial_ports():
 def Serial_Port_Configuration(port):
     global ser
     try:
-        ser = serial.Serial(port, 15200, timeout=2)
+        ser = serial.Serial(port,115200,timeout=2)
     except:
         print("\n   Oops! That was not a valid port")
 
@@ -329,8 +310,7 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
 
 
 def decode_menu_command_code(controller_name, command, additional_par):
-    command = int(command, 10)
-    ret = 0
+    ret_value = 0
     data_buf = []
     for i in range(255):
         data_buf.append(0)
@@ -356,7 +336,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_VER_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 2):
         # print("\n   Command == > BL_GET_HELP") this line is for manual debugging
@@ -375,7 +355,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_HELP_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_HELP_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 3):
         # print("\n   Command == > BL_GET_CID") this line is for manual debugging
@@ -394,7 +374,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_CID_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_CID_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 4):
         # print("\n   Command == > BL_GET_RDP_STATUS") this line is for manual debugging
@@ -413,7 +393,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GET_RDP_STATUS_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_RDP_STATUS_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 5):
         # print("\n   Command == > BL_GO_TO_ADDR") this line is for manual debugging
@@ -438,7 +418,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_GO_TO_ADDR_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GO_TO_ADDR_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     #elif(command == 6):
         #print("\n   This command is not supported")
@@ -449,11 +429,11 @@ def decode_menu_command_code(controller_name, command, additional_par):
         data_buf[1] = COMMAND_BL_FLASH_ERASE_LEN-1
         data_buf[2] = COMMAND_BL_FLASH_ERASE
         # sector_num = input("\n   Enter sector number(0-7 or 0xFF) here :")  # learn about data validation
-        sector_num = additional_par["sector number"]
+        sector_num = additional_par["sector_number"]
         sector_num = int(sector_num, 16)
         nsec = ""
         if(sector_num != 0xff):
-            nsec = additional_par["number of sectors to erase"]
+            nsec = additional_par["number_of_sectors_to_erase"]
             nsec = int(nsec, 16)
             # nsec = int(input("\n   Enter number of sectors to erase(max 8) here :"))
 
@@ -471,7 +451,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_FLASH_ERASE_LEN]:
             Write_to_serial_port(i, COMMAND_BL_FLASH_ERASE_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 8):
         #print("\n   Command == > BL_MEM_WRITE") this line is for manual debugging
@@ -549,13 +529,13 @@ def decode_menu_command_code(controller_name, command, additional_par):
     elif(command == 9):
         #print("\n   Command == > BL_EN_R_W_PROTECT")
         #total_sector = int(input("\n   How many sectors do you want to protect ?: "))
-        total_sector = additional_par["number of sectors to protect"]
+        total_sector = additional_par["number_of_sectors_to_protect"]
         total_sector = int(total_sector, 10)
         sector_numbers = [0,0,0,0,0,0,0,0]
         sector_details=0
         for x in range(total_sector):
             #sector_numbers[x]=int(input("\n   Enter sector number[{0}]: ".format(x+1) ))
-            sector_numbers[x] = int(additional_par["list of sector numbers"]["x"]).format(x+1) #???
+            sector_numbers[x] = int(additional_par["list_of_sector_numbers"]["x"].format(x+1)) #???
             sector_details = sector_details | (1 << sector_numbers[x])
 
         #print("Sector details",sector_details)
@@ -587,7 +567,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_EN_R_W_PROTECT_LEN]:
             Write_to_serial_port(i, COMMAND_BL_EN_R_W_PROTECT_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     #elif(command == 10):
         #print("\n   Command == > COMMAND_BL_MEM_READ")
@@ -610,7 +590,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_READ_SECTOR_P_STATUS_LEN]:
             Write_to_serial_port(i, COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     #elif(command == 12):
         #print("\n   Command == > COMMAND_OTP_READ")
@@ -632,7 +612,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_DIS_R_W_PROTECT_LEN]:
             Write_to_serial_port(i,COMMAND_BL_DIS_R_W_PROTECT_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 14):
         #print("\n   Command == > COMMAND_BL_MY_NEW_COMMAND ")
@@ -650,7 +630,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         for i in data_buf[1:COMMAND_BL_MY_NEW_COMMAND_LEN]:
             Write_to_serial_port(i, COMMAND_BL_MY_NEW_COMMAND_LEN-1)
 
-        ret = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(data_buf[1])
     #else:
         #print("\n   Please input valid command code\n")
         #return
@@ -660,7 +640,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         #print("\n   Reset the board and Try Again !")
         #return
 
-    return ret
+    return ret_value
 
 def read_bootloader_reply(command_code):
     #ack=[0,0]
@@ -776,12 +756,14 @@ while True:
 
 def execute_command(port_name, controller_name, command_code, additional_par):
     name = port_name
-    ret_value = 0
-    ret_value = Serial_Port_Configuration(name)
-    if ret_value < 0:
+    ret = 0
+    ret = Serial_Port_Configuration(name)
+    if ret < 0:
         raise SystemExit
-    decode_menu_command_code(controller_name, command_code, additional_par)
+    result = decode_menu_command_code(controller_name, command_code, additional_par)
     purge_serial_port()
+    return result
+
 
 def check_flash_status():
     pass

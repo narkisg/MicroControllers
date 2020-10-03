@@ -18,7 +18,7 @@ def do_command(port_name, controller_name, command_No, additional_par):
 def check_user_name(user_to_check):
     with open('database.json') as dta:
         data = json.load(dta)
-        for x in data.values():
+        for x in data['users']:
             if x['name'] == user_to_check:
                 return 1
         return 0
@@ -28,7 +28,7 @@ def check_user_name(user_to_check):
 def check_password(pass_to_check):
     with open('database.json') as dta:
         data = json.load(dta)
-        for x in data.values():
+        for x in data['users']:
             if x['password'] == pass_to_check:
                 return 1
         return 0
@@ -38,7 +38,7 @@ def check_authorization(username, password):
     output = ""
     with open('database.json') as dta:
         data = json.load(dta)
-        for x in data.values():
+        for x in data['users']:
             curr1 = x['name']
             curr2 = x['password']
             if curr1 == username and curr2 == password:
@@ -51,7 +51,7 @@ def check_match(username, password):
     output = 0
     with open('database.json') as dta:
         data = json.load(dta)
-        for x in data.valuse():
+        for x in data['users']:
             curr1 = x['name']
             curr2 = x['password']
             if curr1 == username and curr2 == password:
@@ -134,7 +134,6 @@ def get_number_of_users():
 def exit_system():
     raise SystemExit
 
-
 # checks that username and password is not in use
 # add new user to data base
 def create_new_user(new_username, new_password, new_author_code):
@@ -153,13 +152,14 @@ def create_new_user(new_username, new_password, new_author_code):
             output = 1
         elif p_w_c == 0:
             output = 3
-            with open('database.json') as dta:
-                data = json.load(dta)
-                toinsert = {"name": new_username, "password": new_password, "authorization": new_author_code}
-                user_num = get_number_of_users()
-                data['user_'+str(user_num)] = toinsert
-                with open('database.json', 'w') as dta:
-                    json.dump(data, dta)
+            with open('database.json', 'r+') as f:
+                data = json.load(f)
+                data['users'].append({"name": new_username, "password": new_password, "authorization": new_author_code})
+                data = json.dumps(data)
+                f.seek(0)
+                f.write(data)
+                f.truncate()
+            f.close()
     return output
 
 
@@ -172,72 +172,89 @@ def delete_user(username):
         output = 0
     else:
         output = 1
-        with open('database.json') as dta:
-            data = json.load(dta)
-            key = ""
-            for i, j in data.items():
-                if j['name'] == username:
-                    j.clear()
-                    key = i
+        with open('database.json', 'r+') as f:
+            data = json.load(f)
+            for x in data['users']:
+                if x['name'] == username:
+                    password = x['password']
+                    authorization = x['authorization']
+                    data['users'].remove({"name": username, "password": password, "authorization": authorization})
                     break
-            for x in data:
-                if x == key:
-                    data.pop(x)
-                    break
-            with open('database.json', 'w'):
-                json.dump(data, dta)        # not writing- handle later!
+            data = json.dumps(data)
+            f.seek(0)
+            f.write(data)
+            f.truncate()
+        f.close()
     return output
 
 
 def change_user_authorization(username, new_author_code):
     #if my_authorization != 3:
-        #raise -1  # not suppose to happen
+        #return -1  # not suppose to happen
     output = 0
-    with open('database.json') as dta:
-        data = json.load(dta)
-        for profile in data.values:
-            if profile['name'] == username:
+    with open('database.json', 'r+') as f:
+        data = json.load(f)
+        for x in data['users']:
+            if x['name'] == username:
+                x['authorization'] = new_author_code
                 output = 1
-                with open('database.json', 'w'):
-                    profile['authorization_code'] = new_author_code
-                    json.dump(data, dta)
                 break
+        data = json.dumps(data)
+        f.seek(0)
+        f.write(data)
+        f.truncate()
+    f.close()
     return output
 
 
 def change_user_name(username, new_user_name):
+    # if my_authorization != 3:
+        # return -1  # not suppose to happen
     output = 0
-    for x in global_vars_setting.table_of_users.values():
-        current = x.username
-        if current == username:
-            x.username = new_user_name
-            output = 1
+    with open('database.json', 'r+') as f:
+        data = json.load(f)
+        for x in data['users']:
+            if x['name'] == username:
+                x['name'] = new_user_name
+                output = 1
+                break
+        data = json.dumps(data)
+        f.seek(0)
+        f.write(data)
+        f.truncate()
+    f.close()
     return output
 
 
 def change_user_password(username, new_password):
+    # if my_authorization != 3:
+        # return -1  # not suppose to happen
     output = 0
-    for x in global_vars_setting.table_of_users.values():
-        current = x.username
-        if current == username:
-            x.password = new_password
-            output = 1
+    with open('database.json', 'r+') as f:
+        data = json.load(f)
+        for x in data['users']:
+            if x['name'] == username:
+                x['password'] = new_password
+                output = 1
+                break
+        data = json.dumps(data)
+        f.seek(0)
+        f.write(data)
+        f.truncate()
+    f.close()
     return output
 
 
-def trying(username):
-    a = {"nevo": {"user": "1", "password": "767"},
-         "ran": {"user": "2", "password": "551"}}
-    b = ""
-    for i,j in a.items():
-        if j["user"] == username:
-            j.clear()
-            b = i
-    for x in a:
-        if x == b:
-            a.pop(x)
-            break
-    print(a)
+def trying():
+    with open('database.json', 'r+') as f:
+        data = json.load(f)
+        data['users'].append({"name": "ziv", "ln": "levi", "author": "17"})
+        data = json.dumps(data)
+        f.seek(0)
+        f.write(data)
+        f.truncate()
+    f.close()
+
 
 
 

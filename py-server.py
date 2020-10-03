@@ -169,7 +169,9 @@ def handle_message(details):
     else:
         result = change_user_authorization(username, new_author_code)
         if result == -1:
-            emit('change_user_response', {'success': 'false', 'message': 'unauthorized_command'})
+            emit('change_authorization_response', {'success': 'false', 'message': 'unauthorized_command'})
+        elif result == -1:
+            emit('change_authorization_response', {'success': 'false', 'message': 'unauthorized_command'})
         elif result == 0:
             emit('change_authorization_response', {'success': 'false', 'message': 'user_is_not_in_list'})
         elif result == 1:
@@ -183,20 +185,24 @@ def handle_message(details):
     username = data["username"]
     new_user_name = data["new_username"]
     result = change_user_name(username, new_user_name)
-    if result == 0:
+    if result == -1:
+        emit('change_username_response', {'success': 'false', 'message': 'unauthorized_command'})
+    elif result == 0:
         emit('change_username_response', {'success': 'false', 'message': 'user_is_not_in_list'})
     elif result == 1:
         emit('change_username_response', {'success': 'true', 'message': 'user_name_changed'})
 
 
-@socketio.on('change_user_password')
+@socketio.on('change_password')
 def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
     username = data["username"]
     new_password = data["new_password"]
     result = change_user_password(username, new_password)
-    if result == 0:
+    if result == -1:
+        emit('change_password_response', {'success': 'false', 'message': 'unauthorized_command'})
+    elif result == 0:
         emit('change_password_response', {'success': 'false', 'message': 'user_is_not_in_list'})
     elif result == 1:
         emit('change_username_response', {'success': 'true', 'message': 'password_changed'})
@@ -204,8 +210,8 @@ def handle_message(details):
 
 @socketio.on('my_profile')
 def handle_message():
-    my_profile = {'username': global_vars_setting.my_user_name,
-                  'password': global_vars_setting.my_password, 'authorization': global_vars_setting.my_authorization}
+    my_profile = {'username': my_username,
+                  'password': my_password, 'authorization': my_authorization}
     emit(json.dumps(my_profile))
 
 
@@ -220,12 +226,17 @@ def handle_message():
 if __name__ == '__main__':
     #init_my_profile()
     #create_new_user('nevo', '7','8')
-    print(get_users_list())
-    change_user_authorization('user_2', '3')
-    print(get_users_list())
+    #print(get_users_list())
+    a = change_user_authorization('user_3', '7')
+    print(a)
+    b = change_user_password('user_3', '12345')
+    print(b)
+    c = change_user_name('user3', 'nevo')
+    print(c)
+    # delete_user('user_0')
+    #print(get_users_list())
     #print(get_users_list())
     #delete_user('user_1')
-    #trying('2')
     name = input("Enter the Port Name of your device(Ex: COM3):")
     Serial_Port_Configuration(name)
     for i in serial.tools.list_ports.comports():
