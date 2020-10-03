@@ -1,8 +1,9 @@
 
-import serial.tools.list_ports
 from flask import Flask
 from flask_socketio import SocketIO, emit
+import functions
 from functions import *
+import json
 
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 
@@ -210,8 +211,8 @@ def handle_message(details):
 
 @socketio.on('my_profile')
 def handle_message():
-    my_profile = {'username': my_username,
-                  'password': my_password, 'authorization': my_authorization}
+    my_profile = {'username': functions.my_username,
+                  'password': functions.my_password, 'authorization': functions.my_authorization}
     emit(json.dumps(my_profile))
 
 
@@ -223,23 +224,9 @@ def handle_message():
     raise SystemExit
 
 
+
 if __name__ == '__main__':
-    #init_my_profile()
-    #create_new_user('nevo', '7','8')
-    #print(get_users_list())
-    a = change_user_authorization('user_3', '7')
-    print(a)
-    b = change_user_password('user_3', '12345')
-    print(b)
-    c = change_user_name('user3', 'nevo')
-    print(c)
-    # delete_user('user_0')
-    #print(get_users_list())
-    #print(get_users_list())
-    #delete_user('user_1')
-    name = input("Enter the Port Name of your device(Ex: COM3):")
-    Serial_Port_Configuration(name)
-    for i in serial.tools.list_ports.comports():
-        print(i)
+    init_my_profile()
+    do_command('COM3','','0','')
     print('running on port 5000')
     socketio.run(app)

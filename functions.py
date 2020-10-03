@@ -9,6 +9,16 @@ my_password = ""
 my_authorization = ""
 
 
+def init_my_profile():
+    global my_username
+    my_username = ""
+
+    global my_password
+    my_password = ""
+
+    global my_authorization
+    my_authorization = ""
+
 def do_command(port_name, controller_name, command_No, additional_par):
     result = execute_command(port_name, controller_name, command_No, additional_par)
     return result

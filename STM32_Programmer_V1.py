@@ -308,12 +308,20 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
     else:
         print("\n   SUCCESS")
 
+def add():
+    output = []
+    for i in range(255):
+        output.append(0)
+    return output
+
 
 def decode_menu_command_code(controller_name, command, additional_par):
     ret_value = 0
     data_buf = []
-    for i in range(255):
-        data_buf.append(0)
+    data_buf = add()  # for debugging
+    command = int(command, 10)
+    #for i in range(255):
+        #data_buf.append(0)
 
     if(command  == 0):
         # print("\n   Exiting...!") this line is for manual debugging
@@ -322,15 +330,15 @@ def decode_menu_command_code(controller_name, command, additional_par):
     elif(command == 1):
         # print(f"\n   Command == > BL_GET_VER") this line is for manual debugging
         COMMAND_BL_GET_VER_LEN              = 6
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_GET_VER_LEN-1
-        data_buf[2] = COMMAND_BL_GET_VER
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_GET_VER_LEN-1
+        data_buf[1] = COMMAND_BL_GET_VER
         crc32       = get_crc(data_buf, COMMAND_BL_GET_VER_LEN-4)
         crc32 = crc32 & 0xffffffff
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
         for i in data_buf[1:COMMAND_BL_GET_VER_LEN]:
@@ -341,15 +349,15 @@ def decode_menu_command_code(controller_name, command, additional_par):
     elif(command == 2):
         # print("\n   Command == > BL_GET_HELP") this line is for manual debugging
         COMMAND_BL_GET_HELP_LEN             =6
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_GET_HELP_LEN-1
-        data_buf[2] = COMMAND_BL_GET_HELP
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_GET_HELP_LEN-1
+        data_buf[1] = COMMAND_BL_GET_HELP
         crc32       = get_crc(data_buf, COMMAND_BL_GET_HELP_LEN-4)
         crc32 = crc32 & 0xffffffff
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
         for i in data_buf[1:COMMAND_BL_GET_HELP_LEN]:
@@ -360,15 +368,15 @@ def decode_menu_command_code(controller_name, command, additional_par):
     elif(command == 3):
         # print("\n   Command == > BL_GET_CID") this line is for manual debugging
         COMMAND_BL_GET_CID_LEN             =6
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_GET_CID_LEN-1
-        data_buf[2] = COMMAND_BL_GET_CID
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_GET_CID_LEN-1
+        data_buf[1] = COMMAND_BL_GET_CID
         crc32       = get_crc(data_buf, COMMAND_BL_GET_CID_LEN-4)
         crc32 = crc32 & 0xffffffff
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
         for i in data_buf[1:COMMAND_BL_GET_CID_LEN]:
@@ -378,15 +386,15 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
     elif(command == 4):
         # print("\n   Command == > BL_GET_RDP_STATUS") this line is for manual debugging
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_GET_RDP_STATUS_LEN-1
-        data_buf[2] = COMMAND_BL_GET_RDP_STATUS
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_GET_RDP_STATUS_LEN-1
+        data_buf[1] = COMMAND_BL_GET_RDP_STATUS
         crc32       = get_crc(data_buf, COMMAND_BL_GET_RDP_STATUS_LEN-4)
         crc32 = crc32 & 0xffffffff
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -400,18 +408,18 @@ def decode_menu_command_code(controller_name, command, additional_par):
         #go_address  = input("\n   Please enter 4 bytes go address in hex:")  # learn about data validation
         go_address = additional_par["address"]
         go_address = int(go_address, 16)
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_GO_TO_ADDR_LEN-1
-        data_buf[2] = COMMAND_BL_GO_TO_ADDR
-        data_buf[3] = word_to_byte(go_address, 1, 1)
-        data_buf[4] = word_to_byte(go_address, 2, 1)
-        data_buf[5] = word_to_byte(go_address, 3, 1)
-        data_buf[6] = word_to_byte(go_address, 4, 1)
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_GO_TO_ADDR_LEN-1
+        data_buf[1] = COMMAND_BL_GO_TO_ADDR
+        data_buf[2] = word_to_byte(go_address, 1, 1)
+        data_buf[3] = word_to_byte(go_address, 2, 1)
+        data_buf[4] = word_to_byte(go_address, 3, 1)
+        data_buf[5] = word_to_byte(go_address, 4, 1)
         crc32       = get_crc(data_buf, COMMAND_BL_GO_TO_ADDR_LEN-4)
-        data_buf[7] = word_to_byte(crc32, 1, 1)
-        data_buf[8] = word_to_byte(crc32, 2, 1)
-        data_buf[9] = word_to_byte(crc32, 3, 1)
-        data_buf[10] = word_to_byte(crc32, 4, 1)
+        data_buf[6] = word_to_byte(crc32, 1, 1)
+        data_buf[7] = word_to_byte(crc32, 2, 1)
+        data_buf[8] = word_to_byte(crc32, 3, 1)
+        data_buf[9] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -425,9 +433,9 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
     elif(command == 7):
         #print("\n   Command == > BL_FLASH_ERASE") this line is for manual debugging
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_FLASH_ERASE_LEN-1
-        data_buf[2] = COMMAND_BL_FLASH_ERASE
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_FLASH_ERASE_LEN-1
+        data_buf[1] = COMMAND_BL_FLASH_ERASE
         # sector_num = input("\n   Enter sector number(0-7 or 0xFF) here :")  # learn about data validation
         sector_num = additional_par["sector_number"]
         sector_num = int(sector_num, 16)
@@ -437,14 +445,14 @@ def decode_menu_command_code(controller_name, command, additional_par):
             nsec = int(nsec, 16)
             # nsec = int(input("\n   Enter number of sectors to erase(max 8) here :"))
 
-        data_buf[3]= sector_num
-        data_buf[4]= nsec
+        data_buf[2]= sector_num
+        data_buf[3]= nsec
 
         crc32       = get_crc(data_buf, COMMAND_BL_FLASH_ERASE_LEN-4)
-        data_buf[5] = word_to_byte(crc32, 1, 1)
-        data_buf[6] = word_to_byte(crc32, 2, 1)
-        data_buf[7] = word_to_byte(crc32, 3, 1)
-        data_buf[8] = word_to_byte(crc32, 4, 1)
+        data_buf[4] = word_to_byte(crc32, 1, 1)
+        data_buf[5] = word_to_byte(crc32, 2, 1)
+        data_buf[6] = word_to_byte(crc32, 3, 1)
+        data_buf[7] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -460,7 +468,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         bytes_so_far_sent = 0
         len_to_read=0
         base_mem_address=0
-        data_buf[0] = controller_name
+        #data_buf[0] = controller_name
         data_buf[1] = COMMAND_BL_MEM_WRITE
 
         #First get the total number of bytes in the .bin file.
@@ -535,7 +543,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
         sector_details=0
         for x in range(total_sector):
             #sector_numbers[x]=int(input("\n   Enter sector number[{0}]: ".format(x+1) ))
-            sector_numbers[x] = int(additional_par["list_of_sector_numbers"]["x"].format(x+1)) #???
+            sector_numbers[x] = int(additional_par["list_of_sector_numbers"][x].format(x+1)) #???
             sector_details = sector_details | (1 << sector_numbers[x])
 
         #print("Sector details",sector_details)
@@ -551,16 +559,16 @@ def decode_menu_command_code(controller_name, command, additional_par):
             #print("\n   This feature is currently not supported !")
             return
 
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_EN_R_W_PROTECT_LEN-1
-        data_buf[2] = COMMAND_BL_EN_R_W_PROTECT
-        data_buf[3] = sector_details
-        data_buf[4] = mode
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_EN_R_W_PROTECT_LEN-1
+        data_buf[1] = COMMAND_BL_EN_R_W_PROTECT
+        data_buf[2] = sector_details
+        data_buf[3] = mode
         crc32       = get_crc(data_buf, COMMAND_BL_EN_R_W_PROTECT_LEN-4)
-        data_buf[5] = word_to_byte(crc32, 1, 1)
-        data_buf[6] = word_to_byte(crc32, 2, 1)
-        data_buf[7] = word_to_byte(crc32, 3, 1)
-        data_buf[8] = word_to_byte(crc32, 4, 1)
+        data_buf[4] = word_to_byte(crc32, 1, 1)
+        data_buf[5] = word_to_byte(crc32, 2, 1)
+        data_buf[6] = word_to_byte(crc32, 3, 1)
+        data_buf[7] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -575,15 +583,15 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
     elif(command == 11):
         #print("\n   Command == > COMMAND_BL_READ_SECTOR_P_STATUS")
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1
-        data_buf[2] = COMMAND_BL_READ_SECTOR_P_STATUS
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1
+        data_buf[1] = COMMAND_BL_READ_SECTOR_P_STATUS
 
         crc32       = get_crc(data_buf, COMMAND_BL_READ_SECTOR_P_STATUS_LEN-4)
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -598,14 +606,14 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
     elif(command == 13):
         #print("\n   Command == > COMMAND_BL_DIS_R_W_PROTECT")
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_DIS_R_W_PROTECT_LEN-1
-        data_buf[2] = COMMAND_BL_DIS_R_W_PROTECT
+        #data_buf[0] = controller_name
+        data_buf[2] = COMMAND_BL_DIS_R_W_PROTECT_LEN-1
+        data_buf[3] = COMMAND_BL_DIS_R_W_PROTECT
         crc32       = get_crc(data_buf, COMMAND_BL_DIS_R_W_PROTECT_LEN-4)
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[4] = word_to_byte(crc32, 1, 1)
+        data_buf[5] = word_to_byte(crc32, 2, 1)
+        data_buf[6] = word_to_byte(crc32, 3, 1)
+        data_buf[7] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
@@ -616,14 +624,14 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
     elif(command == 14):
         #print("\n   Command == > COMMAND_BL_MY_NEW_COMMAND ")
-        data_buf[0] = controller_name
-        data_buf[1] = COMMAND_BL_MY_NEW_COMMAND_LEN-1
-        data_buf[2] = COMMAND_BL_MY_NEW_COMMAND
+        #data_buf[0] = controller_name
+        data_buf[0] = COMMAND_BL_MY_NEW_COMMAND_LEN-1
+        data_buf[1] = COMMAND_BL_MY_NEW_COMMAND
         crc32       = get_crc(data_buf, COMMAND_BL_MY_NEW_COMMAND_LEN-4)
-        data_buf[3] = word_to_byte(crc32, 1, 1)
-        data_buf[4] = word_to_byte(crc32, 2, 1)
-        data_buf[5] = word_to_byte(crc32, 3, 1)
-        data_buf[6] = word_to_byte(crc32, 4, 1)
+        data_buf[2] = word_to_byte(crc32, 1, 1)
+        data_buf[3] = word_to_byte(crc32, 2, 1)
+        data_buf[4] = word_to_byte(crc32, 3, 1)
+        data_buf[5] = word_to_byte(crc32, 4, 1)
 
         Write_to_serial_port(data_buf[0], 1)
 
