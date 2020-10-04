@@ -3,6 +3,7 @@ import struct
 import os
 import sys
 import glob
+import functions
 
 Flash_HAL_OK                                        = 0x00
 Flash_HAL_ERROR                                     = 0x01
@@ -157,9 +158,11 @@ def Write_to_serial_port(value, *length):
         if (verbose_mode):
             value = bytearray(data)
             #print("   "+hex(value[0]), end='')
-            print("   "+"0x{:02x}".format(value[0]), end=' ')
+            #print("   "+"0x{:02x}".format(value[0]), end=' ')
+            functions.print_nevo("   "+"0x{:02x}".format(value[0]), end=' ')
         if(mem_write_active and (not verbose_mode)):
-                print("#", end=' ')
+                #print("#", end=' ')
+                functions.print_nevo("#", end=' ')
         ser.write(data)
 
 
@@ -664,7 +667,8 @@ def read_bootloader_reply(command_code):
         if (a_array[0]== 0xA5):
             #CRC of last command was good .. received ACK and "len to follow"
             len_to_follow=a_array[1]
-            print("\n   CRC : SUCCESS Len :",len_to_follow)
+            #print("\n   CRC : SUCCESS Len :",len_to_follow)
+            functions.print_nevo("\n   CRC : SUCCESS Len :",len_to_follow)
             #print("command_code:",hex(command_code))
             if (command_code) == COMMAND_BL_GET_VER :
                 process_COMMAND_BL_GET_VER(len_to_follow)
@@ -700,16 +704,19 @@ def read_bootloader_reply(command_code):
                 process_COMMAND_BL_MY_NEW_COMMAND(len_to_follow)
 
             else:
-                print("\n   Invalid command code\n")
+                #print("\n   Invalid command code\n")
+                functions.print_nevo("\n   Invalid command code\n")
 
             ret_value = 0
 
         elif a_array[0] == 0x7F:
             #CRC of last command was bad .. received NACK
-            print("\n   CRC: FAIL \n")
+            #print("\n   CRC: FAIL \n")
+            functions.print_nevo("\n   CRC: FAIL \n")
             ret_value= -1
     else:
-        print("\n   Timeout : Bootloader not responding")
+        #print("\n   Timeout : Bootloader not responding")
+        functions.print_nevo("\n   Timeout : Bootloader not responding",',damm...')
 
     return ret_value
 

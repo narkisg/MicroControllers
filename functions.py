@@ -1,7 +1,6 @@
 from STM32_Programmer_V1 import *
 import json
 
-
 # ============== functions ============== #
 
 my_username = ""
@@ -18,6 +17,7 @@ def init_my_profile():
 
     global my_authorization
     my_authorization = ""
+
 
 def do_command(port_name, controller_name, command_No, additional_par):
     result = execute_command(port_name, controller_name, command_No, additional_par)
@@ -100,7 +100,7 @@ def arbitrator(username, password):
 def get_controllers_list():
     output = []
     for i in range(24):
-        controller = 'controller'+str(i)
+        controller = 'controller' + str(i)
         output.append(controller)
     return output
 
@@ -117,10 +117,6 @@ def get_commands_list():
 
 def get_ports_list():
     return serial_ports()
-    # with open('data.txt') as dta:
-    # data = json.load(dta)
-    # output = data['comports']
-    # return output
 
 
 def get_users_list():
@@ -144,11 +140,12 @@ def get_number_of_users():
 def exit_system():
     raise SystemExit
 
+
 # checks that username and password is not in use
 # add new user to data base
 def create_new_user(new_username, new_password, new_author_code):
-    #if my_authorization != 3:
-        #return -1  # not suppose to happen
+    if my_authorization != 3:
+        return -1  # not suppose to happen
     output = -1
     u_n_c = check_user_name(new_username)  # for user name check- 0 if the name not in list, 1 if it is
     p_w_c = check_password(new_password)  # for password check 0 if the password not in list, 1 if it is
@@ -174,8 +171,8 @@ def create_new_user(new_username, new_password, new_author_code):
 
 
 def delete_user(username):
-    #if my_authorization != 3:
-        #return -1  # not suppose to happen
+    if my_authorization != 3:
+        return -1  # not suppose to happen
     output = 0
     u_n_c = check_user_name(username)
     if u_n_c == 0:
@@ -199,8 +196,8 @@ def delete_user(username):
 
 
 def change_user_authorization(username, new_author_code):
-    #if my_authorization != 3:
-        #return -1  # not suppose to happen
+    if my_authorization != 3:
+        return -1  # not suppose to happen
     output = 0
     with open('database.json', 'r+') as f:
         data = json.load(f)
@@ -218,8 +215,8 @@ def change_user_authorization(username, new_author_code):
 
 
 def change_user_name(username, new_user_name):
-    # if my_authorization != 3:
-        # return -1  # not suppose to happen
+    if my_authorization != 3:
+        return -1  # not suppose to happen
     output = 0
     with open('database.json', 'r+') as f:
         data = json.load(f)
@@ -237,8 +234,8 @@ def change_user_name(username, new_user_name):
 
 
 def change_user_password(username, new_password):
-    # if my_authorization != 3:
-        # return -1  # not suppose to happen
+    if my_authorization != 3:
+        return -1  # not suppose to happen
     output = 0
     with open('database.json', 'r+') as f:
         data = json.load(f)
@@ -255,6 +252,10 @@ def change_user_password(username, new_password):
     return output
 
 
+def print_nevo(result, end):
+    print(result, end)
+
+
 def trying():
     with open('database.json', 'r+') as f:
         data = json.load(f)
@@ -264,17 +265,3 @@ def trying():
         f.write(data)
         f.truncate()
     f.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-

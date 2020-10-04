@@ -22,6 +22,11 @@ def handle_message(user_name_deatils):  # transfer to switch-case function
     data = json.loads(data)
     username = data["username"]
     password = data["password"]
+    #print(type(password))
+    #print(username)
+    #print(password)
+    #print(type(data))
+    #print(data)
     permission = arbitrator(username, password)
     if permission == -3:
         emit('login_response', {'success': 'false', 'message': 'invalid_username_and_password'})
@@ -159,6 +164,9 @@ def handle_message(username_to_del):
         emit('delete_user_response', {'success': 'true', 'message': 'user_is_out_of_the_system'})
 
 
+def results():
+    emit('',{'':'','':''})
+
 @socketio.on('change_user_authorization')
 def handle_message(details):
     data = json.dumps(details)
@@ -227,6 +235,5 @@ def handle_message():
 
 if __name__ == '__main__':
     init_my_profile()
-    do_command('COM3','','0','')
     print('running on port 5000')
     socketio.run(app)
