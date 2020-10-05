@@ -6,7 +6,8 @@ import json
 my_username = ""
 my_password = ""
 my_authorization = ""
-
+process_reply = []
+bootloader_reply = []
 
 def init_my_profile():
     global my_username
@@ -17,6 +18,12 @@ def init_my_profile():
 
     global my_authorization
     my_authorization = ""
+
+    global process_reply
+    process_reply = []
+
+    global bootloader_reply
+    bootloader_reply = []
 
 
 def do_command(port_name, controller_name, command_No, additional_par):
@@ -252,8 +259,12 @@ def change_user_password(username, new_password):
     return output
 
 
-def print_nevo(result, end):
-    print(result, end)
+def print_process_nevo(result):
+    functions.process_reply.append(result)
+
+
+def print_bootloader_nevo(result):
+        functions.bootloader_reply.append(result)
 
 
 def trying():
@@ -265,3 +276,4 @@ def trying():
         f.write(data)
         f.truncate()
     f.close()
+

@@ -159,10 +159,10 @@ def Write_to_serial_port(value, *length):
             value = bytearray(data)
             #print("   "+hex(value[0]), end='')
             #print("   "+"0x{:02x}".format(value[0]), end=' ')
-            functions.print_nevo("   "+"0x{:02x}".format(value[0]), end=' ')
+            functions.print_process_nevo("0x{:02x}".format(value[0]))
         if(mem_write_active and (not verbose_mode)):
                 #print("#", end=' ')
-                functions.print_nevo("#", end=' ')
+                functions.print_process_nevo("#")
         ser.write(data)
 
 
@@ -668,9 +668,9 @@ def read_bootloader_reply(command_code):
             #CRC of last command was good .. received ACK and "len to follow"
             len_to_follow=a_array[1]
             #print("\n   CRC : SUCCESS Len :",len_to_follow)
-            functions.print_nevo("\n   CRC : SUCCESS Len :",len_to_follow)
+            functions.print_bootloader_nevo("CRC:_SUCCESS,Len:_"+str(len_to_follow))
             #print("command_code:",hex(command_code))
-            if (command_code) == COMMAND_BL_GET_VER :
+            if (command_code) == COMMAND_BL_GET_VER:
                 process_COMMAND_BL_GET_VER(len_to_follow)
 
             elif(command_code) == COMMAND_BL_GET_HELP:
@@ -705,18 +705,18 @@ def read_bootloader_reply(command_code):
 
             else:
                 #print("\n   Invalid command code\n")
-                functions.print_nevo("\n   Invalid command code\n")
+                functions.print_bootloader_nevo("Invalid_command_code")
 
             ret_value = 0
 
         elif a_array[0] == 0x7F:
             #CRC of last command was bad .. received NACK
             #print("\n   CRC: FAIL \n")
-            functions.print_nevo("\n   CRC: FAIL \n")
+            functions.print_bootloader_nevo("CRC_FAIL")
             ret_value= -1
     else:
         #print("\n   Timeout : Bootloader not responding")
-        functions.print_nevo("\n   Timeout : Bootloader not responding",',damm...')
+        functions.print_bootloader_nevo("Timeout:_Bootloader_not_responding")
 
     return ret_value
 

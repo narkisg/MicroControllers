@@ -1,12 +1,12 @@
 
 from flask import Flask
 from flask_socketio import SocketIO, emit
-import functions
+#import functions
 from functions import *
 import json
 
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
-
+from engineio.async_drivers import gevent
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'secret!'
@@ -99,20 +99,62 @@ def handle_message(details):  # transfer to switch-case function
     if my_authorization == 1 & command_No != 8:
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
-        result = do_command(port_name, controller_name, command_No, additional_par)
-        if result == 0x00:
-            emit('execute_command_response', {'success': 'true', 'message': 'Flash_HAL_OK'})
-        elif result == 0x01:
-            emit('execute_command_response', {'success': 'false', 'message': 'Flash_HAL_ERROR'})
-        elif result == 0x02:
-            emit('execute_command_response', {'success': 'false', 'message': 'Flash_HAL_BUSY'})
-        elif result == 0x03:
-            emit('execute_command_response', {'success': 'false', 'message':  'Flash_HAL_TIMEOUT'})
-        elif result == 0x04:
-            emit('execute_command_response', {'success': 'false', 'message': 'Flash_HAL_INV_ADDR'})
-        elif result == -2:
-            emit('execute_command_response', {'success': 'false', 'message': 'TimeOut:_No_response_from_the_bootloader,_reset_the_board_and_try_Again_!'})
+        do_command(port_name, controller_name, command_No, additional_par)
+        bootloader_message = json.dumps(functions.bootloader_reply)
+        set1 = [1,2,3,4,11,13,14]
+        if command_No in set1:
+            emit1()
+        elif command_No == 5: #go to addr
+            emit2()
+        elif command_No == 7: # BL_FLASH_ERASE
+            emit3()
+        elif command_No == 8: #BL_MEM_WRITE
+            emit4()
+        elif command_No == 9: #BL_EN_R_W_PROTECT
+            emit5()
+        if 'Invalid_command_code' in functions.bootloader_reply:
+            emit('execute_command_bootloader_response', {'success':'false', 'message': 'Invalid_command_code'})
+        elif 'CRC_FAIL' in functions.bootloader_reply:
+            emit('execute_command_bootloader_response', {'success': 'false', 'message': 'CRC_FAIL'})
+        elif 'Timeout' in functions.bootloader_reply:
+            emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
+        elif 'CRC:_SUCCESS' in functions.bootloader_reply:
+            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
 
+
+#------------------- assistance functions for execute command, for emitting the correct message -----------
+def emit1():
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'CRC': functions.process_reply[2]})
+
+def emit2():
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'memory_address(LE)': functions.process_reply[2],
+                                              'CRC': functions.process_reply[3]})
+
+def emit3():
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'sector_number': functions.process_reply[2],
+                                              'number_of_sectors': functions.process_reply[3],
+                                              'CRC': functions.process_reply[4]})
+
+def emit4():
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'base_memory_address(LE)': functions.process_reply[2],
+                                              'payload_length': functions.process_reply[3],
+                                              'payload': functions.process_reply[4],
+                                              'CRC': functions.process_reply[5]})
+
+def emit5():
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'sector_details': functions.process_reply[2],
+                                              'protection_mode': functions.process_reply[3],
+                                              'CRC': functions.process_reply[4]})
 
 # ----- user management functions ----- #
 
@@ -163,9 +205,6 @@ def handle_message(username_to_del):
     else:
         emit('delete_user_response', {'success': 'true', 'message': 'user_is_out_of_the_system'})
 
-
-def results():
-    emit('',{'':'','':''})
 
 @socketio.on('change_user_authorization')
 def handle_message(details):
@@ -235,5 +274,11 @@ def handle_message():
 
 if __name__ == '__main__':
     init_my_profile()
-    print('running on port 5000')
+    do_command('COM3','','9', {'number_of_sectors_to_protect': '2', 'list_of_sector_numbers': ['0','1'], 'mode':'1'})
+    print('process')
+    print(functions.process_reply[3])
+    print('bootloader')
+    print(functions.bootloader_reply[0])
+    #print('running on port 5000')
     socketio.run(app)
+
