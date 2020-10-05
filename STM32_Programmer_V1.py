@@ -51,6 +51,9 @@ def calc_file_len():
     size = os.path.getsize("user_app.bin")
     return size
 
+def nevo_calc_file_len(file):
+    size = os.path.getsize(file)
+    return size
 
 def open_the_file():
     global bin_file
@@ -58,6 +61,11 @@ def open_the_file():
     #read = bin_file.read()
     #global file_contents = bytearray(read)
 
+def nevo_open_the_file(file):
+    global bin_file
+    bin_file = open(file, 'rb')
+    #read = bin_file.read()
+    #global file_contents = bytearray(read)
 
 def read_the_file():
     pass
@@ -475,10 +483,13 @@ def decode_menu_command_code(controller_name, command, additional_par):
         data_buf[1] = COMMAND_BL_MEM_WRITE
 
         #First get the total number of bytes in the .bin file.
-        t_len_of_file = calc_file_len()
+        #t_len_of_file = calc_file_len()
+        t_len_of_file = nevo_calc_file_len(additional_par["file_name"])
+
 
         #keep opening the file
-        open_the_file()
+        #open_the_file()
+        nevo_open_the_file(additional_par["file_name"])
 
         bytes_remaining = t_len_of_file - bytes_so_far_sent
 

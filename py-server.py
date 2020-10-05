@@ -22,12 +22,8 @@ def handle_message(user_name_deatils):  # transfer to switch-case function
     data = json.loads(data)
     username = data["username"]
     password = data["password"]
-    #print(type(password))
-    #print(username)
-    #print(password)
-    #print(type(data))
-    #print(data)
     permission = arbitrator(username, password)
+    permission = int(permission, 10)
     if permission == -3:
         emit('login_response', {'success': 'false', 'message': 'invalid_username_and_password'})
     elif permission == -2:
@@ -66,8 +62,10 @@ def handle_message():
 # activate after pressing the button to show the available commands
 @socketio.on('get_list_of_commands')
 def handle_message():
+    print('a')
     commandslist = get_commands_list()
-    emit(json.dumps(commandslist))
+    print(commandslist)
+    emit('list_of_commands_response', json.dumps(commandslist))
 
 
 @socketio.on('get_list_of_users')
@@ -119,7 +117,7 @@ def handle_message(details):  # transfer to switch-case function
         elif 'Timeout' in functions.bootloader_reply:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply:
-            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
+            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message[0]})
 
 
 #------------------- assistance functions for execute command, for emitting the correct message -----------
@@ -274,11 +272,6 @@ def handle_message():
 
 if __name__ == '__main__':
     init_my_profile()
-    do_command('COM3','','9', {'number_of_sectors_to_protect': '2', 'list_of_sector_numbers': ['0','1'], 'mode':'1'})
-    print('process')
-    print(functions.process_reply[3])
-    print('bootloader')
-    print(functions.bootloader_reply[0])
-    #print('running on port 5000')
+    print('running on port 5000')
     socketio.run(app)
 
