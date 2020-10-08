@@ -787,6 +787,7 @@ def execute_command(port_name, controller_name, command_code, additional_par):
     if ret < 0:
         raise SystemExit
     result = decode_menu_command_code(controller_name, command_code, additional_par)
+    print(result)
     purge_serial_port()
     return result
 

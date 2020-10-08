@@ -15,16 +15,24 @@ def permission_1():
         if command != 8 and command != 0 and command != 16 and command != -1:
             print('unauthorized command maddafacka!')
         elif command == 0:
-            do_command("", "", 0, "")
+            do_command("", "", '0', "")
+            print("\n process arguments:")
+            print(functions.process_reply)
+            print("\n bootloader reply:")
+            print(functions.bootloader_reply)
         elif command == 16:
             my_profile()
         elif command == -1:
             break
         else:
             port = str(input("\n insert your port name here :"))
-            cont = str(input("\n from controller 1-1000,\n insert your controller name here :"))
+            cont = str(("\n from controller 1-1000,\n insert your controller name here :"))
             file = str(input("\n insert your the directory name here :"))
-            do_command(port, cont, command, file, "")
+            do_command(port, cont, str(command), file, "")
+            print("\n process arguments:")
+            print(functions.process_reply)
+            print("\n bootloader reply:")
+            print(functions.bootloader_reply)
 
 def permission_2():
     while True:
@@ -55,37 +63,63 @@ def permission_2():
         elif command == -1:
             break
         elif command == 0:
-            do_command("", "", 0, "")
+            do_command("", "", '0', "")
+            print("\n process arguments:")
+            print(functions.process_reply)
+            print("\n bootloader reply:")
+            print(functions.bootloader_reply)
         elif command == 15:
             print('unauthorized command maddafacka!')
         elif command == 16:
             my_profile()
         else:
             port = str(input("\n insert your port name here :"))
-            cont = str(input("\n from controller 1-1000,\n insert your controller name here :"))
-            additional_par = ""
-            if command == 5 or command == 8:
+            cont = str(("\n from controller 1-1000,\n insert your controller name here :"))
+            if command == 5:
                 address = str(input("\n this command demands address.\n please insert your address here: "))
                 additional_par = {"address": address}
-            do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
 
-            if command == 7:
+            elif command == 7:
                 print("\n this command demands more info from user\n")
                 sector_number = str(input("\n insert sector number here: (0-8 decimal)"))
                 nsec = str(input("\n insert number of sectors to erase here: (0-7 decimal)"))
                 additional_par = {"sector number": sector_number, "number of sectors to erase": nsec}
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
+
+            elif command == 8:
+                print("\n this command demands more info from user\n")
+                address = str(input("\n please insert your address here: "))
+                filename = str(input("\n please insert your file name here: "))
+                additional_par = {"address": address, "file_name": filename}
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
+
 
             elif command == 9:
                 print("\n this command demands more info from user\n")
                 total_sector = str(input("\n insert number of sectors to protect here: (0-8 decimal)"))
-                n = int(total_sector, 10)
-                list_of_sector_numbers = list(input('\n insert list of sector numbers,\n'
+                list_of_sector_numbers = list(input('\n insert **LIST** of sector numbers,\n'
                                                     'with' + str(
-                    n) + ' numbers, no intervals (2567...) here: '))
-                additional_par = {"number of sectors to protect": n,
+                    total_sector) + ' numbers, no intervals (2567...) here: '))
+                additional_par = {"number of sectors to protect": total_sector,
                                   "list of sector numbers": list_of_sector_numbers}
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
 
 def permission_3():
     while True:
@@ -119,7 +153,11 @@ def permission_3():
             break
 
         elif command == 0:
-            do_command("", "", 0, "")
+            do_command("COM3", "", '0', "")
+            print("\n process arguments:")
+            print(functions.process_reply)
+            print("\n bootloader reply:")
+            print(functions.bootloader_reply)
 
         elif command == 15:
             user_management()
@@ -128,33 +166,61 @@ def permission_3():
             my_profile()
 
         else:
-            port = input("\n insert your port name here :")
-            cont = input("\n from controller 1-1000,\n insert your controller name here :")
+            port =str(input("\n insert your port name here :"))
+            cont = str(input("\n from controller 1-1000,\n insert your controller name here :"))
             additional_par = ""
-            if command == 5 or command == 8:
-                address = input("\n this command demands address.\n please insert your address here: ")
+            if command == 5:
+                address = str(input("\n this command demands address.\n please insert your address here: "))
                 additional_par = {"address": address}
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
 
             elif command == 7:
                 print("\n this command demands more info from user\n")
                 sector_number = input("\n please insert sector number here: (0-8 decimal)")
                 nsec = str(input("\n insert number of sectors to erase here: (0-7 decimal)"))
                 additional_par = {"sector number": sector_number, "number of sectors to erase": nsec}
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
+
+
+            elif command == 8:
+                print("\n this command demands more info from user\n")
+                address = str(input("\n please insert your address here: "))
+                filename = str(input("\n please insert your file name here: "))
+                additional_par = {"address": address, "file_name": filename}
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
+
 
             elif command == 9:
                 print("\n this command demands more info from user\n")
                 total_sector = str(input("\n insert number of sectors to protect here: (0-8 decimal)"))
-                n = int(total_sector, 10)
-                list_of_sector_numbers = list(input('\n insert list of sector numbers,\n'
+                list_of_sector_numbers = list(input('\n insert **LIST** of sector numbers,\n'
                                                     'with' + str(
-                    n) + ' numbers, no intervals (2567...) here: '))
-                additional_par = {"number of sectors to protect": n,
+                                                     total_sector) + ' numbers, no intervals (2567...) here: '))
+                additional_par = {"number of sectors to protect": total_sector,
                                   "list of sector numbers": list_of_sector_numbers}
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
             else:
-                do_command(port, cont, command, additional_par)
+                do_command(port, cont, str(command), additional_par)
+                print("\n process arguments:")
+                print(functions.process_reply)
+                print("\n bootloader reply:")
+                print(functions.bootloader_reply)
 
 def user_management():
     while True:
@@ -185,8 +251,8 @@ def create_user():
             break
         new_username = str(input("\n please insert new username here: "))
         new_password = str(input("\n please insert new password here: "))
-        new_authorization = int(input("\n please insert new authorization code here: "))
-        if new_authorization != 1 and new_authorization != 2 and new_authorization != 3:
+        new_authorization = str(input("\n please insert new authorization code here: "))
+        if new_authorization != '1' and new_authorization != '2' and new_authorization != '3':
             print('illegal authorization code')
             break
         result = create_new_user(new_username, new_password, new_authorization)
@@ -283,9 +349,9 @@ def change_us_authorization():
                 break
 
 def my_profile():
-    print('\n my username is: ' + str(global_vars_setting.my_user_name))
-    print('\n my password is: ' + str(global_vars_setting.my_password))
-    print('\n my authorization: ' + str(global_vars_setting.my_authorization))
+    print('\n my username is: ' + str(functions.my_username))
+    print('\n my password is: ' + str(functions.my_password))
+    print('\n my authorization: ' + str(functions.my_authorization))
 
 def is_legal(command):
     a = ["-1"]
@@ -298,7 +364,7 @@ def is_legal(command):
 
 
 # ======================================== STARTS FROM HERE ======================================== #
-global_vars_setting.init1()
+functions.init_my_profile()
 while True:
     print("\n +==========================================+")
     print(" |           test generator                 |")
@@ -308,6 +374,7 @@ while True:
     username = str(input("\n insert your username here :"))
     password = str(input("\n insert your password here :"))
     permission = arbitrator(username, password)
+    permission = int(permission, 10)
     if permission == -3:
         print('\n #####Sorry!  invalid username and password  #####')
     elif permission == -2:

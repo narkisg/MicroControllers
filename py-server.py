@@ -49,20 +49,21 @@ def handle_message(user_name_deatils):  # transfer to switch-case function
 @socketio.on('get_list_of_ports')
 def handle_message():
     portslist = get_ports_list()
-    emit('list_of_ports', json.dumps(portslist))
+    print(portslist)
+    emit('list_of_ports_response', json.dumps(portslist))
 
 
 # activate after pressing the button to show the available controllers
 @socketio.on('get_list_of_controllers')
 def handle_message():
     controllerlist = get_controllers_list()
-    emit('list_of_controllers', json.dumps(controllerlist))
+    print(controllerlist)
+    emit('list_of_controllers_response', json.dumps(controllerlist))
 
 
 # activate after pressing the button to show the available commands
 @socketio.on('get_list_of_commands')
 def handle_message():
-    print('a')
     commandslist = get_commands_list()
     print(commandslist)
     emit('list_of_commands_response', json.dumps(commandslist))
@@ -71,7 +72,8 @@ def handle_message():
 @socketio.on('get_list_of_users')
 def handle_message():
     userslist = get_users_list()
-    emit(json.dumps(userslist))
+    print(userslist)
+    emit('list_of_users_response', json.dumps(userslist))
 
 
 # activate after choosing port, controller, command, and update(if necessary)
@@ -102,13 +104,13 @@ def handle_message(details):  # transfer to switch-case function
         set1 = [1,2,3,4,11,13,14]
         if command_No in set1:
             emit1()
-        elif command_No == 5: #go to addr
+        elif command_No == 5:
             emit2()
-        elif command_No == 7: # BL_FLASH_ERASE
+        elif command_No == 7:
             emit3()
-        elif command_No == 8: #BL_MEM_WRITE
+        elif command_No == 8:
             emit4()
-        elif command_No == 9: #BL_EN_R_W_PROTECT
+        elif command_No == 9:
             emit5()
         if 'Invalid_command_code' in functions.bootloader_reply:
             emit('execute_command_bootloader_response', {'success':'false', 'message': 'Invalid_command_code'})
@@ -172,7 +174,7 @@ def handle_message(new_user_details):  # transfer to switch-case function
     data = json.loads(data)
     new_username = data["new_user_name"]
     new_password = data["new_password"]
-    new_author_code = data["authorization_code"]
+    new_author_code = data["new_authorization_code"]
     new_author_code = int(new_author_code, 10)
     if new_author_code != 1 and new_author_code != 2 and new_author_code != 3:
         emit('register_response', {'success': 'false', 'message': 'illegal_authorization_code'})
@@ -215,8 +217,6 @@ def handle_message(details):
     else:
         result = change_user_authorization(username, new_author_code)
         if result == -1:
-            emit('change_authorization_response', {'success': 'false', 'message': 'unauthorized_command'})
-        elif result == -1:
             emit('change_authorization_response', {'success': 'false', 'message': 'unauthorized_command'})
         elif result == 0:
             emit('change_authorization_response', {'success': 'false', 'message': 'user_is_not_in_list'})
@@ -267,6 +267,14 @@ def handle_message():
 @socketio.on('logout_attempt')
 def handle_message():
     raise SystemExit
+
+
+@socketio.on('is_connected')
+def handle_message():
+    if functions.my_authorization == "":
+        emit('is_connected_response', {'success': 'false'})
+    else:
+        emit('is_connected_response', {'success': 'true'})
 
 
 
