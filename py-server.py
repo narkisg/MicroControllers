@@ -97,7 +97,7 @@ def handle_message(details):
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
         result = do_command(port_name, controller_name, command_No, additional_par)
-        if result<0:
+        if result == -10:
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
         bootloader_message = json.dumps(functions.bootloader_reply)
@@ -112,19 +112,19 @@ def handle_message(details):
             emit4()
         elif command_No == '9':
             emit5()
-        if 'Invalid_command_code' in functions.bootloader_reply:
+        if 'Invalid_command_code' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Invalid_command_code'})
-        elif 'CRC_FAIL' in functions.bootloader_reply:
+        elif 'CRC_FAIL' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'CRC_FAIL'})
-        elif 'Timeout' in functions.bootloader_reply:
+        elif 'Timeout' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
-        elif 'CRC:_SUCCESS' in functions.bootloader_reply:
+        elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message[0]})
 
 
 #------------------- assistance functions for execute command, for emitting the correct message -----------
 def emit1():
-    emit('execute_command_process_response', {'length': functions.process_reply[0],
+    emit('execute_command_process_response',  {'length': functions.process_reply[0],
                                               'command_code': functions.process_reply[1],
                                               'CRC': functions.process_reply[2]})
 
@@ -280,7 +280,7 @@ def handle_message():
 
 # ----- logout function ----- #
 
-# activate after pressing the 'Logout' button, and the 'confirm Logout button'
+# activate after pressing the 'Logout' button
 @socketio.on('logout_attempt')
 def handle_message():
     init_my_profile()
@@ -297,5 +297,6 @@ def handle_message():
 if __name__ == '__main__':
     init_my_profile()
     print('running on port 5000')
+    #do_command('COM3','1','3','')
     socketio.run(app)
 

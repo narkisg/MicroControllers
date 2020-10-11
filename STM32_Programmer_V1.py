@@ -557,7 +557,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
     elif(command == 9):
         #print("\n   Command == > BL_EN_R_W_PROTECT")
         #total_sector = int(input("\n   How many sectors do you want to protect ?: "))
-        total_sector = additional_par["number_of_sectors_to_protect"]
+        total_sector = additional_par["total_sector"]
         total_sector = int(total_sector, 10)
         sector_numbers = [0,0,0,0,0,0,0,0]
         sector_details=0
@@ -792,7 +792,7 @@ def execute_command(port_name, controller_name, command_code, additional_par):
     ret = 0
     ret = Serial_Port_Configuration(name)
     if ret < 0:
-        return ret
+        return -10
     result = decode_menu_command_code(controller_name, command_code, additional_par)
     purge_serial_port()
     return result
