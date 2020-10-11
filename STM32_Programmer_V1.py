@@ -490,7 +490,7 @@ def decode_menu_command_code(controller_name, command, additional_par):
 
         #First get the total number of bytes in the .bin file.
         #t_len_of_file = calc_file_len()
-        t_len_of_file = nevo_calc_file_len(additional_par["file_name"])
+        t_len_of_file = nevo_calc_file_len(additional_par['file_name'])
 
 
         #keep opening the file

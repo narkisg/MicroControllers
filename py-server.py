@@ -93,7 +93,7 @@ def handle_message(details):
     #                           command number: "9"
     #                           authorization code: "2"
     #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
-    if functions.my_authorization == '1' and command_No != '8':
+    if (functions.my_authorization == '1' and command_No != '8'):
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
         result = do_command(port_name, controller_name, command_No, additional_par)
