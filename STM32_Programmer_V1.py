@@ -319,12 +319,18 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
     else:
         print("\n   SUCCESS")
 
+# remember to delete
 def add():
     output = []
     for i in range(255):
         output.append(0)
     return output
 
+def convert_from_string(string):
+    output = []
+    for x in string:
+        output.append(x)
+    return output
 
 def decode_menu_command_code(controller_name, command, additional_par):
     ret_value = 0
@@ -555,9 +561,10 @@ def decode_menu_command_code(controller_name, command, additional_par):
         total_sector = int(total_sector, 10)
         sector_numbers = [0,0,0,0,0,0,0,0]
         sector_details=0
+        list_of_sector_numbers = convert_from_string(additional_par['list_of_sector_numbers'])
         for x in range(total_sector):
             #sector_numbers[x]=int(input("\n   Enter sector number[{0}]: ".format(x+1) ))
-            sector_numbers[x] = int(additional_par["list_of_sector_numbers"][x].format(x+1)) #???
+            sector_numbers[x] = int(list_of_sector_numbers[x].format(x+1))
             sector_details = sector_details | (1 << sector_numbers[x])
 
         #print("Sector details",sector_details)
@@ -785,9 +792,8 @@ def execute_command(port_name, controller_name, command_code, additional_par):
     ret = 0
     ret = Serial_Port_Configuration(name)
     if ret < 0:
-        raise SystemExit
+        return ret
     result = decode_menu_command_code(controller_name, command_code, additional_par)
-    print(result)
     purge_serial_port()
     return result
 

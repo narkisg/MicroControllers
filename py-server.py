@@ -49,7 +49,6 @@ def handle_message(user_name_deatils):  # transfer to switch-case function
 @socketio.on('get_list_of_ports')
 def handle_message():
     portslist = get_ports_list()
-    print(portslist)
     emit('list_of_ports_response', json.dumps(portslist))
 
 
@@ -57,7 +56,6 @@ def handle_message():
 @socketio.on('get_list_of_controllers')
 def handle_message():
     controllerlist = get_controllers_list()
-    print(controllerlist)
     emit('list_of_controllers_response', json.dumps(controllerlist))
 
 
@@ -65,14 +63,12 @@ def handle_message():
 @socketio.on('get_list_of_commands')
 def handle_message():
     commandslist = get_commands_list()
-    print(commandslist)
     emit('list_of_commands_response', json.dumps(commandslist))
 
 
 @socketio.on('get_list_of_users')
 def handle_message():
     userslist = get_users_list()
-    print(userslist)
     emit('list_of_users_response', json.dumps(userslist))
 
 
@@ -80,14 +76,15 @@ def handle_message():
 # and pressing the update program button
 # port_name, controller_name, command_No, additional_par
 @socketio.on('execute_command')
-def handle_message(details):  # transfer to switch-case function
+def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
     controller_name = data["controller_name"]
-    command_No = data["command_number"]
+    command_name = data["command_name"]
+    command_No = convert_to_number(command_name)  # input as the command nickname, output as a string number
     additional_par = data["additional_parameters"]
-    # the additional parameters is a json list of all the additional parameters the current function demands,
+    # the additional parameters is a dictionary of all the additional parameters the current function demands,
     # for example, if some command demands additional parameters than the global fields(port name, cont num...),
     # like number of sectors, or list of something or file address to upload from directory.
     # example for json file with additional parameters-
@@ -95,25 +92,28 @@ def handle_message(details):  # transfer to switch-case function
     #                           controller name: "controller_1"
     #                           command number: "9"
     #                           authorization code: "2"
-    #                           additional parameters: ["6", "00x4", "["3","7","0"]", "user_app.bin"]}
-    if my_authorization == 1 & command_No != 8:
+    #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
+    if functions.my_authorization == '1' and command_No != '8':
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
-        do_command(port_name, controller_name, command_No, additional_par)
+        result = do_command(port_name, controller_name, command_No, additional_par)
+        if result<0:
+            emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
+            return
         bootloader_message = json.dumps(functions.bootloader_reply)
-        set1 = [1,2,3,4,11,13,14]
+        set1 = ['1', '2', '3', '4', '11', '13', '14']
         if command_No in set1:
             emit1()
-        elif command_No == 5:
+        elif command_No == '5':
             emit2()
-        elif command_No == 7:
+        elif command_No == '7':
             emit3()
-        elif command_No == 8:
+        elif command_No == '8':
             emit4()
-        elif command_No == 9:
+        elif command_No == '9':
             emit5()
         if 'Invalid_command_code' in functions.bootloader_reply:
-            emit('execute_command_bootloader_response', {'success':'false', 'message': 'Invalid_command_code'})
+            emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Invalid_command_code'})
         elif 'CRC_FAIL' in functions.bootloader_reply:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'CRC_FAIL'})
         elif 'Timeout' in functions.bootloader_reply:
@@ -156,6 +156,23 @@ def emit5():
                                               'protection_mode': functions.process_reply[3],
                                               'CRC': functions.process_reply[4]})
 
+def convert_to_number(command_name):
+    counter = 1
+    list_of_commands = get_commands_list()
+    for x in list_of_commands:
+        if x['name'] == command_name:
+            return str(counter)
+        counter += 1
+
+
+@socketio.on('get_fields')
+def handle_message(command_name):
+    data = json.dumps(command_name)
+    data = json.loads(data)
+    name = data['name']
+    fields = get_command_fields(name)
+    emit('get_fields_response', json.dumps(fields))
+
 # ----- user management functions ----- #
 
 # activate after pressing the user management button- only for administrator
@@ -181,7 +198,7 @@ def handle_message(new_user_details):  # transfer to switch-case function
     else:
         result = create_new_user(new_username, new_password, new_author_code)
         if result == -1:
-            emit('register_user_response', {'success': 'false', 'message': 'unauthorized_command'})
+            emit('register_response', {'success': 'false', 'message': 'unauthorized_command'})
         elif result == 0:
             emit('register_response', {'success': 'false', 'message': 'username_already_in_use'})
         elif result == 1:
@@ -210,9 +227,9 @@ def handle_message(username_to_del):
 def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
-    username = data["username"]
+    username = data["username"]  # the one you want to change
     new_author_code = data["new_authorization"]
-    if new_author_code != 1 and new_author_code != 2 and new_author_code != 3:
+    if new_author_code != '1' and new_author_code != '2' and new_author_code != '3':
         emit('change_authorization_response', {'success': 'false', 'message': 'illegal_authorization_code'})
     else:
         result = change_user_authorization(username, new_author_code)
@@ -228,7 +245,7 @@ def handle_message(details):
 def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
-    username = data["username"]
+    username = data["username"]   # the one you want to change
     new_user_name = data["new_username"]
     result = change_user_name(username, new_user_name)
     if result == -1:
@@ -243,7 +260,7 @@ def handle_message(details):
 def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
-    username = data["username"]
+    username = data["username"]  # the one you want to change
     new_password = data["new_password"]
     result = change_user_password(username, new_password)
     if result == -1:
@@ -258,7 +275,7 @@ def handle_message(details):
 def handle_message():
     my_profile = {'username': functions.my_username,
                   'password': functions.my_password, 'authorization': functions.my_authorization}
-    emit(json.dumps(my_profile))
+    emit('my_profile_response', json.dumps(my_profile))
 
 
 # ----- logout function ----- #
@@ -266,7 +283,7 @@ def handle_message():
 # activate after pressing the 'Logout' button, and the 'confirm Logout button'
 @socketio.on('logout_attempt')
 def handle_message():
-    raise SystemExit
+    init_my_profile()
 
 
 @socketio.on('is_connected')
@@ -275,7 +292,6 @@ def handle_message():
         emit('is_connected_response', {'success': 'false'})
     else:
         emit('is_connected_response', {'success': 'true'})
-
 
 
 if __name__ == '__main__':

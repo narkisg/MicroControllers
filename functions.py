@@ -113,12 +113,35 @@ def get_controllers_list():
 
 
 def get_commands_list():
-    if my_authorization == 1:
-        output = ['MEM_WRITE']
+    if my_authorization == '1':
+        output = [{'name': 'BL_MEM_WRITE', 'fields': []}]
     else:
-        output = [{'name': 'BL_GET_VER', "fields": ["address", "sectroer"]}, 'BL_GET_HLP', 'BL_GET_CID', 'BL_GET_RDP_STATUS', 'BL_GO_TO_ADDR',
-                  'BL_FLASH_MASS_ERASE', 'BL_FLASH_ERASE', 'BL_MEM_WRITE', 'BL_EN_R_W_PROTECT',
-                  'BL_MEM_READ', 'BL_READ_SECTOR_P_STATUS', 'BL_OTP_READ', 'BL_DIS_R_W_PROTECT', 'BL_MY_NEW_COMMAND']
+        output = [{'name': 'BL_GET_VER', 'fields': []}, {'name': 'BL_GET_HLP', 'fields': []},
+                  {'name': 'BL_GET_CID', 'fields': []}, {'name': 'BL_GET_RDP_STATUS', 'fields': []},
+                  {'name': 'BL_GO_TO_ADDR', 'fields': ['address']}, {'name': 'BL_FLASH_MASS_ERASE', 'fields': []},
+                  {'name': 'BL_FLASH_ERASE', 'fields': ['sector_number', 'number_of_sectors_to_erase']},
+                  {'name': 'BL_MEM_WRITE', 'fields': ['file_name', 'address']},
+                  {'name': 'BL_EN_R_W_PROTECT', 'fields': ['total_sector', 'list_of_sector_numbers', 'mode']},
+                  {'name': 'BL_MEM_READ', 'fields': []}, {'name': 'BL_READ_SECTOR_P_STATUS', 'fields': []},
+                  {'name': 'BL_OTP_READ', 'fields': []}, {'name': 'BL_DIS_R_W_PROTECT', 'fields': []},
+                  {'name': 'BL_MY_NEW_COMMAND', 'fields': []}]
+    return output
+
+
+def get_command_fields(name):
+    output = {'list': []}
+    if name == 'BL_GO_TO_ADDR':
+        output = {'list': ['address']}
+
+    elif name == 'BL_FLASH_ERASE':
+        output = {'list': ['sector_number', 'number_of_sectors_to_erase']}
+
+    elif name == 'BL_MEM_WRITE':
+        output = {'list': ['file_name', 'address']}
+
+    elif name == 'BL_EN_R_W_PROTECT':
+        output = {'list': ['total_sector', 'list_of_sector_numbers', 'mode']}
+
     return output
 
 
@@ -130,7 +153,7 @@ def get_users_list():
     with open('database.json') as dta:
         output = []
         data = json.load(dta)
-        for x in data.values():
+        for x in data['users']:
             output.append(x['name'])
     return output
 
@@ -139,7 +162,7 @@ def get_number_of_users():
     counter = 0
     with open('database.json') as dta:
         data = json.load(dta)
-        for x in data.values():
+        for x in data['users']:
             counter += 1
     return counter
 
@@ -151,8 +174,8 @@ def exit_system():
 # checks that username and password is not in use
 # add new user to data base
 def create_new_user(new_username, new_password, new_author_code):
-    if my_authorization != '3':
-        return -1  # not suppose to happen
+    #if my_authorization != '3':
+        #return -1  # not suppose to happen
     output = -1
     u_n_c = check_user_name(new_username)  # for user name check- 0 if the name not in list, 1 if it is
     p_w_c = check_password(new_password)  # for password check 0 if the password not in list, 1 if it is
@@ -267,13 +290,8 @@ def print_bootloader_nevo(result):
         functions.bootloader_reply.append(result)
 
 
-def trying():
-    with open('database.json', 'r+') as f:
-        data = json.load(f)
-        data['users'].append({"name": "ziv", "ln": "levi", "author": "17"})
-        data = json.dumps(data)
-        f.seek(0)
-        f.write(data)
-        f.truncate()
-    f.close()
+def trying(a):
+   b = list(a.split(" "))
+   print(b)
+   print(type(b))
 

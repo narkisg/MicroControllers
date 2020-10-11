@@ -208,8 +208,9 @@ def permission_3():
                 list_of_sector_numbers = list(input('\n insert **LIST** of sector numbers,\n'
                                                     'with' + str(
                                                      total_sector) + ' numbers, no intervals (2567...) here: '))
-                additional_par = {"number of sectors to protect": total_sector,
-                                  "list of sector numbers": list_of_sector_numbers}
+                mode = str(input("\n please insert protection mode here (0/1): "))
+                additional_par = {"number_of_sectors_to_protect": total_sector,
+                                  "list_of_sector_numbers": list_of_sector_numbers, "mode": mode}
                 do_command(port, cont, str(command), additional_par)
                 print("\n process arguments:")
                 print(functions.process_reply)
