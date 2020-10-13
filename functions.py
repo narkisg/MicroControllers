@@ -9,6 +9,7 @@ my_authorization = ""
 process_reply = []
 bootloader_reply = []
 
+
 def init_my_profile():
     global my_username
     my_username = ""
@@ -26,8 +27,9 @@ def init_my_profile():
     bootloader_reply = []
 
 
-def do_command(port_name, controller_name, command_No, additional_par):
-    result = execute_command(port_name, controller_name, command_No, additional_par)
+def do_command(port_name, controller_name, command_No, additional_par, socket):
+    result = execute_command(port_name, controller_name,
+                             command_No, additional_par, socket)
     return result
 
 
@@ -117,13 +119,19 @@ def get_commands_list():
         output = [{'name': 'BL_MEM_WRITE', 'fields': []}]
     else:
         output = [{'name': 'BL_GET_VER', 'fields': []}, {'name': 'BL_GET_HLP', 'fields': []},
-                  {'name': 'BL_GET_CID', 'fields': []}, {'name': 'BL_GET_RDP_STATUS', 'fields': []},
-                  {'name': 'BL_GO_TO_ADDR', 'fields': ['address']}, {'name': 'BL_FLASH_MASS_ERASE', 'fields': []},
-                  {'name': 'BL_FLASH_ERASE', 'fields': ['sector_number', 'number_of_sectors_to_erase']},
+                  {'name': 'BL_GET_CID', 'fields': []}, {
+                      'name': 'BL_GET_RDP_STATUS', 'fields': []},
+                  {'name': 'BL_GO_TO_ADDR', 'fields': ['address']}, {
+                      'name': 'BL_FLASH_MASS_ERASE', 'fields': []},
+                  {'name': 'BL_FLASH_ERASE', 'fields': [
+                      'sector_number', 'number_of_sectors_to_erase']},
                   {'name': 'BL_MEM_WRITE', 'fields': ['file_name', 'address']},
-                  {'name': 'BL_EN_R_W_PROTECT', 'fields': ['total_sector', 'list_of_sector_numbers', 'mode']},
-                  {'name': 'BL_MEM_READ', 'fields': []}, {'name': 'BL_READ_SECTOR_P_STATUS', 'fields': []},
-                  {'name': 'BL_OTP_READ', 'fields': []}, {'name': 'BL_DIS_R_W_PROTECT', 'fields': []},
+                  {'name': 'BL_EN_R_W_PROTECT', 'fields': [
+                      'total_sector', 'list_of_sector_numbers', 'mode']},
+                  {'name': 'BL_MEM_READ', 'fields': []}, {
+                      'name': 'BL_READ_SECTOR_P_STATUS', 'fields': []},
+                  {'name': 'BL_OTP_READ', 'fields': []}, {
+                      'name': 'BL_DIS_R_W_PROTECT', 'fields': []},
                   {'name': 'BL_MY_NEW_COMMAND', 'fields': []}]
     return output
 
@@ -174,11 +182,13 @@ def exit_system():
 # checks that username and password is not in use
 # add new user to data base
 def create_new_user(new_username, new_password, new_author_code):
-    #if my_authorization != '3':
-        #return -1  # not suppose to happen
+    # if my_authorization != '3':
+    # return -1  # not suppose to happen
     output = -1
-    u_n_c = check_user_name(new_username)  # for user name check- 0 if the name not in list, 1 if it is
-    p_w_c = check_password(new_password)  # for password check 0 if the password not in list, 1 if it is
+    # for user name check- 0 if the name not in list, 1 if it is
+    u_n_c = check_user_name(new_username)
+    # for password check 0 if the password not in list, 1 if it is
+    p_w_c = check_password(new_password)
     if u_n_c == 1:
         if p_w_c == 1:
             output = 2
@@ -191,7 +201,8 @@ def create_new_user(new_username, new_password, new_author_code):
             output = 3
             with open('database.json', 'r+') as f:
                 data = json.load(f)
-                data['users'].append({"name": new_username, "password": new_password, "authorization": new_author_code})
+                data['users'].append(
+                    {"name": new_username, "password": new_password, "authorization": new_author_code})
                 data = json.dumps(data)
                 f.seek(0)
                 f.write(data)
@@ -215,7 +226,8 @@ def delete_user(username):
                 if x['name'] == username:
                     password = x['password']
                     authorization = x['authorization']
-                    data['users'].remove({"name": username, "password": password, "authorization": authorization})
+                    data['users'].remove(
+                        {"name": username, "password": password, "authorization": authorization})
                     break
             data = json.dumps(data)
             f.seek(0)
@@ -287,11 +299,10 @@ def print_process_nevo(result):
 
 
 def print_bootloader_nevo(result):
-        functions.bootloader_reply.append(result)
+    functions.bootloader_reply.append(result)
 
 
 def trying(a):
-   b = list(a.split(" "))
-   print(b)
-   print(type(b))
-
+    b = list(a.split(" "))
+    print(b)
+    print(type(b))

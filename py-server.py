@@ -96,7 +96,7 @@ def handle_message(details):
     if (functions.my_authorization == '1' and command_No != '8'):
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
-        result = do_command(port_name, controller_name, command_No, additional_par)
+        result = do_command(port_name, controller_name, command_No, additional_par, socketio)
         if result == -10:
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
