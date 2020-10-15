@@ -17,13 +17,12 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 
 # activate after pressing the 'Login' button
 @socketio.on('login_attempt')
-def handle_message(user_name_deatils):  # transfer to switch-case function
-    data = json.dumps(user_name_deatils)
+def handle_message(user_name_details):
+    data = json.dumps(user_name_details)
     data = json.loads(data)
     username = data["username"]
     password = data["password"]
     permission = arbitrator(username, password)
-    permission = int(permission, 10)
     if permission == -3:
         emit('login_response', {'success': 'false', 'message': 'invalid_username_and_password'})
     elif permission == -2:
@@ -39,7 +38,6 @@ def handle_message(user_name_deatils):  # transfer to switch-case function
             emit('login_response', {'success': 'true', 'message': 'developer_user_successfully_logged_in'})
         elif permission == 3:
             emit('login_response', {'success': 'true', 'message': 'administrator_user_successfully_logged_in'})
-
 
 # ========================= main window functions ========================= #
 
@@ -77,7 +75,6 @@ def handle_message():
 # port_name, controller_name, command_No, additional_par
 @socketio.on('execute_command')
 def handle_message(details):
-    print('start process')
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
@@ -94,20 +91,14 @@ def handle_message(details):
     #                           command number: "9"
     #                           authorization code: "2"
     #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
-    if functions.my_authorization == '1' and command_name != 'BL_MEM_WRITE':
+    if functions.my_authorization == '1' and command_No != '8':
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
-    elif command_No in ['6', '10', '12']:
-        emit('execute_command_response', {'success': 'false', 'message': 'unsupported_command'})
     else:
-        print('new print and emit for ziv')
-        emit('execute_command_response', {'success': 'maybe', 'message': 'hello world'})
-        print('good')
-        #return
-        print('bad')
-        result = do_command(port_name, controller_name, command_No, additional_par)
+        result = do_command(port_name, controller_name, command_No, additional_par, socketio)
         if result == -10:
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
+        bootloader_message = json.dumps(functions.bootloader_reply)
         set1 = ['1', '2', '3', '4', '11', '13', '14']
         if command_No in set1:
             emit1()
@@ -126,8 +117,10 @@ def handle_message(details):
         elif 'Timeout' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
-            emit('execute_command_bootloader_response', {'success': 'true', 'message': functions.bootloader_reply[0]})
-
+            print('boot start')
+            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message[0]})
+            print('boot end')
+        print('process done')
 
 #------------------- assistance functions for execute command, for emitting the correct message -----------
 def emit1():
@@ -149,12 +142,14 @@ def emit3():
                                               'CRC': functions.process_reply[4]})
 
 def emit4():
+    print('emit 4 start')
     emit('execute_command_process_response', {'length': functions.process_reply[0],
                                               'command_code': functions.process_reply[1],
                                               'base_memory_address(LE)': functions.process_reply[2],
                                               'payload_length': functions.process_reply[3],
                                               'payload': functions.process_reply[4],
                                               'CRC': functions.process_reply[5]})
+    print('emit 4 end')
 
 def emit5():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
@@ -191,7 +186,7 @@ def handle_message():
         emit('user_management_response', {'success': 'false', 'message': 'unauthorized_user'})
 
 
-# create new user - add to database after filing details and pressing register
+# create new user - add to database after filling details and pressing register
 @socketio.on('register_user')
 def handle_message(new_user_details):  # transfer to switch-case function
     data = json.dumps(new_user_details)
@@ -200,7 +195,7 @@ def handle_message(new_user_details):  # transfer to switch-case function
     new_password = data["new_password"]
     new_author_code = data["new_authorization_code"]
     new_author_code = int(new_author_code, 10)
-    if (new_author_code != 1 and new_author_code != 2 and new_author_code) != 3:
+    if new_author_code != 1 and new_author_code != 2 and new_author_code != 3:
         emit('register_response', {'success': 'false', 'message': 'illegal_authorization_code'})
     else:
         result = create_new_user(new_username, new_password, new_author_code)
@@ -299,11 +294,6 @@ def handle_message():
         emit('is_connected_response', {'success': 'false'})
     else:
         emit('is_connected_response', {'success': 'true'})
-
-
-@socketio.on('reset_ports')
-def handle_message():
-    purge_serial_port()
 
 
 if __name__ == '__main__':

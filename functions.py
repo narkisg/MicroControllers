@@ -28,15 +28,14 @@ def init_my_profile():
 
 
 def do_command(port_name, controller_name, command_No, additional_par, socket):
-    result = execute_command(port_name, controller_name,
-                             command_No, additional_par, socket)
+    result = execute_command(port_name, controller_name, command_No, additional_par, socket)
     return result
 
 
 # assistant functions for arbitrator
 def check_user_name(user_to_check):
-    with open('database.json') as dta:
-        data = json.load(dta)
+    with open('database.json') as f:
+        data = json.load(f)
         for x in data['users']:
             if x['name'] == user_to_check:
                 return 1
@@ -45,8 +44,8 @@ def check_user_name(user_to_check):
 
 # assistant functions for arbitrator
 def check_password(pass_to_check):
-    with open('database.json') as dta:
-        data = json.load(dta)
+    with open('database.json') as f:
+        data = json.load(f)
         for x in data['users']:
             if x['password'] == pass_to_check:
                 return 1
@@ -55,8 +54,8 @@ def check_password(pass_to_check):
 
 def check_authorization(username, password):
     output = ""
-    with open('database.json') as dta:
-        data = json.load(dta)
+    with open('database.json') as f:
+        data = json.load(f)
         for x in data['users']:
             curr1 = x['name']
             curr2 = x['password']
@@ -68,8 +67,8 @@ def check_authorization(username, password):
 # assistant functions for arbitrator
 def check_match(username, password):
     output = 0
-    with open('database.json') as dta:
-        data = json.load(dta)
+    with open('database.json') as f:
+        data = json.load(f)
         for x in data['users']:
             curr1 = x['name']
             curr2 = x['password']
@@ -89,7 +88,6 @@ def arbitrator(username, password):
             output = -3
         else:
             output = -2
-
     elif u_n_c == 1:
         if p_w_c == 0:
             output = -1
@@ -103,7 +101,7 @@ def arbitrator(username, password):
             my_password = password
             global my_authorization
             my_authorization = output
-    return output
+    return int(output)
 
 
 def get_controllers_list():
@@ -158,9 +156,9 @@ def get_ports_list():
 
 
 def get_users_list():
-    with open('database.json') as dta:
+    with open('database.json') as f:
         output = []
-        data = json.load(dta)
+        data = json.load(f)
         for x in data['users']:
             output.append(x['name'])
     return output
@@ -168,8 +166,8 @@ def get_users_list():
 
 def get_number_of_users():
     counter = 0
-    with open('database.json') as dta:
-        data = json.load(dta)
+    with open('database.json') as f:
+        data = json.load(f)
         for x in data['users']:
             counter += 1
     return counter
@@ -301,8 +299,3 @@ def print_process_nevo(result):
 def print_bootloader_nevo(result):
     functions.bootloader_reply.append(result)
 
-
-def trying(a):
-    b = list(a.split(" "))
-    print(b)
-    print(type(b))

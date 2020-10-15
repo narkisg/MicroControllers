@@ -320,7 +320,6 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
     else:
         print("\n   SUCCESS")
 
-# remember to delete
 
 
 def add():
@@ -337,13 +336,13 @@ def convert_from_string(string):
     return output
 
 
-def decode_menu_command_code(controller_name, command, additional_par, socket):
+def decode_menu_command_code(port_name, controller_name, command, additional_par, socket):
     ret_value = 0
     data_buf = []
     data_buf = add()  # for debugging
-    command = int(command, 10)
     # for i in range(255):
     # data_buf.append(0)
+    command = int(command, 10)
 
     if(command == 0):
         # print("\n   Exiting...!") this line is for manual debugging
@@ -484,6 +483,7 @@ def decode_menu_command_code(controller_name, command, additional_par, socket):
         ret_value = read_bootloader_reply(data_buf[1])
 
     elif(command == 8):
+        print('memory write starts')
         # print("\n   Command == > BL_MEM_WRITE") this line is for manual debugging
         bytes_remaining = 0
         t_len_of_file = 0
@@ -801,8 +801,7 @@ def execute_command(port_name, controller_name, command_code, additional_par, so
     ret = Serial_Port_Configuration(name)
     if ret < 0:
         return -10
-    result = decode_menu_command_code(
-        controller_name, command_code, additional_par,socket)
+    result = decode_menu_command_code(port_name, controller_name, command_code, additional_par, socket)
     purge_serial_port()
     return result
 
