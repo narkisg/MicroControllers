@@ -136,18 +136,24 @@ def Serial_Port_Configuration(port):
         ser = serial.Serial(port, 115200, timeout=2)
     except:
         print("\n   Oops! That was not a valid port")
+        functions.port_configuration_message('Oops! That was not a valid port')
 
         port = serial_ports()
         if(not port):
             print("\n   No ports Detected")
+            functions.port_configuration_message('No ports Detected')
         else:
             print("\n   Here are some available ports on your PC. Try Again!")
-            print("\n   ", port)
+            functions.port_configuration_message('Here are some available ports on your PC. Try Again!')
+            #print("\n   ", port)
         return -1
     if ser.is_open:
         print("\n   Port Open Success")
+        functions.port_configuration_message('Port Open Success')
     else:
         print("\n   Port Open Failed")
+        functions.port_configuration_message('Port Open Failed')
+
     return 0
 
 

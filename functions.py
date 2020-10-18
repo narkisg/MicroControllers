@@ -1,6 +1,6 @@
 from STM32_Programmer_V1 import *
 import json
-
+from py_server import emit_port_configuration_message
 # ============== functions ============== #
 
 my_username = ""
@@ -25,6 +25,7 @@ def init_my_profile():
 
     global bootloader_reply
     bootloader_reply = []
+
 
 
 def do_command(port_name, controller_name, command_No, additional_par, socket):
@@ -298,4 +299,8 @@ def print_process_nevo(result):
 
 def print_bootloader_nevo(result):
     functions.bootloader_reply.append(result)
+
+def port_configuration_message(port_configuration_message):
+    emit_port_configuration_message(port_configuration_message)
+    return
 

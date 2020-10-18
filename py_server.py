@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, emit
 from functions import *
 import json
 
+
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent
 
@@ -75,6 +76,7 @@ def handle_message():
 # port_name, controller_name, command_No, additional_par
 @socketio.on('execute_command')
 def handle_message(details):
+    print('start')
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
@@ -158,13 +160,18 @@ def emit5():
                                               'protection_mode': functions.process_reply[3],
                                               'CRC': functions.process_reply[4]})
 
+
 def convert_to_number(command_name):
-    counter = 1
-    list_of_commands = get_commands_list()
-    for x in list_of_commands:
-        if x['name'] == command_name:
-            return str(counter)
-        counter += 1
+    if functions.my_authorization == '1':
+        if command_name == 'BL_MEM_WRITE':
+            return '8'
+    else:
+        counter = 1
+        list_of_commands = get_commands_list()
+        for x in list_of_commands:
+            if x['name'] == command_name:
+                return str(counter)
+            counter += 1
 
 
 @socketio.on('get_fields')
@@ -294,6 +301,11 @@ def handle_message():
         emit('is_connected_response', {'success': 'false'})
     else:
         emit('is_connected_response', {'success': 'true'})
+
+
+def emit_port_configuration_message(port_configuration_message):
+    emit('port_configuration_response', port_configuration_message)
+    return
 
 
 if __name__ == '__main__':
