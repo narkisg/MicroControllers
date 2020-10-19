@@ -304,7 +304,8 @@ def handle_message():
 
 
 def emit_port_configuration_message(port_configuration_message):
-    emit('port_configuration_response', port_configuration_message)
+    print(port_configuration_message)
+    emit('port_configuration_response', {'message': port_configuration_message})
     return
 
 

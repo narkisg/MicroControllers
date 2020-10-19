@@ -5,11 +5,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="16.10 no address">
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="with port emit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STM32_Programmer_V1.py" beforeDir="false" afterPath="$PROJECT_DIR$/STM32_Programmer_V1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.json" beforeDir="false" afterPath="$PROJECT_DIR$/database.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +97,11 @@
       <updated>1602619064792</updated>
       <workItem from="1602619065875" duration="87000" />
       <workItem from="1602918981743" duration="2674000" />
-      <workItem from="1603037922649" duration="5578000" />
+      <workItem from="1603037922649" duration="5725000" />
+      <workItem from="1603104878815" duration="734000" />
+      <workItem from="1603097187514" duration="10000" />
+      <workItem from="1603098144885" duration="21000" />
+      <workItem from="1603099277840" duration="1688000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -106,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602847056453</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="with port emit">
+      <created>1603048171343</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1603048171343</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,36 +137,37 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="16.10 no address" />
-    <option name="LAST_COMMIT_MESSAGE" value="16.10 no address" />
+    <MESSAGE value="with port emit" />
+    <option name="LAST_COMMIT_MESSAGE" value="with port emit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602847176582">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1602847176582" />
-    <state width="1238" height="249" key="GridCell.Tab.0.bottom" timestamp="1603045392635">
+    <state width="1238" height="119" key="GridCell.Tab.0.bottom" timestamp="1603100373718">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="249" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603045392635" />
-    <state width="1238" height="249" key="GridCell.Tab.0.center" timestamp="1603045392635">
+    <state width="1238" height="119" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603100373718" />
+    <state width="1238" height="119" key="GridCell.Tab.0.center" timestamp="1603100373717">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="249" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603045392635" />
-    <state width="1238" height="249" key="GridCell.Tab.0.left" timestamp="1603045392635">
+    <state width="1238" height="119" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603100373717" />
+    <state width="1238" height="119" key="GridCell.Tab.0.left" timestamp="1603100373717">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="249" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603045392635" />
-    <state width="1238" height="249" key="GridCell.Tab.0.right" timestamp="1603045392635">
+    <state width="1238" height="119" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603100373717" />
+    <state width="1238" height="119" key="GridCell.Tab.0.right" timestamp="1603100373717">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="249" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603045392635" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1602847061050">
+    <state width="1238" height="119" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603100373717" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1603048173584">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1602847061050" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1603048173584" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py-server Coverage Results" MODIFIED="1603045382259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py_server Coverage Results" MODIFIED="1603100373687" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$tests.coverage" NAME="tests Coverage Results" MODIFIED="1602349022557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1603037888907" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$py_server__1_.coverage" NAME="py-server (1) Coverage Results" MODIFIED="1602841124856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
