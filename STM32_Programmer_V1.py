@@ -368,9 +368,9 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
         for i in data_buf[1:COMMAND_BL_GET_VER_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -387,9 +387,9 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
         for i in data_buf[1:COMMAND_BL_GET_HELP_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_GET_HELP_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_GET_HELP_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -406,9 +406,9 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
         for i in data_buf[1:COMMAND_BL_GET_CID_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_GET_CID_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_GET_CID_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -424,10 +424,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_GET_RDP_STATUS_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_GET_RDP_STATUS_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_GET_RDP_STATUS_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -449,10 +449,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[8] = word_to_byte(crc32, 3, 1)
         data_buf[9] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_GO_TO_ADDR_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_GO_TO_ADDR_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_GO_TO_ADDR_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -482,10 +482,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[6] = word_to_byte(crc32, 3, 1)
         data_buf[7] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_FLASH_ERASE_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_FLASH_ERASE_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_FLASH_ERASE_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -554,11 +554,11 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
             # update base mem address for the next loop
             base_mem_address += len_to_read
 
-            Write_to_serial_port(data_buf[0], 1, socket)
+            Write_to_serial_port(data_buf[0], 1, socket=socket)
 
             for i in data_buf[1:mem_write_cmd_total_len]:
                 socket.sleep(0)
-                Write_to_serial_port(i, mem_write_cmd_total_len-1, socket)
+                Write_to_serial_port(i, mem_write_cmd_total_len-1, socket=socket)
 
             socket.sleep(0)
             bytes_so_far_sent += len_to_read
@@ -607,10 +607,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[6] = word_to_byte(crc32, 3, 1)
         data_buf[7] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_EN_R_W_PROTECT_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_EN_R_W_PROTECT_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_EN_R_W_PROTECT_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -630,10 +630,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_READ_SECTOR_P_STATUS_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_READ_SECTOR_P_STATUS_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -652,10 +652,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[6] = word_to_byte(crc32, 3, 1)
         data_buf[7] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_DIS_R_W_PROTECT_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_DIS_R_W_PROTECT_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_DIS_R_W_PROTECT_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
 
@@ -670,10 +670,10 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
         data_buf[4] = word_to_byte(crc32, 3, 1)
         data_buf[5] = word_to_byte(crc32, 4, 1)
 
-        Write_to_serial_port(data_buf[0], 1, socket)
+        Write_to_serial_port(data_buf[0], 1, socket=socket)
 
         for i in data_buf[1:COMMAND_BL_MY_NEW_COMMAND_LEN]:
-            Write_to_serial_port(i, COMMAND_BL_MY_NEW_COMMAND_LEN-1, socket)
+            Write_to_serial_port(i, COMMAND_BL_MY_NEW_COMMAND_LEN-1, socket=socket)
 
         ret_value = read_bootloader_reply(data_buf[1])
     # else:

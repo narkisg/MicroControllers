@@ -112,6 +112,8 @@ def handle_message(details):
             emit4()
         elif command_No == '9':
             emit5()
+
+        socketio.sleep(0)
         if 'Invalid_command_code' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Invalid_command_code'})
         elif 'CRC_FAIL' in functions.bootloader_reply[0]:
@@ -144,6 +146,7 @@ def emit3():
                                               'CRC': functions.process_reply[4]})
 
 def emit4():
+    socketio.sleep(0)
     print('emit 4 start')
     emit('execute_command_process_response', {'length': functions.process_reply[0],
                                               'command_code': functions.process_reply[1],
