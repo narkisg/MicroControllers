@@ -163,8 +163,8 @@ def read_serial_port(length):
 
 
 def Close_serial_port():
-    # pass
-    ser.close()
+    pass
+    # ser.close()
 
 
 def purge_serial_port():
