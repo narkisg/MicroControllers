@@ -296,12 +296,13 @@ def handle_message():
 @socketio.on('logout_attempt')
 def handle_message():
     init_my_profile()
-    Close_serial_port()  # not doing anything for now
+    # Close_serial_port()  # not doing anything for now
 
 
 @socketio.on('reset_ports')
 def handle_message():
-    Close_serial_port()
+    return
+    # Close_serial_port()
 
 
 

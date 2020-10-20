@@ -5,9 +5,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="project done">
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="project done2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STM32_Programmer_V1.py" beforeDir="false" afterPath="$PROJECT_DIR$/STM32_Programmer_V1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +146,7 @@
       <workItem from="1603097187514" duration="10000" />
       <workItem from="1603098144885" duration="21000" />
       <workItem from="1603099277840" duration="15869000" />
-      <workItem from="1603197930552" duration="4295000" />
+      <workItem from="1603197930552" duration="5522000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -197,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603200672569</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="project done2">
+      <created>1603202245678</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1603202245678</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +229,8 @@
     <MESSAGE value=":(" />
     <MESSAGE value="...socket pr" />
     <MESSAGE value="project done" />
-    <option name="LAST_COMMIT_MESSAGE" value="project done" />
+    <MESSAGE value="project done2" />
+    <option name="LAST_COMMIT_MESSAGE" value="project done2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602847176582">
@@ -253,11 +261,11 @@
     <state width="1877" height="361" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200629906" />
     <state width="1238" height="206" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603198735510" />
     <state width="1238" height="207" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603163519000" />
-    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2" timestamp="1603200675773">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1603202247819">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1570" y="286" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200675773" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603190067617" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603202247819" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1603176218202" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
