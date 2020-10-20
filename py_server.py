@@ -96,11 +96,14 @@ def handle_message(details):
     if functions.my_authorization == '1' and command_No != '8':
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     else:
+        socketio.sleep(0)
         result = do_command(port_name, controller_name, command_No, additional_par, socketio)
         if result == -10:
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
+        socketio.sleep(0)
         bootloader_message = json.dumps(functions.bootloader_reply)
+        socketio.sleep(0)
         set1 = ['1', '2', '3', '4', '11', '13', '14']
         if command_No in set1:
             emit1()

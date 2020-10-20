@@ -524,6 +524,7 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
                 len_to_read = bytes_remaining
             # get the bytes in to buffer by reading file
             for x in range(len_to_read):
+                socket.sleep(0)
                 file_read_value = bin_file.read(1)
                 file_read_value = bytearray(file_read_value)
                 data_buf[7+x] = int(file_read_value[0])
@@ -555,17 +556,16 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
             base_mem_address += len_to_read
 
             Write_to_serial_port(data_buf[0], 1, socket=socket)
-
+            socket.sleep(0)
             for i in data_buf[1:mem_write_cmd_total_len]:
                 socket.sleep(0)
                 Write_to_serial_port(i, mem_write_cmd_total_len-1, socket=socket)
-
             socket.sleep(0)
             bytes_so_far_sent += len_to_read
             bytes_remaining = t_len_of_file - bytes_so_far_sent
             print("\n   bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
             functions.port_configuration_message("bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
-
+            socket.sleep(0)
             ret_value = read_bootloader_reply(data_buf[1])
         mem_write_active = 0
 
