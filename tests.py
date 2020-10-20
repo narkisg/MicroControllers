@@ -1,5 +1,6 @@
 from functions import *
 
+"""====================UNDONE YET!!!!=================="""
 
 def permission_1():
     while True:
