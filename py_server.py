@@ -301,9 +301,9 @@ def handle_message():
 
 @socketio.on('reset_ports')
 def handle_message():
-    return
+    purge_serial_port()
+    Close_serial_port()
     # Close_serial_port()
-
 
 
 @socketio.on('is_connected')
