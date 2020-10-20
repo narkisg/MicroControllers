@@ -76,7 +76,7 @@ def handle_message():
 # port_name, controller_name, command_No, additional_par
 @socketio.on('execute_command')
 def handle_message(details):
-    print('start')
+    # print(' message from GUI accepted, start process')
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
@@ -124,9 +124,8 @@ def handle_message(details):
         elif 'Timeout' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
-            print('boot start')
             emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message[0]})
-            print('boot end')
+
         print('process done')
 
 #------------------- assistance functions for execute command, for emitting the correct message -----------
@@ -150,14 +149,12 @@ def emit3():
 
 def emit4():
     socketio.sleep(0)
-    print('emit 4 start')
     emit('execute_command_process_response', {'length': functions.process_reply[0],
                                               'command_code': functions.process_reply[1],
                                               'base_memory_address(LE)': functions.process_reply[2],
                                               'payload_length': functions.process_reply[3],
                                               'payload': functions.process_reply[4],
                                               'CRC': functions.process_reply[5]})
-    print('emit 4 end')
 
 def emit5():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
@@ -299,6 +296,13 @@ def handle_message():
 @socketio.on('logout_attempt')
 def handle_message():
     init_my_profile()
+    Close_serial_port()  # not doing anything for now
+
+
+@socketio.on('reset_ports')
+def handle_message():
+    Close_serial_port()
+
 
 
 @socketio.on('is_connected')
@@ -310,7 +314,7 @@ def handle_message():
 
 
 def emit_port_configuration_message(port_configuration_message):
-    print(port_configuration_message)
+    # print(port_configuration_message)
     emit('port_configuration_response', {'message': port_configuration_message})
     return
 

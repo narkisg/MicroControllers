@@ -135,23 +135,23 @@ def Serial_Port_Configuration(port):
     try:
         ser = serial.Serial(port, 115200, timeout=2)
     except:
-        print("\n   Oops! That was not a valid port")
+        #print("\n   Oops! That was not a valid port")
         functions.port_configuration_message('Oops! That was not a valid port')
 
         port = serial_ports()
         if(not port):
-            print("\n   No ports Detected")
+            #print("\n   No ports Detected")
             functions.port_configuration_message('No ports Detected')
         else:
-            print("\n   Here are some available ports on your PC. Try Again!")
+            #print("\n   Here are some available ports on your PC. Try Again!")
             functions.port_configuration_message('Here are some available ports on your PC. Try Again!')
             #print("\n   ", port)
         return -1
     if ser.is_open:
-        print("\n   Port Open Success")
+        #print("\n   Port Open Success")
         functions.port_configuration_message('Port Open Success')
     else:
-        print("\n   Port Open Failed")
+        #print("\n   Port Open Failed")
         functions.port_configuration_message('Port Open Failed')
 
     return 0
@@ -163,7 +163,8 @@ def read_serial_port(length):
 
 
 def Close_serial_port():
-    pass
+    # pass
+    ser.close()
 
 
 def purge_serial_port():
@@ -563,7 +564,7 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
             socket.sleep(0)
             bytes_so_far_sent += len_to_read
             bytes_remaining = t_len_of_file - bytes_so_far_sent
-            print("\n   bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
+            #print("\n   bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
             functions.port_configuration_message("bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
             socket.sleep(0)
             ret_value = read_bootloader_reply(data_buf[1])
