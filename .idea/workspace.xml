@@ -5,10 +5,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="project done3">
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="yofi versano">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/STM32_Programmer_V1.py" beforeDir="false" afterPath="$PROJECT_DIR$/STM32_Programmer_V1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.json" beforeDir="false" afterPath="$PROJECT_DIR$/database.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +147,10 @@
       <workItem from="1603097187514" duration="10000" />
       <workItem from="1603098144885" duration="21000" />
       <workItem from="1603099277840" duration="15869000" />
-      <workItem from="1603197930552" duration="9776000" />
+      <workItem from="1603197930552" duration="14697000" />
+      <workItem from="1603230347995" duration="80000" />
+      <workItem from="1603230462294" duration="737000" />
+      <workItem from="1603276962818" duration="13791000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -213,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603204341595</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="yofi versano">
+      <created>1603209672270</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1603209672270</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,49 +249,70 @@
     <MESSAGE value="project done" />
     <MESSAGE value="project done2" />
     <MESSAGE value="project done3" />
-    <option name="LAST_COMMIT_MESSAGE" value="project done3" />
+    <MESSAGE value="yofi versano" />
+    <option name="LAST_COMMIT_MESSAGE" value="yofi versano" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602847176582">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1602847176582" />
-    <state width="1238" height="212" key="GridCell.Tab.0.bottom" timestamp="1603207597694">
+    <state x="386" y="142" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603210722863">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1877" height="361" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200629906" />
-    <state width="1238" height="212" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603207597694" />
-    <state width="1238" height="207" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603163519000" />
-    <state width="1238" height="212" key="GridCell.Tab.0.center" timestamp="1603207597694">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="386" y="142" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603210722863" />
+    <state width="1877" height="201" key="GridCell.Tab.0.bottom" timestamp="1603354136349">
+      <screen x="-1920" y="174" width="1920" height="1040" />
     </state>
-    <state width="1877" height="361" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200629906" />
-    <state width="1238" height="212" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603207597694" />
-    <state width="1238" height="207" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603163519000" />
-    <state width="1238" height="212" key="GridCell.Tab.0.left" timestamp="1603207597693">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="201" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603354136349" />
+    <state width="1237" height="135" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603212301331" />
+    <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603231201821" />
+    <state width="1877" height="201" key="GridCell.Tab.0.center" timestamp="1603354136349">
+      <screen x="-1920" y="174" width="1920" height="1040" />
     </state>
-    <state width="1877" height="361" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200629906" />
-    <state width="1238" height="212" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603207597693" />
-    <state width="1238" height="207" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603163519000" />
-    <state width="1238" height="212" key="GridCell.Tab.0.right" timestamp="1603207597694">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="201" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603354136349" />
+    <state width="1237" height="135" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603212301331" />
+    <state width="1238" height="169" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603231201821" />
+    <state width="1877" height="201" key="GridCell.Tab.0.left" timestamp="1603354136349">
+      <screen x="-1920" y="174" width="1920" height="1040" />
     </state>
-    <state width="1877" height="361" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200629906" />
-    <state width="1238" height="212" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603207597694" />
-    <state width="1238" height="207" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603163519000" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1603204343647">
+    <state width="1877" height="201" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603354136349" />
+    <state width="1237" height="135" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603212301331" />
+    <state width="1238" height="169" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603231201821" />
+    <state width="1877" height="201" key="GridCell.Tab.0.right" timestamp="1603354136349">
+      <screen x="-1920" y="174" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="201" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603354136349" />
+    <state width="1237" height="135" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603212301331" />
+    <state width="1238" height="169" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603231201821" />
+    <state width="1877" height="206" key="GridCell.Tab.1.bottom" timestamp="1603278023707">
+      <screen x="-1920" y="174" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="206" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
+    <state width="1877" height="206" key="GridCell.Tab.1.center" timestamp="1603278023707">
+      <screen x="-1920" y="174" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="206" key="GridCell.Tab.1.center/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
+    <state width="1877" height="206" key="GridCell.Tab.1.left" timestamp="1603278023707">
+      <screen x="-1920" y="174" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="206" key="GridCell.Tab.1.left/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
+    <state width="1877" height="206" key="GridCell.Tab.1.right" timestamp="1603278023707">
+      <screen x="-1920" y="174" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="206" key="GridCell.Tab.1.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1603209673497">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1570" y="286" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603200675773" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603204343647" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603209673497" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1603176218202" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py_server Coverage Results" MODIFIED="1603115315549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$tests.coverage" NAME="tests Coverage Results" MODIFIED="1603200611208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1603037888907" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
-    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server__1_.coverage" NAME="py_server (1) Coverage Results" MODIFIED="1603207838041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server__1_.coverage" NAME="py_server (1) Coverage Results" MODIFIED="1603353952868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$STM32_Programmer_V1.coverage" NAME="STM32_Programmer_V1 Coverage Results" MODIFIED="1601398801673" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$database.coverage" NAME="database Coverage Results" MODIFIED="1601634072042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

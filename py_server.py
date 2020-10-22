@@ -93,11 +93,17 @@ def handle_message(details):
     #                           command number: "9"
     #                           authorization code: "2"
     #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
+    set0 = ['0', '6', '10', '12']
     if functions.my_authorization == '1' and command_No != '8':
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
+    elif command_No in set0:
+        emit('execute_command_response', {'success': 'false', 'message': 'This command is not supported'})
+        return
     else:
         socketio.sleep(0)
+        print(command_name, command_No)
         result = do_command(port_name, controller_name, command_No, additional_par, socketio)
+        print(result)
         if result == -10:
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
@@ -122,9 +128,13 @@ def handle_message(details):
         elif 'CRC_FAIL' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'CRC_FAIL'})
         elif 'Timeout' in functions.bootloader_reply[0]:
+            print(functions.bootloader_reply)
+            print(bootloader_message)
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
-            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message[0]})
+            print(functions.bootloader_reply+'2')
+            print(bootloader_message)
+            emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
 
         print('process done')
 
@@ -303,7 +313,6 @@ def handle_message():
 def handle_message():
     purge_serial_port()
     Close_serial_port()
-    # Close_serial_port()
 
 
 @socketio.on('is_connected')
@@ -324,4 +333,3 @@ if __name__ == '__main__':
     init_my_profile()
     print('running on port 5000')
     socketio.run(app)
-
