@@ -132,7 +132,7 @@ def handle_message(details):
             print(bootloader_message)
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
-            print(functions.bootloader_reply+'2')
+            print(functions.bootloader_reply)
             print(bootloader_message)
             emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
 

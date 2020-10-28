@@ -747,8 +747,9 @@ def read_bootloader_reply(command_code):
             functions.print_bootloader_nevo("CRC:_SUCCESS,Len:_ "+str(len_to_follow))
             # print("command_code:",hex(command_code))
             if (command_code) == COMMAND_BL_GET_VER:
+                print('nevohere')
                 process_COMMAND_BL_GET_VER(len_to_follow)
-
+                print('hereeeeeee')
             elif(command_code) == COMMAND_BL_GET_HELP:
                 process_COMMAND_BL_GET_HELP(len_to_follow)
 
