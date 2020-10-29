@@ -3,11 +3,12 @@ import json
 from py_server import emit_port_configuration_message
 # ============== functions ============== #
 
-my_username = ""
-my_password = ""
-my_authorization = ""
-process_reply = []
-bootloader_reply = []
+my_username = ""  # holds current user username
+my_password = ""  # holds current user password
+my_authorization = ""  # holds current user authorization
+process_reply = []  # holds current command process arguments
+bootloader_reply = []  # holds current command bootloader reply
+is_connected_to_port = ""  # holds current port connection- empty string for not connected, name of port for connected
 
 
 def init_my_profile():
@@ -26,7 +27,8 @@ def init_my_profile():
     global bootloader_reply
     bootloader_reply = []
 
-
+    global is_connected_to_port
+    is_connected_to_port = ""
 
 def do_command(port_name, controller_name, command_No, additional_par, socket):
     result = execute_command(port_name, controller_name, command_No, additional_par, socket)

@@ -150,6 +150,7 @@ def Serial_Port_Configuration(port):
     if ser.is_open:
         #print("\n   Port Open Success")
         functions.port_configuration_message('Port Open Success')
+        functions.is_connected_to_port = port
     else:
         #print("\n   Port Open Failed")
         functions.port_configuration_message('Port Open Failed')
@@ -849,10 +850,10 @@ while True:
 
 def execute_command(port_name, controller_name, command_code, additional_par, socket):
     name = port_name
-    ret = 0
-    ret = Serial_Port_Configuration(name)
-    if ret < 0:
-        return -10
+    if functions.is_connected_to_port == "":
+        ret = Serial_Port_Configuration(name)
+        if ret < 0:
+            return -10
     result = decode_menu_command_code(port_name, controller_name, command_code, additional_par, socket)
     purge_serial_port()
     return result
