@@ -149,7 +149,7 @@ def Serial_Port_Configuration(port):
         return -1
     if ser.is_open:
         #print("\n   Port Open Success")
-        functions.port_configuration_message('Port Open Success')
+        functions.port_configuration_message('Port Open Success connected to port: '+port)
         functions.is_connected_to_port = port
     else:
         #print("\n   Port Open Failed")
@@ -241,55 +241,51 @@ def process_COMMAND_BL_FLASH_ERASE(length):
     if len(value):
         erase_status = bytearray(value)
         if(erase_status[0] == Flash_HAL_OK):
-            print("\n   Erase Status: Success  Code: FLASH_HAL_OK")
+            # print("\n   Erase Status: Success  Code: FLASH_HAL_OK")
             functions.print_bootloader_nevo('Erase Status: Success  Code: FLASH_HAL_OK')
         elif(erase_status[0] == Flash_HAL_ERROR):
-            print("\n   Erase Status: Fail  Code: FLASH_HAL_ERROR")
+            # print("\n   Erase Status: Fail  Code: FLASH_HAL_ERROR")
             functions.print_bootloader_nevo('Erase Status: Fail  Code: FLASH_HAL_ERROR')
         elif(erase_status[0] == Flash_HAL_BUSY):
-            print("\n   Erase Status: Fail  Code: FLASH_HAL_BUSY")
+            # print("\n   Erase Status: Fail  Code: FLASH_HAL_BUSY")
             functions.print_bootloader_nevo('Erase Status: Fail  Code: FLASH_HAL_BUSY')
         elif(erase_status[0] == Flash_HAL_TIMEOUT):
-            print("\n   Erase Status: Fail  Code: FLASH_HAL_TIMEOUT")
+            # print("\n   Erase Status: Fail  Code: FLASH_HAL_TIMEOUT")
             functions.print_bootloader_nevo('Erase Status: Fail  Code: FLASH_HAL_TIMEOUT')
         elif(erase_status[0] == Flash_HAL_INV_ADDR):
-            print("\n   Erase Status: Fail  Code: FLASH_HAL_INV_SECTOR")
+            # print("\n   Erase Status: Fail  Code: FLASH_HAL_INV_SECTOR")
             functions.print_bootloader_nevo('Erase Status: Fail  Code: FLASH_HAL_INV_SECTOR')
         else:
-            print("\n   Erase Status: Fail  Code: UNKNOWN_ERROR_CODE")
+            # print("\n   Erase Status: Fail  Code: UNKNOWN_ERROR_CODE")
             functions.print_bootloader_nevo('Erase Status: Fai,  Code: UNKNOWN_ERROR_CODE')
     else:
-        print("Timeout: Bootloader is not responding")
+        # print("Timeout: Bootloader is not responding")
         functions.print_bootloader_nevo('Timeout: Bootloader is not responding')
 
 
 def process_COMMAND_BL_MEM_WRITE(length):
     write_status = 0
     value = read_serial_port(length)
-    print(value)
-    print(type(value))
     write_status = bytearray(value)
-    print(write_status)
-    print(type(write_status))
     if(write_status[0] == Flash_HAL_OK):
-        print("\n   Write_status: FLASH_HAL_OK")
+        # print("\n   Write_status: FLASH_HAL_OK")
         functions.print_bootloader_nevo('Write_status: FLASH_HAL_OK')
     elif(write_status[0] == Flash_HAL_ERROR):
-        print("\n   Write_status: FLASH_HAL_ERROR")
+        # print("\n   Write_status: FLASH_HAL_ERROR")
         functions.print_bootloader_nevo('FLASH_HAL_ERROR')
     elif(write_status[0] == Flash_HAL_BUSY):
-        print("\n   Write_status: FLASH_HAL_BUSY")
+        # print("\n   Write_status: FLASH_HAL_BUSY")
         functions.print_bootloader_nevo('FLASH_HAL_BUSY')
     elif(write_status[0] == Flash_HAL_TIMEOUT):
-        print("\n   Write_status: FLASH_HAL_TIMEOUT")
+        # print("\n   Write_status: FLASH_HAL_TIMEOUT")
         functions.print_bootloader_nevo('FLASH_HAL_TIMEOUT')
     elif(write_status[0] == Flash_HAL_INV_ADDR):
-        print("\n   Write_status: FLASH_HAL_INV_ADDR")
+        # print("\n   Write_status: FLASH_HAL_INV_ADDR")
         functions.print_bootloader_nevo('FLASH_HAL_INV_ADDR')
     else:
-        print("\n   Write_status: UNKNOWN_ERROR")
+        # print("\n   Write_status: UNKNOWN_ERROR")
         functions.print_bootloader_nevo('UNKNOWN_ERROR')
-    print("\n")
+    # print("\n")
 
 
 def process_COMMAND_BL_FLASH_MASS_ERASE(length):
@@ -319,23 +315,23 @@ def process_COMMAND_BL_READ_SECTOR_STATUS(length):
     value = read_serial_port(length)
     s_status = bytearray(value)
     #s_status.flash_sector_status = (uint16_t)(status[1] << 8 | status[0] )
-    print("\n   Sector Status : ", s_status[0])
-    print("\n  ====================================")
-    print("\n  Sector                               \tProtection")
-    print("\n  ====================================")
+    #print("\n   Sector Status : ", s_status[0])
+    #print("\n  ====================================")
+    #print("\n  Sector                               \tProtection")
+    #print("\n  ====================================")
     boot_message = "Sector Status : "+str(s_status[0])+"\n  ===================================="+'Sector                               \tProtection'+'\n  ===================================='
     functions.print_bootloader_nevo(boot_message)
     if(s_status[0] & (1 << 15)):
         #PCROP is active
-        print("\n  Flash protection mode : Read/Write Protection(PCROP)\n")
+        #print("\n  Flash protection mode : Read/Write Protection(PCROP)\n")
         functions.print_bootloader_nevo('Flash protection mode : Read/Write Protection(PCROP)')
     else:
-        print("\n  Flash protection mode :   \tWrite Protection\n")
+        # print("\n  Flash protection mode :   \tWrite Protection\n")
         functions.print_bootloader_nevo('Flash protection mode :   \tWrite Protection')
     boot_message2 = ''
     for x in range(8):
-        print("\n   Sector{0}                               {1}".format(
-            x, protection_type(s_status[0], x)))
+        # print("\n   Sector{0}                               {1}".format(
+            # x, protection_type(s_status[0], x)))
         boot_message2 = boot_message2+'Sector{0}                               {1}'.format(
             x, protection_type(s_status[0], x))
     functions.print_bootloader_nevo(boot_message2)
@@ -345,10 +341,10 @@ def process_COMMAND_BL_DIS_R_W_PROTECT(length):
     value = read_serial_port(length)
     status = bytearray(value)
     if(status[0]):
-        print("\n   FAIL")
+        # print("\n   FAIL")
         functions.print_bootloader_nevo('FAIL')
     else:
-        print("\n   SUCCESS")
+       # print("\n   SUCCESS")
         functions.print_bootloader_nevo('SUCCESS')
 
 
@@ -357,10 +353,10 @@ def process_COMMAND_BL_EN_R_W_PROTECT(length):
     value = read_serial_port(length)
     status = bytearray(value)
     if(status[0]):
-        print("\n   FAIL")
+        # print("\n   FAIL")
         functions.print_bootloader_nevo('FAIL')
     else:
-        print("\n   SUCCESS")
+        # print("\n   SUCCESS")
         functions.print_bootloader_nevo('SUCCESS')
 
 
@@ -736,9 +732,7 @@ def read_bootloader_reply(command_code):
     # read_serial_port(ack,2)
     #ack = ser.read(2)
     ack = read_serial_port(2)
-    print('here1')
     if(len(ack)):
-        print('here2')
         a_array = bytearray(ack)
         #print("read uart:",ack)
         if (a_array[0] == 0xA5):
@@ -748,9 +742,8 @@ def read_bootloader_reply(command_code):
             functions.print_bootloader_nevo("CRC:_SUCCESS,Len:_ "+str(len_to_follow))
             # print("command_code:",hex(command_code))
             if (command_code) == COMMAND_BL_GET_VER:
-                print('nevohere')
                 process_COMMAND_BL_GET_VER(len_to_follow)
-                print('hereeeeeee')
+
             elif(command_code) == COMMAND_BL_GET_HELP:
                 process_COMMAND_BL_GET_HELP(len_to_follow)
 
@@ -793,7 +786,6 @@ def read_bootloader_reply(command_code):
             functions.print_bootloader_nevo("ERROR! CRC_FAIL")
             ret_value = -1
     else:
-        print('here3')
         #print("\n   Timeout : Bootloader not responding")
         functions.print_bootloader_nevo("ERROR! Timeout:_Bootloader_not_responding")
 
@@ -850,7 +842,7 @@ while True:
 
 def execute_command(port_name, controller_name, command_code, additional_par, socket):
     name = port_name
-    if functions.is_connected_to_port == "":
+    if functions.is_connected_to_port != name:
         ret = Serial_Port_Configuration(name)
         if ret < 0:
             return -10

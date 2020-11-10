@@ -1,7 +1,8 @@
 from STM32_Programmer_V1 import *
 import json
 from py_server import emit_port_configuration_message
-# ============== functions ============== #
+
+# ============== global variables ============== #
 
 my_username = ""  # holds current user username
 my_password = ""  # holds current user password
@@ -10,7 +11,9 @@ process_reply = []  # holds current command process arguments
 bootloader_reply = []  # holds current command bootloader reply
 is_connected_to_port = ""  # holds current port connection- empty string for not connected, name of port for connected
 
+# ============== functions ============== #
 
+# initializing global variables
 def init_my_profile():
     global my_username
     my_username = ""
@@ -29,6 +32,15 @@ def init_my_profile():
 
     global is_connected_to_port
     is_connected_to_port = ""
+
+
+def clean_process_reply():
+    process_reply.clear()
+
+
+def clean_bootloader_reply():
+    bootloader_reply.clear()
+
 
 def do_command(port_name, controller_name, command_No, additional_par, socket):
     result = execute_command(port_name, controller_name, command_No, additional_par, socket)

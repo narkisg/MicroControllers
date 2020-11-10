@@ -1,11 +1,14 @@
 
 from flask import Flask
 from flask_socketio import SocketIO, emit
-#import functions
 from functions import *
 import json
 
-
+"""
+create py_server.exe with: pyinstaller py_server.py -n py-server.py
+to create electron app go to dist/py-server and copy content to GUI's public library
+than to pack everything to app command: npm run dep-win (for Windows.. look in package.json for more)
+"""
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent
 
@@ -77,6 +80,7 @@ def handle_message():
 @socketio.on('execute_command')
 def handle_message(details):
     # print(' message from GUI accepted, start process')
+    # translating arguments from GUI, from JSON to list of strings.
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
@@ -93,21 +97,26 @@ def handle_message(details):
     #                           command number: "9"
     #                           authorization code: "2"
     #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
+
+    # all the sets arguments are groups of commands numbers
     set0 = ['0', '6', '10', '12']
-    if functions.my_authorization == '1' and command_No != '8':
-        emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})  # server side secure
+    if functions.my_authorization == '1' and command_No != '8':  # simple user tries to execute unauthorized command.  server side secure
+        emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     elif command_No in set0:
         emit('execute_command_response', {'success': 'false', 'message': 'This command is not supported'})
         return
-    else:
+    else:  # all set for executing the command
         socketio.sleep(0)
         result = do_command(port_name, controller_name, command_No, additional_par, socketio)
-        if result == -10:
+        if result == -10:  # unable to connect this port
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
         socketio.sleep(0)
-        bootloader_message = json.dumps(functions.bootloader_reply)
+        bootloader_message = json.dumps(functions.bootloader_reply)   # converting the list to JSON
         socketio.sleep(0)
+
+        # all commands in set1 required different types of visual structure to display to the user.
+        # each one of the emit functions 'emitting' the correct process details back to the GUI
         set1 = ['1', '2', '3', '4', '11', '13', '14']
         if command_No in set1:
             emit1()
@@ -121,6 +130,8 @@ def handle_message(details):
             emit5()
 
         socketio.sleep(0)
+
+        # the down below scopes are required for emitting the bootloader reply back to the GUI.
         if 'Invalid_command_code' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Invalid_command_code'})
         elif 'CRC_FAIL' in functions.bootloader_reply[0]:
@@ -130,13 +141,15 @@ def handle_message(details):
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
 
+        clean_process_reply()
+        clean_bootloader_reply()
         print('process done')
 
 #------------------- assistance functions for execute command, for emitting the correct message -----------
 def emit1():
     emit('execute_command_process_response',  {'length': functions.process_reply[0],
-                                              'command_code': functions.process_reply[1],
-                                              'CRC': functions.process_reply[2]})
+                                               'command_code': functions.process_reply[1],
+                                               'CRC': functions.process_reply[2]})
 
 def emit2():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
@@ -202,13 +215,13 @@ def handle_message():
 
 # create new user - add to database after filling details and pressing register
 @socketio.on('register_user')
-def handle_message(new_user_details):  # transfer to switch-case function
+def handle_message(new_user_details):
+    print('create user accepted')
     data = json.dumps(new_user_details)
     data = json.loads(data)
     new_username = data["new_user_name"]
     new_password = data["new_password"]
     new_author_code = data["new_authorization_code"]
-    new_author_code = int(new_author_code, 10)
     if new_author_code != 1 and new_author_code != 2 and new_author_code != 3:
         emit('register_response', {'success': 'false', 'message': 'illegal_authorization_code'})
     else:
@@ -300,7 +313,7 @@ def handle_message():
 @socketio.on('logout_attempt')
 def handle_message():
     init_my_profile()
-    # Close_serial_port()  # not doing anything for now
+    Close_serial_port()
 
 
 @socketio.on('reset_ports')
@@ -318,7 +331,6 @@ def handle_message():
 
 
 def emit_port_configuration_message(port_configuration_message):
-    # print(port_configuration_message)
     emit('port_configuration_response', {'message': port_configuration_message})
     return
 
