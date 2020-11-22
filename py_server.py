@@ -7,7 +7,7 @@ import json
 """
 create py_server.exe with: pyinstaller py_server.py -n py-server.py
 to create electron app go to dist/py-server and copy content to GUI's public library
-than to pack everything to app command: npm run dep-win (for Windows.. look in package.json for more)
+than to pack everything to app command: npm run dep-win->for Windows.. (look in package.json for more)
 """
 # ----------DO NOT REMOVE THIS LINE!!!---------- #
 from engineio.async_drivers import gevent

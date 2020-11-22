@@ -5,17 +5,22 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="GLOBAL PORT CONFIGURATION">
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="create user fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STM32_Programmer_V1.py" beforeDir="false" afterPath="$PROJECT_DIR$/STM32_Programmer_V1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Unit Test" />
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -36,7 +41,29 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Python.py_server (1)">
+  <component name="RunManager" selected="Python.client">
+    <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Netafim-MC-backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="py_server (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Netafim-MC-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -127,6 +154,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.client" />
         <item itemvalue="Python.py_server (1)" />
         <item itemvalue="Python.tests" />
         <item itemvalue="Python.py_server" />
@@ -157,7 +185,11 @@
       <workItem from="1604468543539" duration="1447000" />
       <workItem from="1604742965704" duration="4351000" />
       <workItem from="1604842728543" duration="11246000" />
-      <workItem from="1605009029634" duration="4481000" />
+      <workItem from="1605009029634" duration="7861000" />
+      <workItem from="1605092866971" duration="2038000" />
+      <workItem from="1605428388260" duration="7906000" />
+      <workItem from="1605593134032" duration="2071000" />
+      <workItem from="1606053950803" duration="227000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -243,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603973783040</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="create user fixed">
+      <created>1605014991829</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1605014991829</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +312,8 @@
     <MESSAGE value="yofi versano" />
     <MESSAGE value="28.10" />
     <MESSAGE value="GLOBAL PORT CONFIGURATION" />
-    <option name="LAST_COMMIT_MESSAGE" value="GLOBAL PORT CONFIGURATION" />
+    <MESSAGE value="create user fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="create user fixed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602847176582">
@@ -284,54 +324,63 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="386" y="142" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603210722863" />
-    <state width="1877" height="283" key="GridCell.Tab.0.bottom" timestamp="1605014952414">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="190" key="GridCell.Tab.0.bottom" timestamp="1605081634146">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="283" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014952414" />
     <state width="1237" height="84" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1605014185219" />
-    <state width="1238" height="304" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604933912085" />
-    <state width="1877" height="283" key="GridCell.Tab.0.center" timestamp="1605014952414">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="190" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1605081634146" />
+    <state width="1238" height="190" key="GridCell.Tab.0.center" timestamp="1605081634146">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="283" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014952414" />
     <state width="1237" height="84" key="GridCell.Tab.0.center/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1605014185219" />
-    <state width="1238" height="304" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604933912084" />
-    <state width="1877" height="283" key="GridCell.Tab.0.left" timestamp="1605014952414">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="190" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1605081634146" />
+    <state width="1238" height="190" key="GridCell.Tab.0.left" timestamp="1605081634144">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="283" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014952414" />
     <state width="1237" height="84" key="GridCell.Tab.0.left/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1605014185219" />
-    <state width="1238" height="304" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604933912084" />
-    <state width="1877" height="283" key="GridCell.Tab.0.right" timestamp="1605014952414">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="190" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1605081634144" />
+    <state width="1238" height="190" key="GridCell.Tab.0.right" timestamp="1605081634146">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="283" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014952414" />
     <state width="1237" height="84" key="GridCell.Tab.0.right/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1605014185219" />
-    <state width="1238" height="304" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604933912084" />
-    <state width="1877" height="206" key="GridCell.Tab.1.bottom" timestamp="1603278023707">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="190" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1605081634146" />
+    <state width="1238" height="345" key="GridCell.Tab.1.bottom" timestamp="1605081480134">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="206" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
-    <state width="1877" height="206" key="GridCell.Tab.1.center" timestamp="1603278023707">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="345" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1605081480134" />
+    <state width="1238" height="345" key="GridCell.Tab.1.center" timestamp="1605081480133">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="206" key="GridCell.Tab.1.center/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
-    <state width="1877" height="206" key="GridCell.Tab.1.left" timestamp="1603278023707">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="345" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1605081480133" />
+    <state width="1238" height="345" key="GridCell.Tab.1.left" timestamp="1605081480133">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="206" key="GridCell.Tab.1.left/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
-    <state width="1877" height="206" key="GridCell.Tab.1.right" timestamp="1603278023707">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state width="1238" height="345" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1605081480133" />
+    <state width="1238" height="345" key="GridCell.Tab.1.right" timestamp="1605081480133">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1877" height="206" key="GridCell.Tab.1.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
-    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2" timestamp="1603973784134">
+    <state width="1238" height="345" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1605081480133" />
+    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2" timestamp="1605014994563">
       <screen x="-1920" y="174" width="1920" height="1040" />
     </state>
-    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603973784134" />
+    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014994563" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603209673497" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1603864953840" />
+    <state x="303" y="2" width="672" height="678" key="search.everywhere.popup" timestamp="1605080728072">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="2" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1605080728072" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/NetafimMC_python$client.coverage" NAME="client Coverage Results" MODIFIED="1605081634111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py_server Coverage Results" MODIFIED="1604924584022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$tests.coverage" NAME="tests Coverage Results" MODIFIED="1605011717539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1604221269080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
