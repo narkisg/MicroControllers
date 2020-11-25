@@ -5,9 +5,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="create user fixed">
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +40,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Python.client">
+  <component name="RunManager" selected="Python.py_server">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Netafim-MC-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -154,10 +153,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.py_server" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.py_server (1)" />
         <item itemvalue="Python.tests" />
-        <item itemvalue="Python.py_server" />
         <item itemvalue="Python.scratch" />
       </list>
     </recent_temporary>
@@ -189,7 +188,8 @@
       <workItem from="1605092866971" duration="2038000" />
       <workItem from="1605428388260" duration="7906000" />
       <workItem from="1605593134032" duration="2071000" />
-      <workItem from="1606053950803" duration="227000" />
+      <workItem from="1606053950803" duration="1895000" />
+      <workItem from="1606222984109" duration="630000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -282,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605014991829</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="check">
+      <created>1606054192247</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1606054192247</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +320,8 @@
     <MESSAGE value="28.10" />
     <MESSAGE value="GLOBAL PORT CONFIGURATION" />
     <MESSAGE value="create user fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="create user fixed" />
+    <MESSAGE value="check" />
+    <option name="LAST_COMMIT_MESSAGE" value="check" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602847176582">
@@ -368,11 +376,11 @@
     </state>
     <state width="1877" height="206" key="GridCell.Tab.1.right/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1603278023707" />
     <state width="1238" height="345" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1605081480133" />
-    <state x="-1570" y="286" key="Vcs.Push.Dialog.v2" timestamp="1605014994563">
-      <screen x="-1920" y="174" width="1920" height="1040" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1606054193884">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1570" y="286" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@-1920.174.1920.1040" timestamp="1605014994563" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1603209673497" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.174.1920.1040@0.0.1280.680" timestamp="1606054193884" />
     <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1603864953840" />
     <state x="303" y="2" width="672" height="678" key="search.everywhere.popup" timestamp="1605080728072">
       <screen x="0" y="0" width="1280" height="680" />
