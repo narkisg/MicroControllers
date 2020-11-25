@@ -315,7 +315,6 @@ def print_bootloader_nevo(result):
     functions.bootloader_reply.append(result)
 
 def port_configuration_message(port_configuration_message):
-    # print(port_configuration_message)
     emit_port_configuration_message(port_configuration_message)
     return
 

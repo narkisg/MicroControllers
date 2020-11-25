@@ -71,6 +71,11 @@ def nevo_open_the_file(file):
     # global file_contents = bytearray(read)
 
 
+def nevo_confirm_controller_ID(my_controller, controller_ID):
+    controller_ID = hex(int(controller_ID, 16))
+    return my_controller == controller_ID
+
+
 def read_the_file():
     pass
 
@@ -375,13 +380,18 @@ def convert_from_string(string):
     return output
 
 
-def decode_menu_command_code(port_name, controller_name, command, additional_par, socket):
+def decode_menu_command_code(controller_ID, command, additional_par, socket):
     ret_value = 0
-    data_buf = []
-    data_buf = add()  # for debugging
-    # for i in range(255):
-    # data_buf.append(0)
+    data_buf = add()
     command = int(command, 10)
+    multiple_controllers_is_connected = True
+    shift = 1
+    if data_buf[0] == '':
+        multiple_controllers_is_connected = False
+        shift = 0
+    if multiple_controllers_is_connected:
+        controller_ID = hex(int(controller_ID))
+
 
     if(command == 0):
         # print("\n   Exiting...!") this line is for manual debugging
@@ -390,21 +400,22 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
     elif(command == 1):
         # print(f"\n   Command == > BL_GET_VER") this line is for manual debugging
         COMMAND_BL_GET_VER_LEN = 6
-        #data_buf[0] = controller_name
-        data_buf[0] = COMMAND_BL_GET_VER_LEN-1
-        data_buf[1] = COMMAND_BL_GET_VER
+        data_buf[0] = controller_ID
+        data_buf[1] = COMMAND_BL_GET_VER_LEN-1
+        data_buf[2] = COMMAND_BL_GET_VER
         crc32 = get_crc(data_buf, COMMAND_BL_GET_VER_LEN-4)
         crc32 = crc32 & 0xffffffff
-        data_buf[2] = word_to_byte(crc32, 1, 1)
-        data_buf[3] = word_to_byte(crc32, 2, 1)
-        data_buf[4] = word_to_byte(crc32, 3, 1)
-        data_buf[5] = word_to_byte(crc32, 4, 1)
-
+        data_buf[3] = word_to_byte(crc32, 1, 1)
+        data_buf[4] = word_to_byte(crc32, 2, 1)
+        data_buf[5] = word_to_byte(crc32, 3, 1)
+        data_buf[6] = word_to_byte(crc32, 4, 1)
+        if not multiple_controllers_is_connected:  # one controller is connected
+            data_buf.pop(0)                        # removes the controller_ID fro list
         Write_to_serial_port(data_buf[0], 1, socket=socket)
         for i in data_buf[1:COMMAND_BL_GET_VER_LEN]:
             Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN-1, socket=socket)
 
-        ret_value = read_bootloader_reply(data_buf[1])
+        ret_value = read_bootloader_reply(shift, controller_ID, data_buf[1+shift])
 
     elif(command == 2):
         # print("\n   Command == > BL_GET_HELP") this line is for manual debugging
@@ -724,20 +735,25 @@ def decode_menu_command_code(port_name, controller_name, command, additional_par
     return ret_value
 
 
-def read_bootloader_reply(command_code):
-    # ack=[0,0]
-    len_to_follow = 0
+def read_bootloader_reply(shift, controller_ID, command_code):
     ret_value = -2
+    ack = read_serial_port(2+shift)
 
-    # read_serial_port(ack,2)
-    #ack = ser.read(2)
-    ack = read_serial_port(2)
+    #block to check match between sent controller ID to returned ID
+    if shift==1:
+        match = nevo_confirm_controller_ID(controller_ID, ack[0])
+        if not match:
+            functions.print_bootloader_nevo("MATCH ERROR! Controller "+str(ack[0])+" receives the command instead of controller "+controller_ID)
+            return ret_value
+
     if(len(ack)):
+        #if current_controller_state:
+            #function to confrim controller ID
         a_array = bytearray(ack)
         #print("read uart:",ack)
-        if (a_array[0] == 0xA5):
+        if (a_array[0+shift] == 0xA5):
             # CRC of last command was good .. received ACK and "len to follow"
-            len_to_follow = a_array[1]
+            len_to_follow = a_array[1+shift]
             #print("\n   CRC : SUCCESS Len :",len_to_follow)
             functions.print_bootloader_nevo("CRC:_SUCCESS,Len:_ "+str(len_to_follow))
             # print("command_code:",hex(command_code))
@@ -780,7 +796,7 @@ def read_bootloader_reply(command_code):
 
             ret_value = 0
 
-        elif a_array[0] == 0x7F:
+        elif a_array[0+shift] == 0x7F:
             # CRC of last command was bad .. received NACK
             #print("\n   CRC: FAIL \n")
             functions.print_bootloader_nevo("ERROR! CRC_FAIL")
@@ -846,7 +862,7 @@ def execute_command(port_name, controller_name, command_code, additional_par, so
         ret = Serial_Port_Configuration(name)
         if ret < 0:
             return -10
-    result = decode_menu_command_code(port_name, controller_name, command_code, additional_par, socket)
+    result = decode_menu_command_code(controller_name, command_code, additional_par, socket)
     purge_serial_port()
     return result
 

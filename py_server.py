@@ -3,7 +3,7 @@ from flask import Flask
 from flask_socketio import SocketIO, emit
 from functions import *
 import json
-#check check!!!!!!
+
 """
 create py_server.exe with: pyinstaller py_server.py -n py-server.py
 to create electron app go to dist/py-server and copy content to GUI's public library
@@ -84,23 +84,27 @@ def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
     port_name = data["port_name"]
+    # if the controller_name field is an empty string (""), so the user send the command to one default controller,
+    #else, this field contains the ID of the target controller.
     controller_name = data["controller_name"]
     command_name = data["command_name"]
     command_No = convert_to_number(command_name)  # input as the command nickname, output as a string number
     additional_par = data["additional_parameters"]
-    # the additional parameters is a dictionary of all the additional parameters the current function demands,
-    # for example, if some command demands additional parameters than the global fields(port name, cont num...),
-    # like number of sectors, or list of something or file address to upload from directory.
-    # example for json file with additional parameters-
-    #                           {port name: "COM3",
-    #                           controller name: "controller_1"
-    #                           command number: "9"
-    #                           authorization code: "2"
-    #                           additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}
+
+    """ the additional parameters is a dictionary of all the additional parameters the current function demands,
+         for example, if some command demands additional parameters than the global fields(port name, cont num...),
+         like number of sectors, or list of something or file address to upload from a directory.
+         example for json file with additional parameters-
+                                   {port name: "COM3",
+                                   controller name: "controller_1"
+                                   command number: "9"
+                                   authorization code: "2"
+                                   additional parameters: {"address": "6", "list_of_sectors": ["3","7","0"], "file_name": "user_app.bin"}"""
 
     # all the sets arguments are groups of commands numbers
     set0 = ['0', '6', '10', '12']
-    if functions.my_authorization == '1' and command_No != '8':  # simple user tries to execute unauthorized command.  server side secure
+    # simple user tries to execute unauthorized command. server side secure
+    if functions.my_authorization == '1' and command_No != '8':
         emit('execute_command_response', {'success': 'false', 'message': 'unauthorized_command_for_simple_user'})
     elif command_No in set0:
         emit('execute_command_response', {'success': 'false', 'message': 'This command is not supported'})
