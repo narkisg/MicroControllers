@@ -119,10 +119,33 @@ def arbitrator(username, password):
     return int(output)
 
 
+def discover_controllers_status_by_port(port_to_check, socket):
+    list_of_connected_controllers = []
+    for i in range(32):
+        current_controller = i+1
+        result = execute_command(port_to_check, str(current_controller), 1, '',socket)
+        if result == 0 | result == -1:
+            list_of_connected_controllers.append(current_controller)
+
+
+def discover_controllers_status_all_ports(socket):
+    map_of_connected_controllers = {}
+    available_ports = get_ports_list()
+    for i in range(len(available_ports)):
+        current_port = available_ports[i]
+        map_of_connected_controllers[current_port]=[]
+        for j in range(32):
+            current_controller = j+1
+            result = execute_command(current_port, str(current_controller), 1, '', socket)
+            if result == 0 | result == -1:
+                map_of_connected_controllers[current_port].append(str(current_controller))
+    return map_of_connected_controllers
+
+
 def get_controllers_list():
     output = []
-    for i in range(24):
-        controller = 'controller' + str(i)
+    for i in range(32):
+        controller = 'controller' + str(i+1)
         output.append(controller)
     return output
 

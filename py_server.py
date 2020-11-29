@@ -206,6 +206,21 @@ def handle_message(command_name):
     fields = get_command_fields(name)
     emit('get_fields_response', json.dumps(fields))
 
+
+@socketio.on('discover_controllers_status_by_port')
+def handle_message(port_to_check):
+    list_of_connected_controllers = discover_controllers_status_by_port(port_to_check, socketio)
+    data = json.dumps(list_of_connected_controllers)
+    emit('discover_controllers_status_by_port', data)
+
+
+@socketio.on('discover_controllers_status_all_ports')
+def handle_message():
+    map_of_connected_controllers = discover_controllers_status_all_ports(socketio)
+    data = json.dumps(map_of_connected_controllers)
+    emit('discover_controllers_status_response', data)
+
+
 # ----- user management functions ----- #
 
 # activate after pressing the user management button- only for administrator
@@ -311,9 +326,6 @@ def handle_message():
     emit('my_profile_response', json.dumps(my_profile))
 
 
-# ----- logout function ----- #
-
-# activate after pressing the 'Logout' button
 @socketio.on('logout_attempt')
 def handle_message():
     init_my_profile()
@@ -337,6 +349,7 @@ def handle_message():
 def emit_port_configuration_message(port_configuration_message):
     emit('port_configuration_response', {'message': port_configuration_message})
     return
+
 
 
 if __name__ == '__main__':
