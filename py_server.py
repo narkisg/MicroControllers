@@ -86,7 +86,7 @@ def handle_message(details):
     port_name = data["port_name"]
     # if the controller_name field is an empty string (""), so the user send the command to one default controller,
     #else, this field contains the ID of the target controller.
-    controller_name = data["controller_name"]
+    controller_ID = data["controller_name"]
     command_name = data["command_name"]
     command_No = convert_to_number(command_name)  # input as the command nickname, output as a string number
     additional_par = data["additional_parameters"]
@@ -111,7 +111,7 @@ def handle_message(details):
         return
     else:  # all set for executing the command
         socketio.sleep(0)
-        result = do_command(port_name, controller_name, command_No, additional_par, socketio)
+        result = do_command(port_name, controller_ID, command_No, additional_par, socketio)
         if result == -10:  # unable to connect this port
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
@@ -204,7 +204,8 @@ def handle_message(command_name):
     data = json.loads(data)
     name = data['name']
     fields = get_command_fields(name)
-    emit('get_fields_response', json.dumps(fields))
+    data = json.dumps(fields)
+    emit('get_fields_response', data)
 
 
 @socketio.on('discover_controllers_status_by_port')

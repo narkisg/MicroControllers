@@ -42,8 +42,8 @@ def clean_bootloader_reply():
     bootloader_reply.clear()
 
 
-def do_command(port_name, controller_name, command_No, additional_par, socket):
-    result = execute_command(port_name, controller_name, command_No, additional_par, socket)
+def do_command(port_name, controller_ID, command_No, additional_par, socket):
+    result = execute_command(port_name, controller_ID, command_No, additional_par, socket)
     return result
 
 
@@ -123,9 +123,10 @@ def discover_controllers_status_by_port(port_to_check, socket):
     list_of_connected_controllers = []
     for i in range(32):
         current_controller = i+1
-        result = execute_command(port_to_check, str(current_controller), 1, '',socket)
+        result = execute_command(port_to_check, str(current_controller), 1, '', socket)
         if result == 0 | result == -1:
             list_of_connected_controllers.append(current_controller)
+    return list_of_connected_controllers
 
 
 def discover_controllers_status_all_ports(socket):
