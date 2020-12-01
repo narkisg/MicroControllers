@@ -90,10 +90,10 @@ def word_to_byte(addr, index, lowerfirst):
     return value
 
 
-def get_crc(buff, length):
+def get_crc(buff, length,initial_index):
     Crc = 0xFFFFFFFF
     # print(length)
-    for data in buff[0:length]:
+    for data in buff[initial_index:length]:
         Crc = Crc ^ data
         for i in range(32):
             if (Crc & 0x80000000):
@@ -398,7 +398,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_VER_LEN - 1
         data_buf[2] = COMMAND_BL_GET_VER
-        crc32 = get_crc(data_buf, COMMAND_BL_GET_VER_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_GET_VER_LEN - 4, shift)
         crc32 = crc32 & 0xffffffff
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
