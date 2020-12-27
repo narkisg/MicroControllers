@@ -11,6 +11,7 @@ process_reply = []  # holds current command process arguments
 bootloader_reply = []  # holds current command bootloader reply
 is_connected_to_port = ""  # holds current port connection- empty string for not connected, name of port for connected
 
+
 # ============== functions ============== #
 
 # initializing global variables
@@ -43,6 +44,7 @@ def clean_bootloader_reply():
 
 
 def do_command(port_name, controller_ID, command_No, additional_par, socket):
+    controller_ID = controller_ID[len(controller_ID) - 1]  # gets only the number
     result = execute_command(port_name, controller_ID, command_No, additional_par, socket)
     return result
 
@@ -122,7 +124,7 @@ def arbitrator(username, password):
 def discover_controllers_status_by_port(port_to_check, socket):
     list_of_connected_controllers = []
     for i in range(32):
-        current_controller = i+1
+        current_controller = i + 1
         result = execute_command(port_to_check, str(current_controller), 1, '', socket)
         if result == 0 | result == -1:
             list_of_connected_controllers.append(current_controller)
@@ -134,10 +136,10 @@ def discover_controllers_status_all_ports(socket):
     available_ports = get_ports_list()
     for i in range(len(available_ports)):
         current_port = available_ports[i]
-        map_of_connected_controllers[current_port]=[]
-        for j in range(32):
-            current_controller = j+1
-            result = execute_command(current_port, str(current_controller), 1, '', socket)
+        map_of_connected_controllers[current_port] = []
+        for j in range(2):
+            current_controller = j + 1
+            result = execute_command(current_port, str(current_controller), '1', '', socket)
             if result == 0 | result == -1:
                 map_of_connected_controllers[current_port].append(str(current_controller))
     return map_of_connected_controllers
@@ -146,7 +148,7 @@ def discover_controllers_status_all_ports(socket):
 def get_controllers_list():
     output = []
     for i in range(32):
-        controller = 'controller' + str(i+1)
+        controller = 'controller' + str(i + 1)
         output.append(controller)
     return output
 
@@ -338,7 +340,7 @@ def print_process_nevo(result):
 def print_bootloader_nevo(result):
     functions.bootloader_reply.append(result)
 
+
 def port_configuration_message(port_configuration_message):
     emit_port_configuration_message(port_configuration_message)
     return
-

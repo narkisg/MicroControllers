@@ -210,16 +210,19 @@ def handle_message(command_name):
 
 @socketio.on('discover_controllers_status_by_port')
 def handle_message(port_to_check):
+    print("got it")
     list_of_connected_controllers = discover_controllers_status_by_port(port_to_check, socketio)
+    print(list_of_connected_controllers)
     data = json.dumps(list_of_connected_controllers)
-    emit('discover_controllers_status_by_port', data)
+    emit('discover_controllers_status_by_port_response', data)
+    print("emit")
 
 
 @socketio.on('discover_controllers_status_all_ports')
 def handle_message():
     map_of_connected_controllers = discover_controllers_status_all_ports(socketio)
     data = json.dumps(map_of_connected_controllers)
-    emit('discover_controllers_status_response', data)
+    emit('discover_controllers_status_all_ports_response', data)
 
 
 # ----- user management functions ----- #
@@ -236,7 +239,6 @@ def handle_message():
 # create new user - add to database after filling details and pressing register
 @socketio.on('register_user')
 def handle_message(new_user_details):
-    print('create user accepted')
     data = json.dumps(new_user_details)
     data = json.loads(data)
     new_username = data["new_user_name"]

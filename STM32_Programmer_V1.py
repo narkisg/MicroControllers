@@ -90,7 +90,7 @@ def word_to_byte(addr, index, lowerfirst):
     return value
 
 
-def get_crc(buff, length,initial_index):
+def get_crc(buff, length, initial_index):
     Crc = 0xFFFFFFFF
     # print(length)
     for data in buff[initial_index:length]:
@@ -387,7 +387,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         is_directed_to_specific_controller = False
         shift = 0
     else:
-        controller_ID = hex(int(controller_ID))
+        controller_ID = int(controller_ID)
 
     if (command == 0):
         # print("\n   Exiting...!") this line is for manual debugging
@@ -419,7 +419,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_HELP_LEN - 1
         data_buf[2] = COMMAND_BL_GET_HELP
-        crc32 = get_crc(data_buf, COMMAND_BL_GET_HELP_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_GET_HELP_LEN - 4, shift)
         crc32 = crc32 & 0xffffffff
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
@@ -440,7 +440,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_CID_LEN - 1
         data_buf[2] = COMMAND_BL_GET_CID
-        crc32 = get_crc(data_buf, COMMAND_BL_GET_CID_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_GET_CID_LEN - 4, shift)
         crc32 = crc32 & 0xffffffff
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
@@ -460,7 +460,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_RDP_STATUS_LEN - 1
         data_buf[2] = COMMAND_BL_GET_RDP_STATUS
-        crc32 = get_crc(data_buf, COMMAND_BL_GET_RDP_STATUS_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_GET_RDP_STATUS_LEN - 4, shift)
         crc32 = crc32 & 0xffffffff
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
@@ -487,7 +487,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[4] = word_to_byte(go_address, 2, 1)
         data_buf[5] = word_to_byte(go_address, 3, 1)
         data_buf[6] = word_to_byte(go_address, 4, 1)
-        crc32 = get_crc(data_buf, COMMAND_BL_GO_TO_ADDR_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_GO_TO_ADDR_LEN - 4, shift)
         data_buf[7] = word_to_byte(crc32, 1, 1)
         data_buf[8] = word_to_byte(crc32, 2, 1)
         data_buf[9] = word_to_byte(crc32, 3, 1)
@@ -520,7 +520,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[3] = sector_num
         data_buf[4] = nsec
 
-        crc32 = get_crc(data_buf, COMMAND_BL_FLASH_ERASE_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_FLASH_ERASE_LEN - 4, shift)
         data_buf[5] = word_to_byte(crc32, 1, 1)
         data_buf[6] = word_to_byte(crc32, 2, 1)
         data_buf[7] = word_to_byte(crc32, 3, 1)
@@ -584,7 +584,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
             # first field is "len_to_follow"
             data_buf[1] = mem_write_cmd_total_len - 1
 
-            crc32 = get_crc(data_buf, mem_write_cmd_total_len - 4)
+            crc32 = get_crc(data_buf, mem_write_cmd_total_len - 4, shift)
             data_buf[8 + len_to_read] = word_to_byte(crc32, 1, 1)
             data_buf[9 + len_to_read] = word_to_byte(crc32, 2, 1)
             data_buf[10 + len_to_read] = word_to_byte(crc32, 3, 1)
@@ -637,7 +637,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[2] = COMMAND_BL_EN_R_W_PROTECT
         data_buf[3] = sector_details
         data_buf[4] = mode
-        crc32 = get_crc(data_buf, COMMAND_BL_EN_R_W_PROTECT_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_EN_R_W_PROTECT_LEN - 4, shift)
         data_buf[5] = word_to_byte(crc32, 1, 1)
         data_buf[6] = word_to_byte(crc32, 2, 1)
         data_buf[7] = word_to_byte(crc32, 3, 1)
@@ -661,7 +661,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[1] = COMMAND_BL_READ_SECTOR_P_STATUS_LEN - 1
         data_buf[2] = COMMAND_BL_READ_SECTOR_P_STATUS
 
-        crc32 = get_crc(data_buf, COMMAND_BL_READ_SECTOR_P_STATUS_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_READ_SECTOR_P_STATUS_LEN - 4, shift)
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
         data_buf[5] = word_to_byte(crc32, 3, 1)
@@ -685,7 +685,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_DIS_R_W_PROTECT_LEN - 1
         data_buf[2] = COMMAND_BL_DIS_R_W_PROTECT
-        crc32 = get_crc(data_buf, COMMAND_BL_DIS_R_W_PROTECT_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_DIS_R_W_PROTECT_LEN - 4, shift)
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
         data_buf[5] = word_to_byte(crc32, 3, 1)
@@ -704,7 +704,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_MY_NEW_COMMAND_LEN - 1
         data_buf[2] = COMMAND_BL_MY_NEW_COMMAND
-        crc32 = get_crc(data_buf, COMMAND_BL_MY_NEW_COMMAND_LEN - 4)
+        crc32 = get_crc(data_buf, COMMAND_BL_MY_NEW_COMMAND_LEN - 4, shift)
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
         data_buf[5] = word_to_byte(crc32, 3, 1)
