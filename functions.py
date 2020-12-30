@@ -44,7 +44,8 @@ def clean_bootloader_reply():
 
 
 def do_command(port_name, controller_ID, command_No, additional_par, socket):
-    controller_ID = controller_ID[len(controller_ID) - 1]  # gets only the number
+    if controller_ID != '':
+        controller_ID = controller_ID[len(controller_ID) - 1]  # gets only the number
     result = execute_command(port_name, controller_ID, command_No, additional_par, socket)
     return result
 
@@ -123,9 +124,9 @@ def arbitrator(username, password):
 
 def discover_controllers_status_by_port(port_to_check, socket):
     list_of_connected_controllers = []
-    for i in range(32):
+    for i in range(2):  # change to 32 (number of controllers)
         current_controller = i + 1
-        result = execute_command(port_to_check, str(current_controller), 1, '', socket)
+        result = execute_command(port_to_check, str(current_controller), '1', '', socket)
         if result == 0 | result == -1:
             list_of_connected_controllers.append(current_controller)
     return list_of_connected_controllers
@@ -137,7 +138,7 @@ def discover_controllers_status_all_ports(socket):
     for i in range(len(available_ports)):
         current_port = available_ports[i]
         map_of_connected_controllers[current_port] = []
-        for j in range(2):
+        for j in range(2):  # change to 32 (number of controllers)
             current_controller = j + 1
             result = execute_command(current_port, str(current_controller), '1', '', socket)
             if result == 0 | result == -1:

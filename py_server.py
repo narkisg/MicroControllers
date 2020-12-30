@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask_socketio import SocketIO, emit
 from functions import *
@@ -43,6 +42,7 @@ def handle_message(user_name_details):
         elif permission == 3:
             emit('login_response', {'success': 'true', 'message': 'administrator_user_successfully_logged_in'})
 
+
 # ========================= main window functions ========================= #
 
 # ----- update program functions ----- #
@@ -85,7 +85,7 @@ def handle_message(details):
     data = json.loads(data)
     port_name = data["port_name"]
     # if the controller_name field is an empty string (""), so the user send the command to one default controller,
-    #else, this field contains the ID of the target controller.
+    # else, this field contains the ID of the target controller.
     controller_ID = data["controller_name"]
     command_name = data["command_name"]
     command_No = convert_to_number(command_name)  # input as the command nickname, output as a string number
@@ -116,7 +116,7 @@ def handle_message(details):
             emit('execute_command_response', {'success': 'false', 'message': 'port_configuration_error'})
             return
         socketio.sleep(0)
-        bootloader_message = json.dumps(functions.bootloader_reply)   # converting the list to JSON
+        bootloader_message = json.dumps(functions.bootloader_reply)  # converting the list to JSON
         socketio.sleep(0)
 
         # all commands in set1 required different types of visual structure to display to the user.
@@ -141,7 +141,8 @@ def handle_message(details):
         elif 'CRC_FAIL' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'false', 'message': 'CRC_FAIL'})
         elif 'Timeout' in functions.bootloader_reply[0]:
-            emit('execute_command_bootloader_response', {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
+            emit('execute_command_bootloader_response',
+                 {'success': 'false', 'message': 'Timeout:_Bootloader_not_responding'})
         elif 'CRC:_SUCCESS' in functions.bootloader_reply[0]:
             emit('execute_command_bootloader_response', {'success': 'true', 'message': bootloader_message})
 
@@ -149,11 +150,13 @@ def handle_message(details):
         clean_bootloader_reply()
         print('process done')
 
-#------------------- assistance functions for execute command, for emitting the correct message -----------
+
+# ------------------- assistance functions for execute command, for emitting the correct message -----------
 def emit1():
-    emit('execute_command_process_response',  {'length': functions.process_reply[0],
-                                               'command_code': functions.process_reply[1],
-                                               'CRC': functions.process_reply[2]})
+    emit('execute_command_process_response', {'length': functions.process_reply[0],
+                                              'command_code': functions.process_reply[1],
+                                              'CRC': functions.process_reply[2]})
+
 
 def emit2():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
@@ -161,12 +164,14 @@ def emit2():
                                               'memory_address(LE)': functions.process_reply[2],
                                               'CRC': functions.process_reply[3]})
 
+
 def emit3():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
                                               'command_code': functions.process_reply[1],
                                               'sector_number': functions.process_reply[2],
                                               'number_of_sectors': functions.process_reply[3],
                                               'CRC': functions.process_reply[4]})
+
 
 def emit4():
     socketio.sleep(0)
@@ -176,6 +181,7 @@ def emit4():
                                               'payload_length': functions.process_reply[3],
                                               'payload': functions.process_reply[4],
                                               'CRC': functions.process_reply[5]})
+
 
 def emit5():
     emit('execute_command_process_response', {'length': functions.process_reply[0],
@@ -210,18 +216,21 @@ def handle_message(command_name):
 
 @socketio.on('discover_controllers_status_by_port')
 def handle_message(port_to_check):
-    print("got it")
-    list_of_connected_controllers = discover_controllers_status_by_port(port_to_check, socketio)
-    print(list_of_connected_controllers)
-    data = json.dumps(list_of_connected_controllers)
-    emit('discover_controllers_status_by_port_response', data)
-    print("emit")
+    data = json.dumps(port_to_check)
+    data = json.loads(data)
+    port = data["port"]
+    list_of_connected_controllers = discover_controllers_status_by_port(port, socketio)
+    data={port: list_of_connected_controllers}
+    data = {port: ['23', '567', '7']}  # remove this line
+    emit('discover_controllers_status_by_port_response', json.dumps(data))
 
 
 @socketio.on('discover_controllers_status_all_ports')
 def handle_message():
     map_of_connected_controllers = discover_controllers_status_all_ports(socketio)
     data = json.dumps(map_of_connected_controllers)
+    #tmp = {"COM3":["12","5678","17"], "COM45":[], "COM7465655":["655","323","O9G5T","76","JGTR"]}
+    #tmp = json.dumps(tmp)
     emit('discover_controllers_status_all_ports_response', data)
 
 
@@ -296,7 +305,7 @@ def handle_message(details):
 def handle_message(details):
     data = json.dumps(details)
     data = json.loads(data)
-    username = data["username"]   # the one you want to change
+    username = data["username"]  # the one you want to change
     new_user_name = data["new_username"]
     result = change_user_name(username, new_user_name)
     if result == -1:
@@ -352,7 +361,6 @@ def handle_message():
 def emit_port_configuration_message(port_configuration_message):
     emit('port_configuration_response', {'message': port_configuration_message})
     return
-
 
 
 if __name__ == '__main__':

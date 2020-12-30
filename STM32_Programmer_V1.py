@@ -382,10 +382,10 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
     data_buf = initialize_data_buf()
     command = int(command, 10)
     is_directed_to_specific_controller = True
-    shift = 1
+    shift = 0
     if controller_ID == '':  # No controller is defined
         is_directed_to_specific_controller = False
-        shift = 0
+        shift = 1
     else:
         controller_ID = int(controller_ID)
 
