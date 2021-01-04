@@ -148,7 +148,6 @@ def handle_message(details):
 
         clean_process_reply()
         clean_bootloader_reply()
-        print('process done')
 
 
 # ------------------- assistance functions for execute command, for emitting the correct message -----------
@@ -221,7 +220,7 @@ def handle_message(port_to_check):
     port = data["port"]
     list_of_connected_controllers = discover_controllers_status_by_port(port, socketio)
     data={port: list_of_connected_controllers}
-    data = {port: ['23', '567', '7']}  # remove this line
+    #data = {port: ['23', '567', '7']}  # remove this line
     emit('discover_controllers_status_by_port_response', json.dumps(data))
 
 

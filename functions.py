@@ -138,7 +138,7 @@ def discover_controllers_status_all_ports(socket):
     for i in range(len(available_ports)):
         current_port = available_ports[i]
         map_of_connected_controllers[current_port] = []
-        for j in range(2):  # change to 32 (number of controllers)
+        for j in range(32):  # change to 32 (number of controllers)
             current_controller = j + 1
             result = execute_command(current_port, str(current_controller), '1', '', socket)
             if result == 0 | result == -1:
@@ -334,11 +334,11 @@ def change_user_password(username, new_password):
     return output
 
 
-def print_process_nevo(result):
+def print_process_args(result):
     functions.process_reply.append(result)
 
 
-def print_bootloader_nevo(result):
+def print_bootloader_args(result):
     functions.bootloader_reply.append(result)
 
 
