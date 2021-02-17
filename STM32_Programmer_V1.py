@@ -176,6 +176,7 @@ def purge_serial_port():
 
 
 def Write_to_serial_port(value, *length, socket):
+    print("------------write to serial port-------------")
     data = struct.pack('>B', value)
     if (verbose_mode):
         value = bytearray(data)
@@ -186,9 +187,10 @@ def Write_to_serial_port(value, *length, socket):
         # print("#", end=' ')
         functions.print_process_args("#")
     socket.sleep(0)
+    print("start ser.write with data:")
+    print(data)
     ser.write(data)
-
-
+    print("done ser.write")
 # ----------------------------- command processing----------------------------------------
 
 
@@ -394,13 +396,13 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         raise SystemExit
 
     elif (command == 1):
+        print("start get version")
         COMMAND_BL_GET_VER_LEN = 6
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_VER_LEN - 1
         data_buf[2] = COMMAND_BL_GET_VER
         crc32 = get_crc(data_buf, COMMAND_BL_GET_VER_LEN - 4, shift)
         crc32 = crc32 & 0xffffffff
-        print(crc32)
         data_buf[3] = word_to_byte(crc32, 1, 1)
         data_buf[4] = word_to_byte(crc32, 2, 1)
         data_buf[5] = word_to_byte(crc32, 3, 1)
@@ -414,6 +416,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
             Write_to_serial_port(i, COMMAND_BL_GET_VER_LEN - 1, socket=socket)
 
         ret_value = read_bootloader_reply(shift, controller_ID, data_buf[1+shift])
+
 
     elif (command == 2):
         COMMAND_BL_GET_HELP_LEN = 6
@@ -789,56 +792,7 @@ def read_bootloader_reply(shift, controller_ID, command_code):
     else:
         # print("\n   Timeout : Bootloader not responding")
         functions.print_bootloader_args("ERROR! Timeout:_Bootloader_not_responding")
-
     return ret_value
-
-
-# ----------------------------- Ask Menu implementation----------------------------------------
-
-# switch system for manual activate
-"""name = input("Enter the Port Name of your device(Ex: COM3):")
-ret_value = 0
-ret_value=Serial_Port_Configuration(name)
-if(ret_value < 0):
-    decode_menu_command_code(0)
-
-
-
-
-while True:
-    print("\n +==========================================+")
-    print(" |               Menu                       |")
-    print(" |         STM32F4 BootLoader v1            |")
-    print(" +==========================================+")
-
-
-
-    print("\n   Which BL command do you want to send ??\n")
-    print("   BL_GET_VER                            --> 1")
-    print("   BL_GET_HLP                            --> 2")
-    print("   BL_GET_CID                            --> 3")
-    print("   BL_GET_RDP_STATUS                     --> 4")
-    print("   BL_GO_TO_ADDR                         --> 5")
-    print("   BL_FLASH_MASS_ERASE                   --> 6")
-    print("   BL_FLASH_ERASE                        --> 7")
-    print("   BL_MEM_WRITE                          --> 8")
-    print("   BL_EN_R_W_PROTECT                     --> 9")
-    print("   BL_MEM_READ                           --> 10")
-    print("   BL_READ_SECTOR_P_STATUS               --> 11")
-    print("   BL_OTP_READ                           --> 12")
-    print("   BL_DIS_R_W_PROTECT                    --> 13")
-    print("   BL_MY_NEW_COMMAND                     --> 14")
-    print("   MENU_EXIT                             --> 0")
-
-    command_code = input("\n   Type the command code here :")
-
-    if(not command_code.isdigit()):
-        print("\n   Please Input valid code shown above")
-    else:
-        decode_menu_command_code(int(command_code))
-
-    input("\n   Press any key to continue  :")
-    purge_serial_port()"""
 
 
 def execute_command(port_name, controller_ID, command_code, additional_par, socket):

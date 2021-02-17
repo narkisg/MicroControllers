@@ -215,7 +215,9 @@ def handle_message(command_name):
 
 @socketio.on('discover_controllers_status_by_port')
 def handle_message(port_to_check):
+    print("here")
     data = json.dumps(port_to_check)
+    print("there")
     data = json.loads(data)
     port = data["port"]
     list_of_connected_controllers = discover_controllers_status_by_port(port, socketio)
@@ -226,7 +228,9 @@ def handle_message(port_to_check):
 
 @socketio.on('discover_controllers_status_all_ports')
 def handle_message():
+    print("yess")
     map_of_connected_controllers = discover_controllers_status_all_ports(socketio)
+    print("nooo")
     data = json.dumps(map_of_connected_controllers)
     #tmp = {"COM3":["12","5678","17"], "COM45":[], "COM7465655":["655","323","O9G5T","76","JGTR"]}
     #tmp = json.dumps(tmp)
