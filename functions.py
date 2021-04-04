@@ -123,10 +123,14 @@ def arbitrator(username, password):
 
 
 def discover_controllers_status_by_port(port_to_check, socket):
+    print("port: "+port_to_check)
     list_of_connected_controllers = []
     for i in range(32):  # change to 32 (number of controllers)
+        socket.sleep(0)
+        print("controller number:" +str(i+1))
         current_controller = i + 1
         result = execute_command(port_to_check, str(current_controller), '1', '', socket)
+        socket.sleep(0)
         if result == 0 | result == -1:
             list_of_connected_controllers.append(current_controller)
     return list_of_connected_controllers
