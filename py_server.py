@@ -10,9 +10,11 @@ than to pack everything to app command: npm run dep-win->for Windows.. (look in 
 """
 # ----------DO NOT REMOVE THIS SCOPE!!!---------- #
 from engineio.async_drivers import gevent
+
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins='*')
+
 # ---------UNTIL HERE!!!!! ---------------------- #
 
 
@@ -218,7 +220,7 @@ def handle_message(port_to_check):
     data = json.loads(data)
     port = data["port"]
     list_of_connected_controllers = discover_controllers_status_by_port(port, socketio)
-    data={port: list_of_connected_controllers}
+    data = {port: list_of_connected_controllers}
     emit('discover_controllers_status_by_port_response', json.dumps(data))
 
 
@@ -358,5 +360,5 @@ def emit_port_configuration_message(port_configuration_message):
 
 if __name__ == '__main__':
     init_my_profile()
-    print('running on port 5000')
+    print('running on port 5000')  # default port of flask is 5000
     socketio.run(app)

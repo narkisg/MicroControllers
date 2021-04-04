@@ -92,7 +92,6 @@ def word_to_byte(addr, index, lowerfirst):
 
 def get_crc(buff, length, initial_index):
     Crc = 0xFFFFFFFF
-    # print(length)
     for data in buff[initial_index:length]:
         Crc = Crc ^ data
         for i in range(32):
@@ -138,24 +137,18 @@ def Serial_Port_Configuration(port):
     try:
         ser = serial.Serial(port, 115200, timeout=2)
     except:
-        # print("\n   Oops! That was not a valid port")
         functions.port_configuration_message('Oops! That was not a valid port')
 
         port = serial_ports()
         if (not port):
-            # print("\n   No ports Detected")
             functions.port_configuration_message('No ports Detected')
         else:
-            # print("\n   Here are some available ports on your PC. Try Again!")
             functions.port_configuration_message('Here are some available ports on your PC. Try Again!')
-            # print("\n   ", port)
         return -1
     if ser.is_open:
-        # print("\n   Port Open Success")
         functions.port_configuration_message('Port Open Success connected to port: ' + port)
         functions.is_connected_to_port = port
     else:
-        # print("\n   Port Open Failed")
         functions.port_configuration_message('Port Open Failed')
 
     return 0
@@ -179,15 +172,10 @@ def Write_to_serial_port(value, *length, socket):
     data = struct.pack('>B', value)
     if (verbose_mode):
         value = bytearray(data)
-        # print("   "+hex(value[0]), end='')
-        # print("   "+"0x{:02x}".format(value[0]), end=' ')
         functions.print_process_args("0x{:02x}".format(value[0]))
     if (mem_write_active and (not verbose_mode)):
-        # print("#", end=' ')
         functions.print_process_args("#")
     socket.sleep(0)
-    print(data)
-    print(type(data))
     ser.write(data)
 # ----------------------------- command processing----------------------------------------
 
@@ -199,7 +187,6 @@ def process_COMMAND_BL_MY_NEW_COMMAND(length):
 def process_COMMAND_BL_GET_VER(length):
     ver = read_serial_port(1)
     value = bytearray(ver)
-    # print("\n   Bootloader Ver. : ", hex(value[0]))
     functions.print_bootloader_args('Bootloader Ver. : ' + hex(value[0]))
 
 
@@ -207,26 +194,21 @@ def process_COMMAND_BL_GET_HELP(length):
     # print("reading:", length)
     value = read_serial_port(length)
     reply = bytearray(value)
-    # print("\n   Supported Commands :", end=' ')
     boot_message = 'Supported Commands : '
     for x in reply:
-        # print(hex(x), end=' ')
         boot_message = boot_message + ', ' + hex(x)
-    # print()
     functions.print_bootloader_args(boot_message)
 
 
 def process_COMMAND_BL_GET_CID(length):
     value = read_serial_port(length)
     ci = (value[1] << 8) + value[0]
-    # print("\n   Chip Id. : ", hex(ci))
     functions.print_bootloader_args('Chip Id. : ' + hex(ci))
 
 
 def process_COMMAND_BL_GET_RDP_STATUS(length):
     value = read_serial_port(length)
     rdp = bytearray(value)
-    # print("\n   RDP Status : ", hex(rdp[0]))
     functions.print_bootloader_args('RDP Status : ' + hex(rdp[0]))
 
 
@@ -234,7 +216,6 @@ def process_COMMAND_BL_GO_TO_ADDR(length):
     addr_status = 0
     value = read_serial_port(length)
     addr_status = bytearray(value)
-    # print("\n   Address Status : ", hex(addr_status[0]))
     functions.print_bootloader_args('Address Status : ' + hex(addr_status[0]))
 
 
@@ -244,25 +225,18 @@ def process_COMMAND_BL_FLASH_ERASE(length):
     if len(value):
         erase_status = bytearray(value)
         if (erase_status[0] == Flash_HAL_OK):
-            # print("\n   Erase Status: Success  Code: FLASH_HAL_OK")
             functions.print_bootloader_args('Erase Status: Success  Code: FLASH_HAL_OK')
         elif (erase_status[0] == Flash_HAL_ERROR):
-            # print("\n   Erase Status: Fail  Code: FLASH_HAL_ERROR")
             functions.print_bootloader_args('Erase Status: Fail  Code: FLASH_HAL_ERROR')
         elif (erase_status[0] == Flash_HAL_BUSY):
-            # print("\n   Erase Status: Fail  Code: FLASH_HAL_BUSY")
             functions.print_bootloader_args('Erase Status: Fail  Code: FLASH_HAL_BUSY')
         elif (erase_status[0] == Flash_HAL_TIMEOUT):
-            # print("\n   Erase Status: Fail  Code: FLASH_HAL_TIMEOUT")
             functions.print_bootloader_args('Erase Status: Fail  Code: FLASH_HAL_TIMEOUT')
         elif (erase_status[0] == Flash_HAL_INV_ADDR):
-            # print("\n   Erase Status: Fail  Code: FLASH_HAL_INV_SECTOR")
             functions.print_bootloader_args('Erase Status: Fail  Code: FLASH_HAL_INV_SECTOR')
         else:
-            # print("\n   Erase Status: Fail  Code: UNKNOWN_ERROR_CODE")
             functions.print_bootloader_args('Erase Status: Fai,  Code: UNKNOWN_ERROR_CODE')
     else:
-        # print("Timeout: Bootloader is not responding")
         functions.print_bootloader_args('Timeout: Bootloader is not responding')
 
 
@@ -271,24 +245,17 @@ def process_COMMAND_BL_MEM_WRITE(length):
     value = read_serial_port(length)
     write_status = bytearray(value)
     if (write_status[0] == Flash_HAL_OK):
-        # print("\n   Write_status: FLASH_HAL_OK")
         functions.print_bootloader_args('Write_status: FLASH_HAL_OK')
     elif (write_status[0] == Flash_HAL_ERROR):
-        # print("\n   Write_status: FLASH_HAL_ERROR")
         functions.print_bootloader_args('FLASH_HAL_ERROR')
     elif (write_status[0] == Flash_HAL_BUSY):
-        # print("\n   Write_status: FLASH_HAL_BUSY")
         functions.print_bootloader_args('FLASH_HAL_BUSY')
     elif (write_status[0] == Flash_HAL_TIMEOUT):
-        # print("\n   Write_status: FLASH_HAL_TIMEOUT")
         functions.print_bootloader_args('FLASH_HAL_TIMEOUT')
     elif (write_status[0] == Flash_HAL_INV_ADDR):
-        # print("\n   Write_status: FLASH_HAL_INV_ADDR")
         functions.print_bootloader_args('FLASH_HAL_INV_ADDR')
     else:
-        # print("\n   Write_status: UNKNOWN_ERROR")
         functions.print_bootloader_args('UNKNOWN_ERROR')
-    # print("\n")
 
 
 def process_COMMAND_BL_FLASH_MASS_ERASE(length):
@@ -317,25 +284,16 @@ def process_COMMAND_BL_READ_SECTOR_STATUS(length):
     s_status = 0
     value = read_serial_port(length)
     s_status = bytearray(value)
-    # s_status.flash_sector_status = (uint16_t)(status[1] << 8 | status[0] )
-    # print("\n   Sector Status : ", s_status[0])
-    # print("\n  ====================================")
-    # print("\n  Sector                               \tProtection")
-    # print("\n  ====================================")
     boot_message = "Sector Status : " + str(s_status[
                                                 0]) + "\n  ====================================" + 'Sector                               \tProtection' + '\n  ===================================='
     functions.print_bootloader_args(boot_message)
     if (s_status[0] & (1 << 15)):
         # PCROP is active
-        # print("\n  Flash protection mode : Read/Write Protection(PCROP)\n")
         functions.print_bootloader_args('Flash protection mode : Read/Write Protection(PCROP)')
     else:
-        # print("\n  Flash protection mode :   \tWrite Protection\n")
         functions.print_bootloader_args('Flash protection mode :   \tWrite Protection')
     boot_message2 = ''
     for x in range(8):
-        # print("\n   Sector{0}                               {1}".format(
-        # x, protection_type(s_status[0], x)))
         boot_message2 = boot_message2 + 'Sector{0}                               {1}'.format(
             x, protection_type(s_status[0], x))
     functions.print_bootloader_args(boot_message2)
@@ -346,10 +304,8 @@ def process_COMMAND_BL_DIS_R_W_PROTECT(length):
     value = read_serial_port(length)
     status = bytearray(value)
     if (status[0]):
-        # print("\n   FAIL")
         functions.print_bootloader_args('FAIL')
     else:
-        # print("\n   SUCCESS")
         functions.print_bootloader_args('SUCCESS')
 
 
@@ -390,7 +346,6 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         controller_ID = int(controller_ID)
 
     if (command == 0):
-        # print("\n   Exiting...!") this line is for manual debugging
         raise SystemExit
 
     elif (command == 1):
@@ -567,8 +522,7 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
                 file_read_value = bin_file.read(1)
                 file_read_value = bytearray(file_read_value)
                 data_buf[8 + x] = int(file_read_value[0])
-            # read_the_file(&data_buf[7],len_to_read)
-            # print("\n   base mem address = \n",base_mem_address, hex(base_mem_address))
+
 
             # populate base mem address
             data_buf[3] = word_to_byte(base_mem_address, 1, 1)
@@ -605,7 +559,6 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
             socket.sleep(0)
             bytes_so_far_sent += len_to_read
             bytes_remaining = t_len_of_file - bytes_so_far_sent
-            # print("\n   bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
             functions.port_configuration_message(
                 "bytes_so_far_sent:{0} -- bytes_remaining:{1}\n".format(bytes_so_far_sent, bytes_remaining))
             socket.sleep(0)
@@ -735,11 +688,9 @@ def read_bootloader_reply(shift, controller_ID, command_code):
                 return ret_value
 
         a_array = bytearray(ack)
-        # print("read uart:",ack)
         if (a_array[0 + shift] == 0xA5):
             # CRC of last command was good .. received ACK and "len to follow"
             len_to_follow = a_array[1 + shift]
-            # print("\n   CRC : SUCCESS Len :",len_to_follow)
             functions.print_bootloader_args("CRC:_SUCCESS,Len:_ " + str(len_to_follow))
             # print("command_code:",hex(command_code))
             if (command_code) == COMMAND_BL_GET_VER:
@@ -776,18 +727,15 @@ def read_bootloader_reply(shift, controller_ID, command_code):
                 process_COMMAND_BL_MY_NEW_COMMAND(len_to_follow)
 
             else:
-                # print("\n   Invalid command code\n")
                 functions.print_bootloader_args("ERROR! Invalid_command_code")
 
             ret_value = 0
 
         elif a_array[0 + shift] == 0x7F:
             # CRC of last command was bad .. received NACK
-            # print("\n   CRC: FAIL \n")
             functions.print_bootloader_args("ERROR! CRC_FAIL")
             ret_value = -1
     else:
-        # print("\n   Timeout : Bootloader not responding")
         functions.print_bootloader_args("ERROR! Timeout:_Bootloader_not_responding")
     return ret_value
 
