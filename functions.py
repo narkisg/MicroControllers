@@ -126,7 +126,6 @@ def discover_controllers_status_by_port(port_to_check, socket):
     list_of_connected_controllers = []
     for i in range(2):  # change to 32 (number of controllers)
         current_controller = i + 1
-        print(port_to_check)
         result = execute_command(port_to_check, str(current_controller), '1', '', socket)
         if result == 0 | result == -1:
             list_of_connected_controllers.append(current_controller)
@@ -136,16 +135,12 @@ def discover_controllers_status_by_port(port_to_check, socket):
 def discover_controllers_status_all_ports(socket):
     map_of_connected_controllers = {}
     available_ports = get_ports_list()
-    print(available_ports)
     for i in range(len(available_ports)):
         current_port = available_ports[i]
-        print("------current port--------: "+current_port)
         map_of_connected_controllers[current_port] = []
         for j in range(2):  # change to 32 (number of controllers)
-            print("j= "+str(j))
             current_controller = j + 1
             result = execute_command(current_port, str(current_controller), '1', '', socket)
-            print("result of j is: "+str(result))
             if result == 0 | result == -1:
                 map_of_connected_controllers[current_port].append(str(current_controller))
     return map_of_connected_controllers

@@ -8,12 +8,12 @@ create py_server.exe with: pyinstaller py_server.py -n py-server.py
 to create electron app go to dist/py-server and copy content to GUI's public library
 than to pack everything to app command: npm run dep-win->for Windows.. (look in package.json for more)
 """
-# ----------DO NOT REMOVE THIS LINE!!!---------- #
+# ----------DO NOT REMOVE THIS SCOPE!!!---------- #
 from engineio.async_drivers import gevent
-
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins='*')
+# ---------UNTIL HERE!!!!! ---------------------- #
 
 
 # ========================= login window functions ========================= #
@@ -79,7 +79,6 @@ def handle_message():
 # port_name, controller_name, command_No, additional_par
 @socketio.on('execute_command')
 def handle_message(details):
-    # print(' message from GUI accepted, start process')
     # translating arguments from GUI, from JSON to list of strings.
     data = json.dumps(details)
     data = json.loads(data)
@@ -215,29 +214,20 @@ def handle_message(command_name):
 
 @socketio.on('discover_controllers_status_by_port')
 def handle_message(port_to_check):
-    print("here")
     data = json.dumps(port_to_check)
-    print("there")
     data = json.loads(data)
     port = data["port"]
     list_of_connected_controllers = discover_controllers_status_by_port(port, socketio)
     data={port: list_of_connected_controllers}
-    #data = {port: ['23', '567', '7']}  # remove this line
     emit('discover_controllers_status_by_port_response', json.dumps(data))
 
 
 @socketio.on('discover_controllers_status_all_ports')
 def handle_message():
-    print("yess")
     map_of_connected_controllers = discover_controllers_status_all_ports(socketio)
-    print("nooo")
     data = json.dumps(map_of_connected_controllers)
-    #tmp = {"COM3":["12","5678","17"], "COM45":[], "COM7465655":["655","323","O9G5T","76","JGTR"]}
-    #tmp = json.dumps(tmp)
     emit('discover_controllers_status_all_ports_response', data)
 
-
-# ----- user management functions ----- #
 
 # activate after pressing the user management button- only for administrator
 @socketio.on('user_management')

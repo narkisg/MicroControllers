@@ -176,7 +176,6 @@ def purge_serial_port():
 
 
 def Write_to_serial_port(value, *length, socket):
-    print("------------write to serial port-------------")
     data = struct.pack('>B', value)
     if (verbose_mode):
         value = bytearray(data)
@@ -187,10 +186,9 @@ def Write_to_serial_port(value, *length, socket):
         # print("#", end=' ')
         functions.print_process_args("#")
     socket.sleep(0)
-    print("start ser.write with data:")
     print(data)
+    print(type(data))
     ser.write(data)
-    print("done ser.write")
 # ----------------------------- command processing----------------------------------------
 
 
@@ -396,7 +394,6 @@ def decode_menu_command_code(controller_ID, command, additional_par, socket):
         raise SystemExit
 
     elif (command == 1):
-        print("start get version")
         COMMAND_BL_GET_VER_LEN = 6
         data_buf[0] = controller_ID
         data_buf[1] = COMMAND_BL_GET_VER_LEN - 1
