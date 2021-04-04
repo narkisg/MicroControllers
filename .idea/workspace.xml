@@ -5,12 +5,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="PROBLEM WITH COM4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STM32_Programmer_V1.py" beforeDir="false" afterPath="$PROJECT_DIR$/STM32_Programmer_V1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_server.py" afterDir="false" />
-    </list>
+    <list default="true" id="502d7188-fa19-4909-8448-b934129c5c16" name="Default Changelist" comment="PROBLEM WITH COM4." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +43,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Python.py_server (1)">
+  <component name="RunManager" selected="Python.py_server">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Netafim-MC-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -161,9 +156,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.py_server" />
         <item itemvalue="Python.py_server (1)" />
         <item itemvalue="Python.scratch" />
-        <item itemvalue="Python.py_server" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.tests" />
       </list>
@@ -218,7 +213,7 @@
       <workItem from="1613544310813" duration="11792000" />
       <workItem from="1614620175205" duration="314000" />
       <workItem from="1617200072661" duration="1380000" />
-      <workItem from="1617518463596" duration="265000" />
+      <workItem from="1617518463596" duration="395000" />
     </task>
     <task id="LOCAL-00001" summary="16.10 no address">
       <created>1602847056453</created>
@@ -381,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613548016721</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="PROBLEM WITH COM4.">
+      <created>1617518757154</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1617518757154</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,13 +424,14 @@
     <MESSAGE value="30.12.20" />
     <MESSAGE value="COMPILE" />
     <MESSAGE value="PROBLEM WITH COM4" />
-    <option name="LAST_COMMIT_MESSAGE" value="PROBLEM WITH COM4" />
+    <MESSAGE value="PROBLEM WITH COM4." />
+    <option name="LAST_COMMIT_MESSAGE" value="PROBLEM WITH COM4." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NetafimMC_python$STM32_Programmer_V1.coverage" NAME="STM32_Programmer_V1 Coverage Results" MODIFIED="1601398801673" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$py_server__1_.coverage" NAME="py_server (1) Coverage Results" MODIFIED="1617200825508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py_server Coverage Results" MODIFIED="1606281788418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1606813364503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/NetafimMC_python$py_server.coverage" NAME="py_server Coverage Results" MODIFIED="1617518852192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$database.coverage" NAME="database Coverage Results" MODIFIED="1601634072042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$tests.coverage" NAME="tests Coverage Results" MODIFIED="1605011717539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NetafimMC_python$client.coverage" NAME="client Coverage Results" MODIFIED="1605081634111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
