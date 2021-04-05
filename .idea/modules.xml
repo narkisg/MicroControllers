@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Netafim-MC-backend.iml" filepath="$PROJECT_DIR$/.idea/Netafim-MC-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MicroControllers.iml" filepath="$PROJECT_DIR$/.idea/MicroControllers.iml" />
     </modules>
   </component>
 </project>
